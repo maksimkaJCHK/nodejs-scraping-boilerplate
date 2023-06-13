@@ -4,8 +4,8 @@
   "description": "scraping with node.js",
   "main": "index.js",
   "scripts": {
-    "parse": "node index.js",
-    "browser": "node browser.js"
+    "parse": "node ./scripts/index.js",
+    "browser": "node ./scripts/browser.js"
   },
   "keywords": [
     "node",
@@ -30,5 +30,6 @@
     "needle": "^3.2.0",
     "puppeteer": "^20.5.0",
     "tress": "^1.1.4"
-  }
+  },
+  "dependencies": {}
 }
