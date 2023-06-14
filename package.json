@@ -6,7 +6,7 @@
   "scripts": {
     "parse": "node ./scripts/index.js",
     "browser": "node ./scripts/browser.js",
-    "shop": "node ./scripts/shop.js",
+    "shop": "node ./scripts/shop.js"
   },
   "keywords": [
     "node",
