@@ -4,6 +4,7 @@ data.json
 package-lock.json
 results/
 hazin_results/
+downloads/
 
 # Logs
 logs
