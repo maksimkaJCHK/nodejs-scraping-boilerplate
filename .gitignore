@@ -1,11 +1,7 @@
 # Мои данные и создаваемые директории
 
-data.json
 package-lock.json
 results/
-hazin_results/
-downloads/
-shop-result/
 
 # Logs
 logs
