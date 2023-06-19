@@ -1,12 +1,13 @@
 {
   "name": "nodejs-scraping-boilerplate",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "description": "scraping with node.js",
   "main": "index.js",
   "scripts": {
-    "parse": "node ./spiders/index.js",
-    "browser": "node ./spiders/browser.js",
-    "shop": "node ./spiders/shop.js"
+    "parse": "node ./spiders/khazinSpider.js",
+    "browser": "node ./spiders/browserExampleSpider.js",
+    "shop": "node ./spiders/shopScriping.js",
+    "analitics": "node ./analitics/shop.js"
   },
   "keywords": [
     "node",
@@ -32,5 +33,7 @@
     "puppeteer": "^20.5.0",
     "tress": "^1.1.4"
   },
-  "dependencies": {}
+  "dependencies": {
+    "app-root-path": "^3.1.0"
+  }
 }

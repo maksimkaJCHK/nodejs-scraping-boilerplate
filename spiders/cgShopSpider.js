@@ -1,16 +1,10 @@
 const puppeteer = require('puppeteer');
 const log = require('cllc')();
 const needle = require('needle');
-const cheerio = require('cheerio');
 const fs = require('fs');
+const { renameFileForAnalitics } = require('../services/fs');
 
-const options = {};
-
-const delayF = (delay = 5000) => {
-  return new Promise((resolve, reject) => {
-    setInterval(() => resolve(), delay);
-  });
-};
+const { delayF } = require('../services/delay');
 
 const headersCg = {};
 
@@ -43,7 +37,7 @@ const writeToken = async (domen) => {
   await browser.close();
 }
 
-const cgShopScraping = async (findFrase) => {
+const cgShopSpider = async (findFrase) => {
   const domen = 'https://www.chitai-gorod.ru/';
   const imgCgShopDomen = 'https://cdn.img-gorod.ru/310x500/';
 
@@ -60,8 +54,6 @@ const cgShopScraping = async (findFrase) => {
 
     await needle('get', javascriptUrl, { headers: headersCg })
       .then((res) => {
-        options.cookies = res.cookies;
-
         if (res.statusCode === 404) {
           log.e('Такой страницы нет - ' + url);
         } else {
@@ -69,7 +61,7 @@ const cgShopScraping = async (findFrase) => {
 
           res.body.included.forEach((el) => {
             if (el.attributes) {
-              const { authors, description, title, id, url, picture, yearPublishing, pages, price } = el.attributes
+              const { authors, description, title, id, url, picture, yearPublishing, pages, price, publisher } = el.attributes
               const bookAuthors = [];
 
               // Мне приходят пустые объекты вместе с реальными книгами, если подумать, то если нет id-ка и url-а, то и книги скорее всего тоже нет
@@ -95,6 +87,7 @@ const cgShopScraping = async (findFrase) => {
                   url: domen + url,
                   picture: imgCgShopDomen + picture,
                   publish: yearPublishing,
+                  publisher: publisher && publisher.title,
                 });
               }
             }
@@ -124,30 +117,22 @@ const cgShopScraping = async (findFrase) => {
     if (!err) log.info('Папка shop-result успешно создана');
   });
 
-  fs.writeFileSync(`./results/shop-result/cg-shop-${findFrase}.json`, JSON.stringify(books, null, 4));
+  const path = './results/shop-result/';
+  const name = `cg-shop-${findFrase}`;
+  const extension = '.json';
 
   log.info(`Всего найдено - ${books.length} книги по запросу ${findFrase}`);
+
+  renameFileForAnalitics({
+    path,
+    name,
+    extension,
+    callback() {
+      fs.writeFileSync(path + name + extension, JSON.stringify(books, null, 4));
+    }
+  });
 
   nullLine();
 };
 
-const parseCg = async () => {
-  fs.mkdir('./results', err => {
-    if (err) {
-      log.warn('Не удалось создать папку results');
-      log.warn(`${err}`);
-    }
-
-    if (!err) log.info('Папка results успешно создана');
-  });
-
-  await cgShopScraping('javascript');
-  await cgShopScraping('python');
-  await cgShopScraping('typescript');
-  await cgShopScraping('react');
-  await cgShopScraping('angular');
-
-  process.exit(1);
-}
-
-parseCg();
+exports.cgShopSpider = cgShopSpider;
