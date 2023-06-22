@@ -1,0 +1,60 @@
+mixin header(fraze, shop)
+  h2 Запрос #{fraze} для #{shop}
+
+mixin nullFraze(fraze, typeShop)
+  p Для поисковой фразы #{fraze} на #{typeShop == 'cg' ? 'читай-городе' : 'лабиринте'} нет товаров!!!
+
+mixin output(fraze, cgIten, lbItem)
+  +header(fraze, 'читай-города')
+  if !shops[cgIten]
+    +nullFraze(fraze, 'cg')
+  else 
+    each val in shops[cgIten]
+      +cg(val)
+
+  +header(fraze, 'лабиринта')
+  if !shops[lbItem]
+    +nullFraze(fraze, 'lb')
+  else 
+    each val in shops[lbItem]
+      +lb(val)
+
+mixin cg(val)
+  .item
+    a(href=`${val.url}` class="item-img") 
+      img(src=`${val.picture}`)
+    .item-description
+      h3= val.title
+      p 
+        b Автор 
+        each author in val.bookAuthors
+          | #{author} 
+      p= val.description
+      p 
+        b Страниц: 
+        | #{val.pages}
+      p 
+        b Опубликовано: 
+        | #{val.yearPublishing}
+      p 
+        b Издательство: 
+        | #{val.publisher}
+      p 
+        b Цена: 
+        | #{val.price} руб
+
+mixin lb(val)
+  .item
+    a(href=`${val.url}` class="item-img") 
+      img(src=`${val.picture}`)
+    .item-description
+      h3= val.title
+      p
+        b Издательство: 
+        | #{val.publisher}
+      p 
+        b Цена: 
+        | #{val.price} руб
+      p 
+        b Старая цена: 
+        | #{val.priceOld} руб

@@ -1,0 +1,10 @@
+extends ./base/main.pug
+
+include ./services/mixins.pug
+
+block content
+  +output('javascript', 'cgJavascript', 'lbJavascript')
+  +output('python', 'cgPythonr', 'lbPythonr')
+  +output('react', 'cgReact', 'lbReact')
+  +output('typescript', 'cgTypescript', 'lbTypescript')
+  +output('angular', 'cgAngular', 'lbAngular')

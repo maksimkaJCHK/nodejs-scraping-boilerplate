@@ -7,7 +7,8 @@
     "parse": "node ./spiders/khazinSpider.js",
     "browser": "node ./spiders/browserExampleSpider.js",
     "shop": "node ./spiders/shopScriping.js",
-    "analitics": "node ./analitics/shop.js"
+    "analitics": "node ./analitics/shop.js",
+    "server": "node ./server/index.js"
   },
   "keywords": [
     "node",
@@ -26,14 +27,14 @@
   "author": "Maksim Zhuchkov",
   "license": "MIT",
   "devDependencies": {
+    "app-root-path": "^3.1.0",
     "cheerio": "^1.0.0-rc.12",
     "cllc": "^1.2.0",
+    "express": "^4.18.2",
     "log": "^6.3.1",
     "needle": "^3.2.0",
-    "puppeteer": "^20.5.0",
+    "pug": "^3.0.2",
+    "puppeteer": "20.7.2",
     "tress": "^1.1.4"
-  },
-  "dependencies": {
-    "app-root-path": "^3.1.0"
   }
 }

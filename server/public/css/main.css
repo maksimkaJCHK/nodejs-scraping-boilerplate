@@ -1,0 +1,67 @@
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+#main {
+  min-height: 100%;
+}
+
+#wrapper {
+  margin: 0 auto;
+  max-width: 1280px;
+  font: 12px/120% tahoma;
+}
+
+nav {
+  padding: 10px 0;
+  font-size: 20px;
+  line-height: 120%;
+  border-bottom: 1px solid #202083;
+}
+
+nav a {
+  color: #202083;
+  text-decoration: none;
+  display: inline-block;
+  margin-left: 20px;
+}
+
+nav a:first-of-type {
+  margin-left: 0;
+}
+
+h2 {
+  font: 20px/120% tahoma;
+}
+
+h3 {
+  margin: 0;
+  font: bold 16px/120% tahoma;
+}
+
+.item {
+  display: flex;
+  padding: 20px 0;
+  border-bottom: 1px dotted #000;
+}
+
+.item p {
+  margin: 5px 0;
+}
+.item-img {
+  width: 200px;
+  display: block;
+  margin-right: 20px;
+  text-decoration: none;
+}
+
+.item-img img {
+  display: block;
+  max-width: 100%;
+}
+
+.item-description {
+  width: 100%;
+}
