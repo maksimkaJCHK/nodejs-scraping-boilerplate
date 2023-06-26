@@ -2,6 +2,19 @@ const fs = require('fs');
 const appRoot = require('app-root-path');
 const log = require('cllc')();
 
+
+const deleteFile = (filePath) => {
+  fs.unlinkSync(filePath);
+};
+
+const renameFile = (name, newName) => new Promise((resolve, reject) => {
+  fs.rename(name, newName, function(err) {
+    if (err) console.log(`Нет файла (${name}) для переименования`);
+
+    resolve();
+  });
+});
+
 const makeFile = (nameFile, fileBody) => {
   require('fs').writeFileSync(nameFile, fileBody);
 };
@@ -65,3 +78,5 @@ exports.readJSONFileToAnalitics = readJSONFileToAnalitics;
 exports.makeResultsFolder = makeResultsFolder;
 exports.makeFolder = makeFolder;
 exports.makeFile = makeFile;
+exports.deleteFile = deleteFile;
+exports.renameFile = renameFile;

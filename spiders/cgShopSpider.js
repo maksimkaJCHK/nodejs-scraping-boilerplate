@@ -65,6 +65,8 @@ const cgShopSpider = async (findFrase) => {
 
               // Мне приходят пустые объекты вместе с реальными книгами, если подумать, то если нет id-ка и url-а, то и книги скорее всего тоже нет
               if (id && url) {
+                const bPicture = picture ? imgCgShopDomen + picture : null;
+
                 if (authors) {
                   authors.forEach((author) => {
                     const firstName = author.firstName;
@@ -74,7 +76,7 @@ const cgShopSpider = async (findFrase) => {
                     bookAuthors.push(`${firstName} ${middleName} ${lastName}`)
                   });
                 }
-        
+
                 books.push({
                   id,
                   bookAuthors,
@@ -84,7 +86,7 @@ const cgShopSpider = async (findFrase) => {
                   yearPublishing,
                   price,
                   url: domen + url,
-                  picture: imgCgShopDomen + picture,
+                  picture: bPicture,
                   publish: yearPublishing,
                   publisher: publisher && publisher.title,
                 });
