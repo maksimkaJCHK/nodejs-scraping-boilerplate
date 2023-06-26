@@ -1,6 +1,6 @@
 const { lbShopSpider } = require('./lbShopSpider');
 const { cgShopSpider } = require('./cgShopSpider');
-const { makeResultsFolder } = require('../services/makeResults.js');
+const { makeResultsFolder } = require('../services/fs.js');
 
 const shopScriping = async () => {
   makeResultsFolder();

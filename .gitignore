@@ -2,6 +2,7 @@
 
 package-lock.json
 results/
+results-old/
 
 # Logs
 logs

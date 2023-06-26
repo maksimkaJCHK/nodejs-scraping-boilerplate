@@ -1,8 +1,7 @@
 const puppeteer = require('puppeteer');
 const log = require('cllc')();
 const needle = require('needle');
-const fs = require('fs');
-const { renameFileForAnalitics } = require('../services/fs');
+const { renameFileForAnalitics, makeFile, makeFolder } = require('../services/fs');
 
 const { delayF } = require('../services/delay');
 
@@ -108,14 +107,7 @@ const cgShopSpider = async (findFrase) => {
 
   nullLine();
 
-  fs.mkdir('./results/shop-result', err => {
-    if (err) {
-      log.warn('Не удалось создать папку shop-result');
-      log.warn(`${err}`);
-    }
-
-    if (!err) log.info('Папка shop-result успешно создана');
-  });
+  makeFolder('./results/shop-result');
 
   const path = './results/shop-result/';
   const name = `cg-shop-${findFrase}`;
@@ -128,7 +120,7 @@ const cgShopSpider = async (findFrase) => {
     name,
     extension,
     callback() {
-      fs.writeFileSync(path + name + extension, JSON.stringify(books, null, 4));
+      makeFile(path + name + extension, JSON.stringify(books, null, 4));
     }
   });
 

@@ -2,8 +2,8 @@ const log = require('cllc')();
 const needle = require('needle');
 const tress = require('tress');
 const cheerio = require('cheerio');
-const fs = require('fs');
-const { renameFileForAnalitics } = require('../services/fs');
+
+const { renameFileForAnalitics, makeFolder, makeFile } = require('../services/fs');
 
 const { delayF } = require('../services/delay');
 
@@ -98,14 +98,7 @@ const lbShopSpider = async (findFrase) => {
     log.info(`Всего найдено ${results.length} товара, по запросу ${findFrase}`);
 
     // Вполне возможно, я лабиринт буду отдельно парсить, к примеру если на читай городе сменят API
-    fs.mkdir('./results/shop-result', err => {
-      if (err) {
-        log.warn('Не удалось создать папку shop-result');
-        log.warn(`${err}`);
-      }
-    
-      if (!err) log.info('Папка shop-result успешно создана');
-    });
+    makeFolder('./results/shop-result');
 
     const path = './results/shop-result/';
     const name = `lb-shop-${findFrase}`;
@@ -116,7 +109,7 @@ const lbShopSpider = async (findFrase) => {
       name,
       extension,
       callback() {
-        require('fs').writeFileSync(path + name + extension, JSON.stringify(results, null, 2));
+        makeFile(path + name + extension, JSON.stringify(results, null, 2));
       }
     });
   };

@@ -2,6 +2,25 @@ const fs = require('fs');
 const appRoot = require('app-root-path');
 const log = require('cllc')();
 
+const makeFile = (nameFile, fileBody) => {
+  require('fs').writeFileSync(nameFile, fileBody);
+};
+
+const makeFolder = (nameFolder) => {
+  fs.mkdir(nameFolder, err => {
+    if (err) {
+      log.warn(`Не удалось создать папку ${nameFolder}`);
+      log.warn(`${err}`);
+    }
+
+    if (!err) log.info(`Папка ${nameFolder} успешно создана`);
+  });
+};
+
+const makeResultsFolder = () => {
+  makeFolder('./results');
+};
+
 const renameFileFunc = (path, name, extension) => new Promise((resolve, reject) => {
   fs.access(`${appRoot.path}/results/shop-result/${name}${extension}`, fs.F_OK, (err) => {
     if (err) {
@@ -43,3 +62,6 @@ const readJSONFileToAnalitics = (name) => new Promise((resolve, reject) => {
 
 exports.renameFileForAnalitics = renameFileForAnalitics;
 exports.readJSONFileToAnalitics = readJSONFileToAnalitics;
+exports.makeResultsFolder = makeResultsFolder;
+exports.makeFolder = makeFolder;
+exports.makeFile = makeFile;

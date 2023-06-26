@@ -1,6 +1,5 @@
 const puppeteer = require('puppeteer');
-const fs = require('fs');
-const { makeResultsFolder } = require('../services/makeResults.js');
+const { makeResultsFolder, makeFile } = require('../services/fs.js');
 
 const domen = 'http://localhost:8080/';
 
@@ -74,7 +73,7 @@ const bNamePage = (url) => `${url
 
         console.log(body);
 
-        require('fs').writeFileSync(`./results/${bNamePage(url)}.txt`, body);
+        makeFile(`./results/${bNamePage(url)}.txt`, body);
       } catch (error) {
         console.log(error);
       }

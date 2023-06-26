@@ -2,8 +2,8 @@ const log = require('cllc')();
 const needle = require('needle');
 const tress = require('tress');
 const cheerio = require('cheerio');
-const fs = require('fs');
-const { makeResultsFolder } = require('../services/makeResults.js');
+
+const { makeResultsFolder, makeFolder, makeFile } = require('../services/fs.js');
 
 const URL = 'https://khazin.ru/articles/';
 const options = {};
@@ -32,14 +32,7 @@ const bNamePage = (url) => {
 
 makeResultsFolder();
 
-fs.mkdir('./results/hazin_results', err => {
-  if (err) {
-    log.warn('Не удалось создать папку hazin_results');
-    log.warn(`${err}`);
-  }
-
-  if (!err) log.info('Папка hazin_results успешно создана');
-});
+makeFolder('./results/hazin_results');
 
 const q = tress((url, callback) => {
   needle.get(url, options, (err, res) => {
@@ -69,7 +62,7 @@ const q = tress((url, callback) => {
           post: buildPost($('.post-content').html())
         });
 
-        require('fs').writeFileSync(`./results/hazin_results/${page}_${count}_${bNamePage(url)}`, $('.post-content').html());
+        makeFile(`./results/hazin_results/${page}_${count}_${bNamePage(url)}`, $('.post-content').html());
       };
   
       // Собираю ссылки на странице
@@ -111,7 +104,7 @@ q.drain = () => {
   console.log('__________________');
   log.info('Парсинг закончился');
 
-  require('fs').writeFileSync('./results/data.json', JSON.stringify(results, null, 2));
+  makeFile('./results/data.json', JSON.stringify(results, null, 2));
 };
 
 q.push(URL);
