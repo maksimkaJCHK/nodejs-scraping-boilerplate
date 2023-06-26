@@ -1,5 +1,6 @@
 const puppeteer = require('puppeteer');
 const fs = require('fs');
+const { makeResultsFolder } = require('../services/makeResults.js');
 
 const domen = 'http://localhost:8080/';
 
@@ -51,11 +52,7 @@ const bNamePage = (url) => `${url
   });
 
   const bPage = async () => {
-    fs.mkdir('./results', err => {
-      if (err) console.log(`Не удалось создать папку - ${err}`);
-
-      if (!err) console.log('Папка results успешно создана');
-    });
+    makeResultsFolder();
 
     for (let i = 0; i < linksPage.length; i++) {
       const url = linksPage[i];

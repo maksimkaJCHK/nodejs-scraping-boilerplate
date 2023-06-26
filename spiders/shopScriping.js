@@ -1,18 +1,9 @@
-const log = require('cllc')();
-const fs = require('fs');
-
 const { lbShopSpider } = require('./lbShopSpider');
 const { cgShopSpider } = require('./cgShopSpider');
+const { makeResultsFolder } = require('../services/makeResults.js');
 
 const shopScriping = async () => {
-  fs.mkdir('./results', err => {
-    if (err) {
-      log.warn('Не удалось создать папку results');
-      log.warn(`${err}`);
-    }
-
-    if (!err) log.info('Папка results успешно создана');
-  });
+  makeResultsFolder();
 
   await cgShopSpider('javascript');
   await cgShopSpider('python');

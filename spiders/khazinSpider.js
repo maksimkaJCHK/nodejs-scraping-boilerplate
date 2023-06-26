@@ -3,6 +3,7 @@ const needle = require('needle');
 const tress = require('tress');
 const cheerio = require('cheerio');
 const fs = require('fs');
+const { makeResultsFolder } = require('../services/makeResults.js');
 
 const URL = 'https://khazin.ru/articles/';
 const options = {};
@@ -29,14 +30,7 @@ const bNamePage = (url) => {
     .replace(/\//gi, '')}`;
 }
 
-fs.mkdir('./results', err => {
-  if (err) {
-    log.warn('Не удалось создать папку results');
-    log.warn(`${err}`);
-  }
-
-  if (!err) log.info('Папка results успешно создана');
-});
+makeResultsFolder();
 
 fs.mkdir('./results/hazin_results', err => {
   if (err) {
