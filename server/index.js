@@ -6,8 +6,8 @@ const port = 8000;
 
 app.use(express.static('./server/public'));
 
-app.set('views', './server/views')
-app.set('view engine', 'pug')
+app.set('views', './server/views');
+app.set('view engine', 'pug');
 
 app.get('/', async (req, res, next) => {
   const cgJavascript = await readJSONFileToAnalitics('cg-shop-javascript');
@@ -23,7 +23,9 @@ app.get('/', async (req, res, next) => {
   const lbTypescript= await readJSONFileToAnalitics('lb-shop-typescript');
 
   res.render('index', {
-    title: 'Главная страница',
+    title: 'Все запросы',
+    headerText: 'Все запросы',
+    type: 'all',
     shops: {
       cgJavascript,
       cgAngular,
@@ -41,95 +43,67 @@ app.get('/', async (req, res, next) => {
   next();
 }, (req, res, next) => {
   console.log('Загрузкилась главная страница');
-})
+});
 
-app.get('/javascript', async (req, res, next) => {
-  const cgJavascript = await readJSONFileToAnalitics('cg-shop-javascript');
-  const lbJavascript = await readJSONFileToAnalitics('lb-shop-javascript');
+app.get('/all-shops/:fraze', async (req, res, next) => {
+  const fraze = req.params.fraze;
+  const cgItems = await readJSONFileToAnalitics(`cg-shop-${fraze}`);
+  const lbItems = await readJSONFileToAnalitics(`lb-shop-${fraze}`);
 
-  res.render('javascript', {
-    title: 'Главная страница',
+  res.render('allShop', {
+    title: `Запрос ${fraze}`,
+    headerText: `Запрос "${fraze}"`,
+    fraze,
+    type: 'all',
     shops: {
-      cgJavascript,
-      lbJavascript,
+      cgItems,
+      lbItems,
     }
   });
 
   next();
 }, (req, res, next) => {
-  console.log('Загрузкилась страница javascript');
-})
+  console.log(`Загрузкилась страница ${req.params.fraze}`);
+});
 
-app.get('/python', async (req, res, next) => {
-  const cgPythonr = await readJSONFileToAnalitics('cg-shop-python');
-  const lbPythonr = await readJSONFileToAnalitics('lb-shop-python');
+app.get('/cg/:fraze', async (req, res, next) => {
+  const fraze = req.params.fraze;
+  const shop = await readJSONFileToAnalitics(`cg-shop-${fraze}`);
 
-  res.render('python', {
-    title: 'Python',
-    shops: {
-      cgPythonr,
-      lbPythonr,
-    }
+  res.render('currentShop', {
+    title: `Запрос ${fraze} для сайта читай-город`,
+    headerText: `Запрос "${fraze}" для сайта читай-город`,
+    fraze,
+    type: 'cg',
+    nameShop: 'cg',
+    shop,
   });
 
   next();
 }, (req, res, next) => {
-  console.log('Загрузкилась страница python');
-})
+  console.log(`Загрузкилась страница ${req.params.fraze} для читай-города`);
+});
 
-app.get('/react', async (req, res, next) => {
-  const cgReact = await readJSONFileToAnalitics('cg-shop-react');
-  const lbReact = await readJSONFileToAnalitics('lb-shop-react');
+app.get('/lb/:fraze', async (req, res, next) => {
+  const fraze = req.params.fraze;
+  const shop = await readJSONFileToAnalitics(`lb-shop-${fraze}`);
 
-  res.render('react', {
-    title: 'React',
-    shops: {
-      cgReact,
-      lbReact,
-    }
+  res.render('currentShop', {
+    title: `Запрос ${fraze} для сайта лабиринт`,
+    headerText: `Запрос "${fraze}" для сайта лабиринт`,
+    fraze,
+    type: 'lb',
+    nameShop: 'lb',
+    shop,
   });
 
   next();
 }, (req, res, next) => {
-  console.log('Загрузкилась страница react');
-})
-
-app.get('/typescript', async (req, res, next) => {
-  const cgTypescript= await readJSONFileToAnalitics('cg-shop-typescript');
-  const lbTypescript= await readJSONFileToAnalitics('lb-shop-typescript');
-
-  res.render('typescript', {
-    title: 'Typescript',
-    shops: {
-      cgTypescript,
-      lbTypescript,
-    }
-  });
-
-  next();
-}, (req, res, next) => {
-  console.log('Загрузкилась страница typescript');
-})
-
-app.get('/angular', async (req, res, next) => {
-  const cgAngular = await readJSONFileToAnalitics('cg-shop-angular');
-  const lbAngular = await readJSONFileToAnalitics('lb-shop-angular');
-
-  res.render('angular', {
-    title: 'Angular',
-    shops: {
-      cgAngular,
-      lbAngular,
-    }
-  });
-
-  next();
-}, (req, res, next) => {
-  console.log('Загрузкилась страница angular');
-})
+  console.log(`Загрузкилась страница ${req.params.fraze} для лабиринта`);
+});
 
 app.use(function(req, res, next) {
-  res.status(404).send('Sorry cant find that!');
+  res.status(404).render('notFound');
 
   next();
 });

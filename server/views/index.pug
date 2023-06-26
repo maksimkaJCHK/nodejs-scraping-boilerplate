@@ -3,8 +3,25 @@ extends ./base/main.pug
 include ./services/mixins.pug
 
 block content
-  +output('javascript', 'cgJavascript', 'lbJavascript')
-  +output('python', 'cgPythonr', 'lbPythonr')
-  +output('react', 'cgReact', 'lbReact')
-  +output('typescript', 'cgTypescript', 'lbTypescript')
-  +output('angular', 'cgAngular', 'lbAngular')
+  ul
+    li
+      a(href='#shop-javascript') Запрос javascript
+    li
+      a(href='#shop-python') Запрос python
+    li
+      a(href='#shop-react') Запрос react
+    li
+      a(href='#shop-typescript') Запрос typescript
+    li
+      a(href='#shop-angular') Запрос angular
+
+  #shop-javascript
+    +output('javascript', 'cgJavascript', 'lbJavascript')
+  #shop-python
+    +output('python', 'cgPythonr', 'lbPythonr')
+  #shop-react
+    +output('react', 'cgReact', 'lbReact')
+  #shop-typescript
+    +output('typescript', 'cgTypescript', 'lbTypescript')
+  #shop-angular
+    +output('angular', 'cgAngular', 'lbAngular')

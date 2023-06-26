@@ -1,16 +1,61 @@
+//- Для всех магазинов
+- var mainPage = !fraze ? 'active' : ''
+- var javascriptPage = (fraze == 'javascript' && type == 'all') ? 'active' : ''
+- var pythonPage = (fraze == 'python' && type == 'all') ? 'active' : ''
+- var reactPage = (fraze == 'react' && type == 'all') ? 'active' : ''
+- var angularPage = (fraze == 'angular' && type == 'all') ? 'active' : ''
+- var typescriptPage = (fraze == 'typescript' && type == 'all') ? 'active' : ''
+
+//- Для магазина читай-город
+- var javascriptPageCg = (fraze == 'javascript' && type == 'cg') ? 'active' : ''
+- var pythonPageCg = (fraze == 'python' && type == 'cg') ? 'active' : ''
+- var reactPageCg = (fraze == 'react' && type == 'cg') ? 'active' : ''
+- var angularPageCg = (fraze == 'angular' && type == 'cg') ? 'active' : ''
+- var typescriptPageCg = (fraze == 'typescript' && type == 'cg') ? 'active' : ''
+
+//- Для магазина лабиринт
+- var javascriptPageLb = (fraze == 'javascript' && type == 'lb') ? 'active' : ''
+- var pythonPageLb = (fraze == 'python' && type == 'lb') ? 'active' : ''
+- var reactPageLb = (fraze == 'react' && type == 'lb') ? 'active' : ''
+- var angularPageLb = (fraze == 'angular' && type == 'lb') ? 'active' : ''
+- var typescriptPageLb = (fraze == 'typescript' && type == 'lb') ? 'active' : ''
+
 html
   head
     title= title 
     description= description
+    meta(name="viewport" content="width=device-width, initial-scale=1.0")
     link(rel="stylesheet" href="/css/main.css")
   body 
     #main 
       #wrapper
-        nav 
-          a(href="/javascript") Javascript
-          a(href="/python") Python
-          a(href="/react") React
-          a(href="/angular") Angular
-          a(href="/typescript") Typescript
+        nav
+          a(href="/" class= mainPage) Главная страница
+          a(href="/all-shops/javascript" class= javascriptPage) Javascript
+          a(href="/all-shops/python" class= pythonPage) Python
+          a(href="/all-shops/react" class= reactPage) React
+          a(href="/all-shops/angular" class= angularPage) Angular
+          a(href="/all-shops/typescript" class= typescriptPage) Typescript
+
+        section.params
+          .h2 Запросы по конкретным магазинам:
+
+          .params-nav
+            b Запрос для читай-города: 
+            a(href="/cg/javascript" class= javascriptPageCg) Javascript
+            a(href="/cg/python" class= pythonPageCg) Python
+            a(href="/cg/react" class= reactPageCg) React
+            a(href="/cg/angular" class= angularPageCg) Angular
+            a(href="/cg/typescript" class= typescriptPageCg) Typescript
+
+          .params-nav
+            b Запрос для лабирита: 
+            a(href="/lb/javascript" class= javascriptPageLb) Javascript
+            a(href="/lb/python" class= pythonPageLb) Python
+            a(href="/lb/react" class= reactPageLb) React
+            a(href="/lb/angular" class= angularPageLb) Angular
+            a(href="/lb/typescript" class= typescriptPageLb) Typescript
+
         main
+          h1= headerText
           block content

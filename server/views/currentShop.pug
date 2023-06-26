@@ -1,0 +1,10 @@
+extends ./base/main.pug
+
+include ./services/mixins.pug
+
+block content
+  if nameShop == 'cg'
+    +outputCgShop(fraze, 'читай-города', shop)
+
+  if nameShop == 'lb'
+    +outputLbShop(fraze, 'лабиринта', shop, false)
