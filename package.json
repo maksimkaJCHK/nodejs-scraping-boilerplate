@@ -7,6 +7,7 @@
     "parse": "node ./spiders/khazinSpider.js",
     "browser": "node ./spiders/browserExampleSpider.js",
     "shop": "node ./spiders/shopScriping.js",
+    "documents": "node ./spiders/documents.js",
     "analitics": "node ./analitics/shop.js",
     "server": "node ./server/index.js"
   },
