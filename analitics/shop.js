@@ -33,24 +33,19 @@ const analizeShop = async (fraze, type = 'cg') => {
   });
 
   const nameFile = `${analiticsPath}/${type}-${fraze}.json`;
+  const bPrefix = bDate();
+  const newNameFile = `${analiticsPath}/${type}-${fraze}_${bPrefix}.json`;
 
   if (!newItems.length) {
+    await renameFile(nameFile, newNameFile);
     console.log(`На сайте ${nameSite} по запросу ${fraze} нет ничего нового.`);
-
-    try {
-      deleteFile(nameFile);
-    } catch (error) {
-      console.log(`Ранее по запросу ${fraze} на ${nameSite} не было новых товаров.`);
-    }
   }
 
   if (newItems.length) {
     console.log(`На сайте ${nameSite} по запросу ${fraze} появилось ${newItems.length} ${buildFrazeItem(newItems.length)}!!!`);
     console.log(newItems);
 
-    const bPrefix = bDate();
-
-    await renameFile(nameFile, `${analiticsPath}/${type}-${fraze}_${bPrefix}.json`);
+    await renameFile(nameFile, newNameFile);
 
     makeFile(nameFile, JSON.stringify(newItems, null, 2));
   }

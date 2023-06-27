@@ -1,8 +1,20 @@
 mixin header(fraze, shop)
-  h3 Запрос "#{fraze}" для #{shop}
+  h3 Товары по запросу "#{fraze}" для #{shop}
 
 mixin nullFraze(fraze, typeShop)
   p Для поисковой фразы #{fraze} на #{typeShop == 'cg' ? 'читай-городе' : 'лабиринте'} нет товаров!!!
+
+mixin newOutput(fraze, cgItem, lbItem)
+  h2 Новые товары по запросу "#{fraze}"
+
+  .shop-results
+    if shops[cgItem] && shops[cgItem].length
+      div(id=`shop-results-cg-${fraze}`)
+        +outputCgShop(fraze, 'читай-города', shops[cgItem])
+
+    if shops[lbItem] && shops[lbItem].length
+      div(id=`shop-results-lb-${fraze}`)
+        +outputLbShop(fraze, 'лабиринта', shops[lbItem])
 
 mixin output(fraze, cgItem, lbItem, severalShop = true)
   h2 Запрос "#{fraze}"
@@ -27,6 +39,7 @@ mixin outputCgShop(fraze, nameShop, shop)
   if !shop
     +nullFraze(fraze, 'cg')
   else 
+    div Всего #{shop.length} товаров
     .item-wrap
       each val in shop
         +cg(val)
@@ -42,6 +55,7 @@ mixin outputLbShop(fraze, nameShop, shop, severalShop)
   if !shop
     +nullFraze(fraze, 'lb')
   else 
+    div Всего #{shop.length} товаров 
     .item-wrap
       each val in shop
         +lb(val)

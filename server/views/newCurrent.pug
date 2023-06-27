@@ -1,0 +1,10 @@
+extends ./base/main.pug
+
+include ./services/mixins.pug
+
+block content
+  if shops.cgItem || shops.lbItem
+    #shop-javascript
+      +newOutput(fraze, 'cgItem', 'lbItem')
+  else 
+    div По запросу #{fraze} нет новых товаров!!!

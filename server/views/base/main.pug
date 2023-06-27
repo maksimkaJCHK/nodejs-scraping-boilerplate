@@ -1,5 +1,5 @@
 //- Для всех магазинов
-- var mainPage = !fraze ? 'active' : ''
+- var mainPage = (!fraze && type == 'all') ? 'active' : ''
 - var javascriptPage = (fraze == 'javascript' && type == 'all') ? 'active' : ''
 - var pythonPage = (fraze == 'python' && type == 'all') ? 'active' : ''
 - var reactPage = (fraze == 'react' && type == 'all') ? 'active' : ''
@@ -19,6 +19,15 @@
 - var reactPageLb = (fraze == 'react' && type == 'lb') ? 'active' : ''
 - var angularPageLb = (fraze == 'angular' && type == 'lb') ? 'active' : ''
 - var typescriptPageLb = (fraze == 'typescript' && type == 'lb') ? 'active' : ''
+
+//- Новые товары
+- var newItems = (!fraze && type == 'new') ? 'active' : ''
+- var newJavascript = (fraze == 'javascript' && type == 'new') ? 'active' : ''
+- var newPython = (fraze == 'python' && type == 'new') ? 'active' : ''
+- var newReact = (fraze == 'react' && type == 'new') ? 'active' : ''
+- var newAngular = (fraze == 'angular' && type == 'new') ? 'active' : ''
+- var newTypescript = (fraze == 'typescript' && type == 'new') ? 'active' : ''
+
 
 html
   head
@@ -55,6 +64,15 @@ html
             a(href="/lb/react" class= reactPageLb) React
             a(href="/lb/angular" class= angularPageLb) Angular
             a(href="/lb/typescript" class= typescriptPageLb) Typescript
+
+          .params-nav
+            b
+              a(href="/new" class= newItems) Новые товары
+            a(href="/new/javascript" class= newJavascript) Новые товары по запросу "Javascript"
+            a(href="/new/python" class= newPython) Новые товары по запросу "Python"
+            a(href="/new/react" class= newReact) Новые товары по запросу 'React'
+            a(href="/new/angular" class= newAngular) Новые товары по запросу "Angular"
+            a(href="/new/typescript" class= newTypescript) Новые товары по запросу "Typescript"
 
         main
           h1= headerText

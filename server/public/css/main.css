@@ -144,6 +144,10 @@ h3 a:hover {
   text-decoration: none;
 }
 
+.params-nav b a {
+  margin-left: 0;
+}
+
 .params-nav a:hover {
   text-decoration: none;
 }

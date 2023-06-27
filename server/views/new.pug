@@ -1,0 +1,37 @@
+extends ./base/main.pug
+
+include ./services/mixins.pug
+
+block content
+  ul
+    if shops.cgJavascript || shops.lbJavascript
+      li
+        a(href='#shop-javascript') Новые товары по запросу "javascript"
+    if shops.cgPythonr || shops.lbPythonr
+      li
+        a(href='#shop-python') Новые товары по запросу "python"
+    if shops.cgReact || shops.lbReact
+      li
+        a(href='#shop-react') Новые товары по запросу "react"
+    if shops.cgTypescript || shops.lbTypescript
+      li
+        a(href='#shop-typescript') Новые товары по запросу "typescript"
+    if shops.cgAngular || shops.lbAngular
+      li
+        a(href='#shop-angular') Новые товары по запросу "angular"
+
+  if shops.cgJavascript || shops.lbJavascript
+    #shop-javascript
+      +newOutput('javascript', 'cgJavascript', 'lbJavascript')
+  if shops.cgPythonr || shops.lbPythonr
+    #shop-python
+      +newOutput('python', 'cgPythonr', 'lbPythonr')
+  if shops.cgReact || shops.lbReact
+    #shop-react
+      +newOutput('react', 'cgReact', 'lbReact')
+  if shops.cgTypescript || shops.lbTypescript
+    #shop-typescript
+      +newOutput('typescript', 'cgTypescript', 'lbTypescript')
+  if shops.cgAngular || shops.lbAngular
+    #shop-angular
+      +newOutput('angular', 'cgAngular', 'lbAngular')

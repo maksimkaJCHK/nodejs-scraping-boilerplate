@@ -57,10 +57,10 @@ const renameFileForAnalitics = async ({ path, name, extension, callback}) => {
   callback();
 };
 
-const readJSONFileToAnalitics = (name) => new Promise((resolve, reject) => {
+const readJSONFileToAnalitics = (name, path = './results/shop-result') => new Promise((resolve, reject) => {
   let obj;
 
-  fs.readFile(`./results/shop-result/${name}.json`, 'utf8', function(err, data) {
+  fs.readFile(`${path}/${name}.json`, 'utf8', function(err, data) {
     if (err) {
       resolve(null);
 

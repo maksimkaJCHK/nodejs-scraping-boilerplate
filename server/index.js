@@ -51,8 +51,8 @@ app.get('/all-shops/:fraze', async (req, res, next) => {
   const lbItems = await readJSONFileToAnalitics(`lb-shop-${fraze}`);
 
   res.render('allShop', {
-    title: `Запрос ${fraze}`,
-    headerText: `Запрос "${fraze}"`,
+    title: `Страница по запросу "${fraze}" для интернет магазинов`,
+    headerText: `Страница по запросу "${fraze}" для интернет магазинов`,
     fraze,
     type: 'all',
     shops: {
@@ -100,6 +100,64 @@ app.get('/lb/:fraze', async (req, res, next) => {
   next();
 }, (req, res, next) => {
   console.log(`Загрузкилась страница ${req.params.fraze} для лабиринта`);
+});
+
+app.get('/new', async (req, res, next) => {
+  const cgJavascript = await readJSONFileToAnalitics('cg-javascript', './results/analitics');
+  const cgAngular = await readJSONFileToAnalitics('cg-angular', './results/analitics');
+  const cgPythonr = await readJSONFileToAnalitics('cg-python', './results/analitics');
+  const cgReact = await readJSONFileToAnalitics('cg-react', './results/analitics');
+  const cgTypescript= await readJSONFileToAnalitics('cg-typescript', './results/analitics');
+
+  const lbJavascript = await readJSONFileToAnalitics('lb-javascript', './results/analitics');
+  const lbAngular = await readJSONFileToAnalitics('lb-angular', './results/analitics');
+  const lbPythonr = await readJSONFileToAnalitics('lb-python', './results/analitics');
+  const lbReact = await readJSONFileToAnalitics('lb-react', './results/analitics');
+  const lbTypescript= await readJSONFileToAnalitics('lb-typescript', './results/analitics');
+
+  res.render('new', {
+    title: 'Новые товары',
+    headerText: 'Новые товары',
+    type: 'new',
+    shops: {
+      cgJavascript,
+      cgAngular,
+      cgPythonr,
+      cgReact,
+      cgTypescript,
+      lbJavascript,
+      lbAngular,
+      lbPythonr,
+      lbReact,
+      lbTypescript,
+    }
+  });
+
+  next();
+}, (req, res, next) => {
+  console.log('Загрузкилась страница с новыми товарами');
+});
+
+app.get('/new/:fraze', async (req, res, next) => {
+  const fraze = req.params.fraze;
+
+  const cgItem = await readJSONFileToAnalitics(`cg-${fraze}`, './results/analitics');
+  const lbItem = await readJSONFileToAnalitics(`lb-${fraze}`, './results/analitics');
+
+  res.render('newCurrent', {
+    title: `Новые товары для фразы ${fraze}`,
+    headerText: `Новые товары для фразы ${fraze}`,
+    type: 'new',
+    fraze,
+    shops: {
+      cgItem,
+      lbItem,
+    }
+  });
+
+  next();
+}, (req, res, next) => {
+  console.log(`Загрузкилась страница с новыми товарами по запросу ${req.params.fraze}`);
 });
 
 app.use(function(req, res, next) {
