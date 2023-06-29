@@ -1,12 +1,22 @@
-const appRoot = require('app-root-path');
 const express = require('express');
+const asyncHandler = require('express-async-handler')
+
 const { readJSONFileToAnalitics } = require('../services/fs');
 const app = express();
 const port = 8000;
 
-app.use(express.static('./server/public'));
+app.use(express.static('./src/server/public'));
 
-app.set('views', './server/views');
+app.use(function (req, res, next) {
+  res.setHeader('Access-Control-Allow-Origin', 'http://localhost:8000');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+  res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+  res.setHeader('Access-Control-Allow-Credentials', true);
+
+  next();
+});
+
+app.set('views', './src/server/views');
 app.set('view engine', 'pug');
 
 app.get('/', async (req, res, next) => {
@@ -168,4 +178,6 @@ app.use(function(req, res, next) {
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
-})
+});
+
+app.disable('etag');

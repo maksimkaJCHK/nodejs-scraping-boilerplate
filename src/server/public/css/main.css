@@ -129,6 +129,24 @@ h3 a:hover {
   width: 100%;
 }
 
+.item-link {
+  margin: 20px 0 0;
+}
+
+.item-link a {
+  color: #fff;
+  padding: 10px 15px;
+  text-decoration: none;
+  display: inline-block;
+  border-radius: 5px;
+  background: #1616f1;
+  transition: background-color .4s ease-in-out 0s;
+}
+
+.item-link a:hover {
+  background: var(--link-color);
+}
+
 .params {
   font-size: 16px;
   line-height: 120%;

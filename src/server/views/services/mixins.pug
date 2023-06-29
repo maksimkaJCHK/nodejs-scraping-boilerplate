@@ -63,7 +63,10 @@ mixin outputLbShop(fraze, nameShop, shop, severalShop)
 mixin cg(val)
   .item
     a(href=`${val.url}` class="item-img" target="_blank") 
-      img(src=`${val.picture}`)
+      if (val.picture)
+        img(src=`${val.picture}`)
+      else 
+        | У товара нет картинки
     .item-description
       h3
         a(href=`${val.url}` target="_blank") #{val.title}
@@ -85,10 +88,16 @@ mixin cg(val)
         b Цена: 
         | #{val.price} руб
 
+      .item-link
+        a(href=`${val.url}` target="_blank") Посмотреть товар
+
 mixin lb(val)
   .item
     a(href=`${val.url}` class="item-img" target="_blank") 
-      img(src=`${val.picture}`)
+      if val.picture
+        img(src=`${val.picture}`)
+      else 
+        | У товара нет картинки
     .item-description
       h3
         a(href=`${val.url}` target="_blank") #{val.title}
@@ -101,3 +110,6 @@ mixin lb(val)
       p 
         b Старая цена: 
         | #{val.priceOld} руб
+
+      .item-link
+        a(href=`${val.url}` target="_blank") Посмотреть товар
