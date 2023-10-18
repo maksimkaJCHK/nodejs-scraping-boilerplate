@@ -47,7 +47,7 @@ const cgShopSpider = async (findFrase) => {
   let isStop = false;
 
   while (!isStop) {
-    const javascriptUrl = `https://web-gate.chitai-gorod.ru/api/v2/search/product?phrase=${findFrase}&filters%5Bphrase%5D=${findFrase}&products%5Bpage%5D=${pageCount}&products%5Bper-page%5D=1000&sort=relevance`;
+    const javascriptUrl = `https://web-gate.chitai-gorod.ru/api/v2/search/product?phrase=${findFrase}&products%5Bpage%5D=${pageCount}&products%5Bper-page%5D=1000&sort=relevance`;
 
     let totalPages = null;
 

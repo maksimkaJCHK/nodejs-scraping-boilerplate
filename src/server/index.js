@@ -1,5 +1,4 @@
 const express = require('express');
-const asyncHandler = require('express-async-handler')
 
 const { readJSONFileToAnalitics } = require('../services/fs');
 const app = express();
