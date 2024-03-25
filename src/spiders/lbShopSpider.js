@@ -36,18 +36,23 @@ const lbShopSpider = async (findFrase) => {
         const $ = cheerio.load(res.body);
 
         // Собираю информацию с товаров
-        if ($('.genres-carousel__item').length) {
-          $('.genres-carousel__item').each(function() {
+        if ($('.product-card').length) {
+          $('.product-card').each(function() {
             count += 1;
 
-            const imgBlock = $(this).find('.cover');
+            const imgBlock = $(this).find('.product-card__img');
 
             const urlPage = imgBlock.attr('href');
             const picture = imgBlock.find('img').attr('data-src');
-            const price = $(this).find('.price .price-val').text().trim();
-            const priceOld = $(this).find('.price-old').text().trim();
-            const title = $(this).find('.product-title').text().trim();
-            const publisher = $(this).find('.product-pubhouse__pubhouse').text().trim();
+            const price = $(this).find('.product-card__price-current').text().trim();
+            const title = $(this).find('.product-card__name').text().trim();
+            const publisher = $(this).find('.product-card__info').text().trim();
+            const author = $(this).find('.product-card__author').text().trim();
+
+            const priceOld = $(this).find('.product-card__price-val-old').text()
+              .replace(/\n/gi, '')
+              .replace(/( ){2,}/gi, ' ')
+              .trim();
 
             results.push({
               page,
@@ -58,6 +63,7 @@ const lbShopSpider = async (findFrase) => {
               priceOld,
               title,
               publisher,
+              author,
             });
           });
         }
