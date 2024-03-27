@@ -94,9 +94,10 @@ const newItem = [
   },
 ];
 
-exports.topNav = topNav;
-exports.navParams = {
+const navParams = {
   cg,
   lb,
   newItem
 };
+
+export { topNav, navParams };

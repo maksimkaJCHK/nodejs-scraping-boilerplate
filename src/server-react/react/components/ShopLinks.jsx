@@ -2,14 +2,14 @@ import React from 'react';
 
 import Link from './ui/Link';
 
-const ShopLinks = ({ title, idCh, idLb }) => {
+const ShopLinks = ({ title, idCg, idLb }) => {
   const header = title ? <h2>{ title }</h2> : null;
 
-  const link = (idCh || idLb)
+  const link = (idCg || idLb)
     ? <ul>
-        { idCh && <li>
+        { idCg && <li>
             <Link
-              url = {'#' + idCh}
+              url = {'#' + idCg}
               title = "Товары на читай-городе"
             />
           </li> }

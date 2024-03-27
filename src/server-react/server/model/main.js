@@ -18,9 +18,9 @@ const mainData = async () => {
       id: "javascript",
       title: "Поисковый запрос 'javascript'",
       idLb: "labirint-javascript",
-      idCh: 'ch-javascript',
+      idCg: 'cg-javascript',
       shops: {
-        ch: cgJavascript || [],
+        cg: cgJavascript || [],
         lb: lbJavascript || []
       },
     },
@@ -28,19 +28,19 @@ const mainData = async () => {
       id: "react",
       title: "Поисковый запрос 'react'",
       idLb: "labirint-react",
-      idCh: 'ch-react',
+      idCg: 'cg-react',
       shops: {
-        ch: cgReact || [],
+        cg: cgReact || [],
         lb: lbReact || []
       },
     },
     {
-      id: "react",
+      id: "python",
       title: "Поисковый запрос 'python'",
       idLb: "labirint-python",
-      idCh: 'ch-python',
+      idCg: 'cg-python',
       shops: {
-        ch: cgPythonr || [],
+        cg: cgPythonr || [],
         lb: lbPythonr || []
       },
     },
@@ -48,9 +48,9 @@ const mainData = async () => {
       id: "angular",
       title: "Поисковый запрос 'angular'",
       idLb: "labirint-angular",
-      idCh: 'ch-angular',
+      idCg: 'cg-angular',
       shops: {
-        ch: cgAngular || [],
+        cg: cgAngular || [],
         lb: lbAngular || []
       },
     },
@@ -58,9 +58,9 @@ const mainData = async () => {
       id: "typescript",
       title: "Поисковый запрос 'typescript'",
       idLb: "labirint-typescript",
-      idCh: 'ch-typescript',
+      idCg: 'cg-typescript',
       shops: {
-        ch: cgTypescript || [],
+        cg: cgTypescript || [],
         lb: lbTypescript || []
       },
     },

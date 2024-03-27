@@ -8,10 +8,10 @@ const MainLinks = ({ title, links }) => {
   const link = links && links.length
     ? <ul>
         {
-          links.map(({ title, url }) => {
+          links.map(({ title, url }, idx) => {
             {
               return url && url.length 
-                ? <li>
+                ? <li key = { idx }>
                     <Link
                       url={'#' + url}
                       title={title || 'Заголовок не определен'}

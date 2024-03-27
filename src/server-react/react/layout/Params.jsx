@@ -1,7 +1,9 @@
 import React from 'react';
 import Link from '../components/ui/Link';
 
-const Params = ({ ch, lb, newItem }) => {
+import './_params.scss';
+
+const Params = ({ cg, lb, newItem }) => {
   return (
     <section className="params">
       <div className="h2">Запросы по конкретным магазинам:</div>
@@ -9,16 +11,16 @@ const Params = ({ ch, lb, newItem }) => {
       <div className="params-nav">
         <b>Запрос для читай-города: </b>
         {
-          ch.map((link) => {
-            return <Link { ...link } />
+          cg.map((link, idx) => {
+            return <Link { ...link } key = { idx } />
           })
         }
       </div>
       <div className="params-nav">
         <b>Запрос для лабирита: </b>
         {
-          lb.map((link) => {
-            return <Link { ...link } />
+          lb.map((link, idx) => {
+            return <Link { ...link } key = { idx } />
           })
         }
       </div>
@@ -31,8 +33,8 @@ const Params = ({ ch, lb, newItem }) => {
           />
         </b>
         {
-          newItem.map((link) => {
-            return <Link { ...link } />
+          newItem.map((link, idx) => {
+            return <Link { ...link } key = { idx } />
           })
         }
       </div>

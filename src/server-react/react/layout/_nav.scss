@@ -1,0 +1,19 @@
+nav {
+  padding: 10px 0;
+  font-size: 20px;
+  line-height: 120%;
+  border-bottom: 1px solid #202083;
+  a {
+    color: var(--type-color);
+    text-decoration: none;
+    display: inline-block;
+    margin-left: 20px;
+    &:first-of-type {
+      margin-left: 0;
+    }
+    &:hover,
+    &.active {
+      color: var(--link-color);
+    }
+  }
+}

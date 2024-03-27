@@ -5,10 +5,10 @@ const MainCatalog = ({ catalogs }) => {
   return (
     <>
       {
-        catalogs.map((shopList) => {
+        catalogs.map((shopList, idx) => {
           return <MainShopList
             { ...shopList }
-            key = { shopList.id }
+            key = { idx }
           />
         })
       }

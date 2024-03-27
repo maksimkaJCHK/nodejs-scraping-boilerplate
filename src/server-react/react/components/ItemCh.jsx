@@ -34,7 +34,7 @@ const ItemCh = ({
           </a>
         </h3>
         <p>
-          <b>Автор:</b> { bookAuthors.map((author) => <>{ author }</>) }
+          <b>Автор:</b> { bookAuthors.map((author, idx) => <span key = {idx}>{ author }</span>) }
         </p>
         <p dangerouslySetInnerHTML = { markup }></p>
         <p>

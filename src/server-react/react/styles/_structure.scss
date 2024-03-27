@@ -1,0 +1,63 @@
+:root {
+  --link-color: #07077d;
+  --type-color: #000;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background: #ccc;
+}
+
+#wrapper {
+  padding: 1px 15px;
+  margin: 0 auto;
+  max-width: 1280px;
+  background: #fff;
+  font: 12px/120% tahoma;
+  min-height: 100vh;
+  box-sizing: border-box;
+}
+
+#main {
+  min-height: 100%;
+}
+
+main {
+  color: var(--type-color);
+  position: relative;
+  min-height: 300px;
+  a {
+    color: var(--link-color);
+    &:hover {
+      text-decoration: none;
+    }
+  }
+  ul {
+    margin: 0;
+    padding: 0 0 0 20px;
+  }
+  li {
+    margin: 10px 0;
+  }
+}
+
+body {
+  overflow: hidden;
+  #app {
+    top: -1000px;
+    left: -1000px;
+    height: 1px;
+    overflow: hidden;
+    position: absolute;
+  }
+  &.isVisible {
+    overflow: visible;
+    #app {
+      height: auto;
+      overflow: visible;
+      position: static;
+    }
+  }
+}
