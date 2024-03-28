@@ -29,7 +29,9 @@
     "web scraping boilerplate",
     "web scraping boilerplate for js",
     "react ssr",
-    "rollup compile in es6 to cjs module"
+    "rollup compile in es6 to cjs module",
+    "parsing books shop",
+    "парсинг книжных интернет-магазинов"
   ],
   "author": "Maksim Zhuchkov",
   "license": "MIT",

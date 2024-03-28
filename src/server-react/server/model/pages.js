@@ -16,7 +16,7 @@ const newData = async () => {
   const catalogs = [
     {
       id: "javascript",
-      title: "Поисковый запрос 'javascript'",
+      title: "Новые товары по запросу 'javascript'",
       idLb: "labirint-javascript",
       idCg: 'cg-javascript',
       shops: {
@@ -26,7 +26,7 @@ const newData = async () => {
     },
     {
       id: "react",
-      title: "Поисковый запрос 'react'",
+      title: "Новые товары по запросу 'react'",
       idLb: "labirint-react",
       idCg: 'cg-react',
       shops: {
@@ -36,7 +36,7 @@ const newData = async () => {
     },
     {
       id: "python",
-      title: "Поисковый запрос 'python'",
+      title: "Новые товары по запросу 'python'",
       idLb: "labirint-python",
       idCg: 'cg-python',
       shops: {
@@ -46,7 +46,7 @@ const newData = async () => {
     },
     {
       id: "angular",
-      title: "Поисковый запрос 'angular'",
+      title: "Новые товары по запросу 'angular'",
       idLb: "labirint-angular",
       idCg: 'cg-angular',
       shops: {
@@ -56,7 +56,7 @@ const newData = async () => {
     },
     {
       id: "typescript",
-      title: "Поисковый запрос 'typescript'",
+      title: "Новые товары по запросу 'typescript'",
       idLb: "labirint-typescript",
       idCg: 'cg-typescript',
       shops: {
@@ -68,23 +68,23 @@ const newData = async () => {
   
   const mainLinks = [
     {
-      title: 'Товары по запросу javascript',
+      title: 'Новые товары по запросу javascript',
       url: 'javascript'
     },
     {
-      title: 'Товары по запросу react',
+      title: 'Новые товары по запросу react',
       url: 'react'
     },
     {
-      title: 'Товары по запросу python',
+      title: 'Новые товары по запросу python',
       url: 'python'
     },
     {
-      title: 'Товары по запросу angular',
+      title: 'Новые товары по запросу angular',
       url: 'angular'
     },
     {
-      title: 'Товары по запросу typescript',
+      title: 'Новые товары по запросу typescript',
       url: 'typescript'
     },
   ];

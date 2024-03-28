@@ -5,19 +5,19 @@ import { useSelector, useDispatch } from 'react-redux';
 import MainCont from './content/MainCont';
 import Preload from '@components/ui/Preload';
 
-import { loadCatalog, addCatalogs, addMainLinks } from '@slices/catalogs.js';
+import { loadCatalog, addCatalogs, addMainLinks } from '@slices/new-catalogs.js';
 
 const Main = () => {
-  const { mainLinks, catalogs, load } = useSelector(state => state.catalogs);
+  const { mainLinks, catalogs, load } = useSelector(state => state.newCatalogs);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (window.catalogs !== undefined && window.mainLinks !== undefined) {
-      dispatch(addCatalogs(window.catalogs));
-      dispatch(addMainLinks(window.mainLinks));
+    if (window.newCatalogs !== undefined && window.newMainLinks !== undefined) {
+      dispatch(addCatalogs(window.newCatalogs));
+      dispatch(addMainLinks(window.newMainLinks));
     }
 
-    if (window.catalogs === undefined && !mainLinks.length) {
+    if (window.newCatalogs === undefined && !mainLinks.length) {
       dispatch(loadCatalog());
     }
   }, []);
@@ -27,7 +27,7 @@ const Main = () => {
       <Preload load = { load } />
 
       <MainCont
-        title = "Все товары по всем запросам"
+        title = "Новые товары по всем запросам"
         mainLinks = { mainLinks }
         catalogs = { catalogs }
       />

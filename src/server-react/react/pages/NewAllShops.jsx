@@ -6,23 +6,23 @@ import { useSelector, useDispatch } from 'react-redux';
 import AllShopsCont from './content/AllShopsCont';
 import Preload from '@components/ui/Preload';
 
-import { loadCurCategory, addCategoryInCatalogs } from '@slices/catalogs.js';
+import { loadCurCategory, addCategoryInCatalogs } from '@slices/new-catalogs.js';
 
 const Main = () => {
   const [ category, setCategory ] = useState({});
 
-  const { timeLoad, catalogs, load } = useSelector(state => state.catalogs);
+  const { timeLoad, catalogs, load } = useSelector(state => state.newCatalogs);
   const dispatch = useDispatch();
 
   const { fraze } = useParams();
 
   useEffect(() => {
-    const isCategory = window.category !== undefined;
+    const isCategory = window.newCategory !== undefined;
 
     if (isCategory) {
-      dispatch(addCategoryInCatalogs(window.category));
+      dispatch(addCategoryInCatalogs(window.newCategory));
 
-      window.category = undefined;
+      window.newCategory = undefined;
     }
 
     if (!isCategory) {
@@ -55,9 +55,9 @@ const Main = () => {
   return (
     <>
       <Preload load = { load } />
-
+      
       <AllShopsCont
-        title = {`Товары по запросу "${ fraze }" для интернет-магазинов`}
+        title = {`Новые товары по запросу "${ fraze }" для интернет-магазинов`}
         category = { category }
       />
     </>

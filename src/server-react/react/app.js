@@ -9,6 +9,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import router from  './router/router';
 
 import catalogs from '@slices/catalogs';
+import newCatalogs from '@slices/new-catalogs';
 
 import '@styles/main.scss';
 
@@ -17,7 +18,8 @@ const root = ReactDOM.createRoot(node);
 
 const store = configureStore({
   reducer: {
-    catalogs, 
+    catalogs,
+    newCatalogs,
   },
 });
 

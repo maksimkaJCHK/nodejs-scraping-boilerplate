@@ -22,11 +22,10 @@ const {
 const {
   newData
 } = require('./server/model/pages.js');
-const ShopList = require('./server/ssr-components/ShopList.js');
-const MainCatalog = require('./server/ssr-components/MainCatalog.js');
-const MainShopList = require('./server/ssr-components/MainShopList.js');
 const Wrapper = require('./server/ssr-components/Wrapper.js');
-const MainLinks = require('./server/ssr-components/MainLinks.js');
+const AllShopsCont = require('./server/ssr-components/AllShopsCont.js');
+const MainCont = require('./server/ssr-components/MainCont.js');
+const CurShopCont = require('./server/ssr-components/CurShopCont.js');
 const PageNotFound = require('./server/ssr-components/PageNotFound.js');
 const app = express();
 const port = 8000;
@@ -72,10 +71,9 @@ app.get('/', async (req, res, next) => {
   let appContent = ReactDOMServer.renderToString( /*#__PURE__*/React.createElement(Wrapper, {
     topNav: topNav,
     navParams: navParams
-  }, /*#__PURE__*/React.createElement(MainLinks, {
-    title: "\u0412\u0441\u0435 \u0437\u0430\u043F\u0440\u043E\u0441\u044B",
-    links: mainLinks
-  }), /*#__PURE__*/React.createElement(MainCatalog, {
+  }, /*#__PURE__*/React.createElement(MainCont, {
+    title: "\u0412\u0441\u0435 \u0442\u043E\u0432\u0430\u0440\u044B \u043F\u043E \u0432\u0441\u0435\u043C \u0437\u0430\u043F\u0440\u043E\u0441\u0430\u043C",
+    mainLinks: mainLinks,
     catalogs: catalogs
   })));
   page = bPage({
@@ -129,7 +127,10 @@ app.get('/all-shops/:fraze', async (req, res, next) => {
   let appContent = ReactDOMServer.renderToString( /*#__PURE__*/React.createElement(Wrapper, {
     topNav: topNav,
     navParams: navParams
-  }, /*#__PURE__*/React.createElement("h1", null, "\u0421\u0442\u0440\u0430\u043D\u0438\u0446\u0430 \u043F\u043E \u0437\u0430\u043F\u0440\u043E\u0441\u0443 \"", fraze, "\" \u0434\u043B\u044F \u0438\u043D\u0442\u0435\u0440\u043D\u0435\u0442 \u043C\u0430\u0433\u0430\u0437\u0438\u043D\u043E\u0432"), /*#__PURE__*/React.createElement(MainShopList, category)));
+  }, /*#__PURE__*/React.createElement(AllShopsCont, {
+    title: `Товары по запросу "${fraze}" для интернет-магазинов`,
+    category: category
+  })));
   page = bPage({
     page,
     seo,
@@ -141,18 +142,17 @@ app.get('/all-shops/:fraze', async (req, res, next) => {
   res.send(page);
   next();
 }, (req, res, next) => {
-  console.log(`Загрузкилась страница с запросами ${req.params.fraze} для всех магазинов`);
+  console.log(`Загрузкилась страница с запросами ${req.params.fraze} для интрнет-магазинов`);
 });
 app.post('/all-shops/:fraze', async (req, res, next) => {
   const fraze = req.params.fraze;
   const category = await bAllShopsParam(fraze);
   res.contentType('application/json');
   res.status(200);
-  console.log(category);
   res.send(category);
   next();
 }, (req, res, next) => {
-  console.log(`Post запрос для ${req.params.fraze} для целой категории`);
+  console.log(`Post запрос для фразы ${req.params.fraze} для интрнет-магазинов`);
 });
 
 // Категория по читай городу
@@ -178,7 +178,10 @@ app.get('/cg/:fraze', async (req, res, next) => {
   let appContent = ReactDOMServer.renderToString( /*#__PURE__*/React.createElement(Wrapper, {
     topNav: topNav,
     navParams: navParams
-  }, /*#__PURE__*/React.createElement("h1", null, "\u0421\u0442\u0440\u0430\u043D\u0438\u0446\u0430 \u043F\u043E \u0437\u0430\u043F\u0440\u043E\u0441\u0443 \"javascript\" \u0434\u043B\u044F \u0447\u0438\u0442\u0430\u0439-\u0433\u043E\u0440\u043E\u0434\u0430"), /*#__PURE__*/React.createElement(ShopList, params)));
+  }, /*#__PURE__*/React.createElement(CurShopCont, {
+    title: `Страница по запросу "${fraze}" для читай-города`,
+    shopListParams: params
+  })));
   page = bPage({
     page,
     seo,
@@ -215,7 +218,10 @@ app.get('/lb/:fraze', async (req, res, next) => {
   let appContent = ReactDOMServer.renderToString( /*#__PURE__*/React.createElement(Wrapper, {
     topNav: topNav,
     navParams: navParams
-  }, /*#__PURE__*/React.createElement("h1", null, "\u0421\u0442\u0440\u0430\u043D\u0438\u0446\u0430 \u043F\u043E \u0437\u0430\u043F\u0440\u043E\u0441\u0443 \"", fraze, "\" \u0434\u043B\u044F \u043B\u0430\u0431\u0438\u0440\u0438\u043D\u0442\u0430"), /*#__PURE__*/React.createElement(ShopList, params)));
+  }, /*#__PURE__*/React.createElement(CurShopCont, {
+    title: `Страница по запросу "${fraze}" для лабиринта`,
+    shopListParams: params
+  })));
   page = bPage({
     page,
     seo,
@@ -237,8 +243,10 @@ app.post('/lb/:fraze', async (req, res, next) => {
   res.send(params);
   next();
 }, (req, res, next) => {
-  console.log(`Post запрос для фразы ${req.params.fraze} для читай-города`);
+  console.log(`Post запрос для фразы ${req.params.fraze} для лабиринта`);
 });
+
+// Новые товары
 app.get('/new', async (req, res, next) => {
   let page = typeLayout;
   let seo = bSeo({
@@ -252,16 +260,16 @@ app.get('/new', async (req, res, next) => {
   let appContent = ReactDOMServer.renderToString( /*#__PURE__*/React.createElement(Wrapper, {
     topNav: topNav,
     navParams: navParams
-  }, /*#__PURE__*/React.createElement(MainLinks, {
-    title: "\u0412\u0441\u0435 \u043D\u043E\u0432\u044B\u0435 \u0442\u043E\u0432\u0430\u0440\u044B \u043F\u043E \u0437\u0430\u043F\u0440\u043E\u0441\u0430\u043C",
-    links: mainLinks
-  }), /*#__PURE__*/React.createElement(MainCatalog, {
+  }, /*#__PURE__*/React.createElement(MainCont, {
+    title: "\u0412\u0441\u0435 \u0442\u043E\u0432\u0430\u0440\u044B \u043F\u043E \u0432\u0441\u0435\u043C \u0437\u0430\u043F\u0440\u043E\u0441\u0430\u043C",
+    mainLinks: mainLinks,
     catalogs: catalogs
   })));
   page = bPage({
     page,
     seo,
-    appContent
+    appContent,
+    js: `window.newCatalogs = ${JSON.stringify(catalogs)}; window.newMainLinks = ${JSON.stringify(mainLinks)}`
   });
   res.contentType('text/html');
   res.status(200);
@@ -270,18 +278,27 @@ app.get('/new', async (req, res, next) => {
 }, (req, res, next) => {
   console.log('Загрузкилась страница с новыми товарами для магазинов');
 });
-app.get('/new/:fraze', async (req, res, next) => {
-  const fraze = req.params.fraze;
+app.post('/new', async (req, res, next) => {
+  const {
+    mainLinks,
+    catalogs
+  } = await newData();
+  res.contentType('application/json');
+  res.status(200);
+  res.send({
+    mainLinks,
+    catalogs
+  });
+  next();
+}, (req, res, next) => {
+  console.log('Post запрос с новыми товарами для магазинов');
+});
+const bNewItems = async fraze => {
   const cgItem = await readJSONFileToAnalitics(`cg-${fraze}`, './results/analitics');
   const lbItem = await readJSONFileToAnalitics(`lb-${fraze}`, './results/analitics');
-  let page = typeLayout;
-  let seo = bSeo({
-    title: `Страница по запросу "${fraze}"`,
-    description: `Описание для страницы по запросу "${fraze}"`
-  });
-  const params = {
+  return {
     id: fraze,
-    title: `Поисковый запрос для новых товаров '${fraze}'`,
+    title: `Новые товары по запросу '${fraze}'`,
     idLb: `labirint-${fraze}`,
     idCg: `cg-${fraze}`,
     shops: {
@@ -289,14 +306,27 @@ app.get('/new/:fraze', async (req, res, next) => {
       lb: lbItem || []
     }
   };
+};
+app.get('/new/:fraze', async (req, res, next) => {
+  const fraze = req.params.fraze;
+  let page = typeLayout;
+  let seo = bSeo({
+    title: `Новые товары по запросу "${fraze}" для интернет магазинов`,
+    description: `Описание для страницы с новыми товарами по запросу "${fraze}"`
+  });
+  const newCategory = await bNewItems(fraze);
   let appContent = ReactDOMServer.renderToString( /*#__PURE__*/React.createElement(Wrapper, {
     topNav: topNav,
     navParams: navParams
-  }, /*#__PURE__*/React.createElement("h1", null, "\u0421\u0442\u0440\u0430\u043D\u0438\u0446\u0430 \u043F\u043E \u0437\u0430\u043F\u0440\u043E\u0441\u0443 \"javascript\" \u0434\u043B\u044F \u0438\u043D\u0442\u0435\u0440\u043D\u0435\u0442 \u043C\u0430\u0433\u0430\u0437\u0438\u043D\u043E\u0432"), /*#__PURE__*/React.createElement(MainShopList, params)));
+  }, /*#__PURE__*/React.createElement(AllShopsCont, {
+    title: `Новые товары по запросу "${fraze}" для интернет-магазинов`,
+    category: newCategory
+  })));
   page = bPage({
     page,
     seo,
-    appContent
+    appContent,
+    js: `window.newCategory=${JSON.stringify(newCategory)}`
   });
   res.contentType('text/html');
   res.status(200);
@@ -304,6 +334,16 @@ app.get('/new/:fraze', async (req, res, next) => {
   next();
 }, (req, res, next) => {
   console.log(`Загрузкилась страница с новыми запросами ${req.params.fraze} для магазинов`);
+});
+app.post('/new/:fraze', async (req, res, next) => {
+  const fraze = req.params.fraze;
+  const newCategory = await bNewItems(fraze);
+  res.contentType('application/json');
+  res.status(200);
+  res.send(newCategory);
+  next();
+}, (req, res, next) => {
+  console.log(`Post запрос с новыми товарами по фразе ${req.params.fraze} для интернет-магазинов`);
 });
 app.use(function (req, res, next) {
   let page = typeLayout;

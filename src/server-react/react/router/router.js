@@ -2,12 +2,14 @@ import React from 'react';
 
 import { createBrowserRouter } from "react-router-dom";
 
-import Root from '../layout/Root';
-import PageNotFound from '../layout/PageNotFound';
+import Root from '@layout/Root';
+import PageNotFound from '@pages/PageNotFound';
 // Конкретные страницы
-import Main from '../pages/Main';
-import AllShops from '../pages/AllShops';
-import CurShop from '../pages/CurShop';
+import Main from '@pages/Main';
+import AllShops from '@pages/AllShops';
+import CurShop from '@pages/CurShop';
+import NewCatalogs from '@pages/NewCatalogs';
+import NewAllShops from "@pages/NewAllShops.jsx";
 
 const router = createBrowserRouter([
   {
@@ -29,6 +31,14 @@ const router = createBrowserRouter([
       {
         path: "/lb/:fraze",
         element: <CurShop nameShop = "lb" />,
+      },
+      {
+        path: "/new",
+        element: <NewCatalogs />,
+      },
+      {
+        path: "/new/:fraze",
+        element: <NewAllShops />,
       },
       {
         path: "*",

@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import { addShopInCatalogs, loadCurShop } from '@slices/catalogs';
 
-import ShopList from '@components/ShopList'
+import CurShopCont from './content/CurShopCont';
 import Preload from '@components/ui/Preload';
 
 const CurShop = ({ nameShop }) => {
@@ -33,18 +33,32 @@ const CurShop = ({ nameShop }) => {
       const fIdx = catalogs.findIndex(({ id }) => id === fraze);
 
       if (fIdx !== -1) {
-        const params = {
-          shop: catalogs[fIdx]['shops'][nameShop],
-          id: fraze,
-          type: nameShop,
-          title: `Товары для ${ (nameShop === 'cg') ? 'читай-города' : 'лабиринта'} по запросу ${fraze}`
+        const noGetReq = (nameShop === 'lb' && catalogs[fIdx].idLb) || (nameShop === 'cg' && catalogs[fIdx].idCg);
+
+        if (noGetReq) {
+          const params = {
+            shop: catalogs[fIdx]['shops'][nameShop],
+            id: fraze,
+            type: nameShop,
+            title: `Товары для ${ (nameShop === 'cg') ? 'читай-города' : 'лабиринта'} по запросу ${fraze}`
+          }
+  
+          changeShopListParams(params);
         }
 
-        changeShopListParams(params);
+        if (!noGetReq) {
+          dispatch(loadCurShop({
+            type: nameShop,
+            fraze,
+          }));
+        }
       }
 
       if (fIdx === -1) {
-        dispatch(loadCurShop({ fraze, type: nameShop }));
+        dispatch(loadCurShop({
+          type: nameShop,
+          fraze,
+        }));
       }
     }
   }, [ nameShop, fraze, timeLoad ]);
@@ -53,12 +67,10 @@ const CurShop = ({ nameShop }) => {
     <>
       <Preload load = { load } />
 
-      <h1>Страница по запросу "{ fraze }" для { nameShop === 'cg'
-        ? 'читай-города'
-        : 'лабиринта'
-      }</h1>
-
-      <ShopList { ...shopListParams } />
+      <CurShopCont
+        title = { `Страница по запросу "${ fraze }" для ${ nameShop === 'cg' ? "читай-города" : "лабиринта" }` }
+        shopListParams = { shopListParams }
+      />
     </>
   )
 }

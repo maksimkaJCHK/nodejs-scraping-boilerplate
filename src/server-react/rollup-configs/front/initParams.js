@@ -26,13 +26,23 @@ export const bTypePlugins = ({ minimizeCss = true }) => {
           replacement: path.resolve(appRoot.path, 'src/server-react/react/components'), 
         },
         {
+          find: '@pages',
+          replacement: path.resolve(appRoot.path, 'src/server-react/react/pages'), 
+        },
+        {
+          find: '@layout',
+          replacement: path.resolve(appRoot.path, 'src/server-react/react/layout'), 
+        },
+        // Хранилище
+        {
           find: '@slices',
           replacement: path.resolve(appRoot.path, 'src/server-react/react/store/slices'), 
         },
         {
-          find: '@pages',
-          replacement: path.resolve(appRoot.path, 'src/server-react/react/pages'), 
+          find: '@thunk',
+          replacement: path.resolve(appRoot.path, 'src/server-react/react/store/thunk'), 
         },
+        // Одни ссылки для front-а, и другие для сервера
         {
           find: '../components/ui/Link',
           replacement: path.resolve(appRoot.path, 'src/server-react/react/components/ui/LinkRouter'), 

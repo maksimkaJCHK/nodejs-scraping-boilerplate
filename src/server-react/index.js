@@ -15,11 +15,10 @@ const { topNav, navParams } = require('./server/model/nav.js');
 const { mainData } = require('./server/model/main.js');
 const { newData } = require('./server/model/pages.js');
 
-const ShopList = require('./server/ssr-components/ShopList.js');
-const MainCatalog = require('./server/ssr-components/MainCatalog.js');
-const MainShopList = require('./server/ssr-components/MainShopList.js');
 const Wrapper = require('./server/ssr-components/Wrapper.js');
-const MainLinks = require('./server/ssr-components/MainLinks.js');
+const AllShopsCont = require('./server/ssr-components/AllShopsCont.js');
+const MainCont = require('./server/ssr-components/MainCont.js');
+const CurShopCont = require('./server/ssr-components/CurShopCont.js');
 const PageNotFound = require('./server/ssr-components/PageNotFound.js');
 
 const app = express();
@@ -69,11 +68,11 @@ app.get('/', async (req, res, next) => {
       topNav = { topNav }
       navParams = { navParams }
     >
-      <MainLinks
-        title = "Все запросы"
-        links = { mainLinks } 
+      <MainCont
+        title = "Все товары по всем запросам"
+        mainLinks = { mainLinks }
+        catalogs = { catalogs }
       />
-      <MainCatalog catalogs = { catalogs } />
     </Wrapper>
   );
   
@@ -136,8 +135,10 @@ app.get('/all-shops/:fraze', async (req, res, next) => {
       topNav = { topNav }
       navParams = { navParams }
     >
-      <h1>Страница по запросу "{ fraze }" для интернет магазинов</h1>
-      <MainShopList { ...category } />
+      <AllShopsCont
+        title = {`Товары по запросу "${ fraze }" для интернет-магазинов`}
+        category = { category }
+      />
     </Wrapper>
   );
 
@@ -155,7 +156,7 @@ app.get('/all-shops/:fraze', async (req, res, next) => {
 
   next();
 }, (req, res, next) => {
-  console.log(`Загрузкилась страница с запросами ${req.params.fraze} для всех магазинов`);
+  console.log(`Загрузкилась страница с запросами ${req.params.fraze} для интрнет-магазинов`);
 });
 
 app.post('/all-shops/:fraze', async (req, res, next) => {
@@ -165,12 +166,11 @@ app.post('/all-shops/:fraze', async (req, res, next) => {
 
   res.contentType('application/json');
   res.status(200);
-  console.log(category);
   res.send(category);
 
   next();
 }, (req, res, next) => {
-  console.log(`Post запрос для ${req.params.fraze} для целой категории`);
+  console.log(`Post запрос для фразы ${req.params.fraze} для интрнет-магазинов`);
 });
 
 // Категория по читай городу
@@ -205,8 +205,10 @@ app.get('/cg/:fraze', async (req, res, next) => {
       topNav = { topNav }
       navParams = { navParams }
     >
-      <h1>Страница по запросу "javascript" для читай-города</h1>
-      <ShopList { ...params } />
+      <CurShopCont
+        title = { `Страница по запросу "${ fraze }" для читай-города` }
+        shopListParams = { params }
+      />
     </Wrapper>
   );
 
@@ -259,8 +261,10 @@ app.get('/lb/:fraze', async (req, res, next) => {
       topNav = { topNav }
       navParams = { navParams }
     >
-      <h1>Страница по запросу "{ fraze }" для лабиринта</h1>
-      <ShopList { ...params } />
+      <CurShopCont
+        title = { `Страница по запросу "${ fraze }" для лабиринта` }
+        shopListParams = { params }
+      />
     </Wrapper>
   );
 
@@ -292,9 +296,10 @@ app.post('/lb/:fraze', async (req, res, next) => {
 
   next();
 }, (req, res, next) => {
-  console.log(`Post запрос для фразы ${req.params.fraze} для читай-города`);
+  console.log(`Post запрос для фразы ${req.params.fraze} для лабиринта`);
 });
 
+// Новые товары
 app.get('/new', async (req, res, next) => {
   let page = typeLayout;
 
@@ -310,15 +315,20 @@ app.get('/new', async (req, res, next) => {
       topNav = { topNav }
       navParams = { navParams }
     >
-      <MainLinks
-        title = "Все новые товары по запросам"
-        links = { mainLinks } 
+      <MainCont
+        title = "Все товары по всем запросам"
+        mainLinks = { mainLinks }
+        catalogs = { catalogs }
       />
-      <MainCatalog catalogs = { catalogs } />
     </Wrapper>
   );
   
-  page = bPage({ page, seo, appContent });
+  page = bPage({
+    page,
+    seo,
+    appContent,
+    js: `window.newCatalogs = ${JSON.stringify(catalogs)}; window.newMainLinks = ${JSON.stringify(mainLinks)}`
+  });
 
   res.contentType('text/html');
   res.status(200);
@@ -330,22 +340,29 @@ app.get('/new', async (req, res, next) => {
   console.log('Загрузкилась страница с новыми товарами для магазинов');
 });
 
-app.get('/new/:fraze', async (req, res, next) => {
-  const fraze = req.params.fraze;
+app.post('/new', async (req, res, next) => {
+  const { mainLinks, catalogs } = await newData();
 
+  res.contentType('application/json');
+  res.status(200);
+
+  res.send({
+    mainLinks,
+    catalogs
+  });
+
+  next();
+}, (req, res, next) => {
+  console.log('Post запрос с новыми товарами для магазинов');
+});
+
+const bNewItems = async (fraze) => {
   const cgItem = await readJSONFileToAnalitics(`cg-${fraze}`, './results/analitics');
   const lbItem = await readJSONFileToAnalitics(`lb-${fraze}`, './results/analitics');
 
-  let page = typeLayout;
-
-  let seo = bSeo({
-    title: `Страница по запросу "${fraze}"`,
-    description: `Описание для страницы по запросу "${fraze}"`
-  });
-
-  const params = {
+  return {
     id: fraze,
-    title: `Поисковый запрос для новых товаров '${fraze}'`,
+    title: `Новые товары по запросу '${fraze}'`,
     idLb: `labirint-${fraze}`,
     idCg: `cg-${fraze}`,
     shops: {
@@ -353,18 +370,38 @@ app.get('/new/:fraze', async (req, res, next) => {
       lb: lbItem || []
     },
   };
+};
+
+app.get('/new/:fraze', async (req, res, next) => {
+  const fraze = req.params.fraze;
+
+  let page = typeLayout;
+
+  let seo = bSeo({
+    title: `Новые товары по запросу "${fraze}" для интернет магазинов`,
+    description: `Описание для страницы с новыми товарами по запросу "${fraze}"`
+  });
+
+  const newCategory = await bNewItems(fraze);
 
   let appContent = ReactDOMServer.renderToString(
     <Wrapper
       topNav = { topNav }
       navParams = { navParams }
     >
-      <h1>Страница по запросу "javascript" для интернет магазинов</h1>
-      <MainShopList { ...params } />
+      <AllShopsCont
+        title = {`Новые товары по запросу "${ fraze }" для интернет-магазинов`}
+        category = { newCategory }
+      />
     </Wrapper>
   );
 
-  page = bPage({ page, seo, appContent });
+  page = bPage({
+    page,
+    seo,
+    appContent,
+    js: `window.newCategory=${JSON.stringify(newCategory)}`
+  });
 
   res.contentType('text/html');
   res.status(200);
@@ -374,6 +411,21 @@ app.get('/new/:fraze', async (req, res, next) => {
   next();
 }, (req, res, next) => {
   console.log(`Загрузкилась страница с новыми запросами ${req.params.fraze} для магазинов`);
+});
+
+app.post('/new/:fraze', async (req, res, next) => {
+  const fraze = req.params.fraze;
+
+  const newCategory = await bNewItems(fraze);
+
+  res.contentType('application/json');
+  res.status(200);
+
+  res.send(newCategory);
+
+  next();
+}, (req, res, next) => {
+  console.log(`Post запрос с новыми товарами по фразе ${req.params.fraze} для интернет-магазинов`);
 });
 
 app.use(function(req, res, next) {

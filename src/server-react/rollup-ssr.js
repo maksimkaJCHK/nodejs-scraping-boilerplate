@@ -6,17 +6,11 @@ const pathFront = './src/server-react/react';
 export default [
   {
     input: [
-      `${pathFront}/layout/PageNotFound.jsx`,
+      `${pathFront}/pages/PageNotFound.jsx`,
       `${pathFront}/layout/Wrapper.jsx`,
-      `${pathFront}/layout/Nav.jsx`,
-      `${pathFront}/layout/Params.jsx`,
-      `${pathFront}/components/ShopLinks.jsx`,
-      `${pathFront}/components/MainLinks.jsx`,
-      `${pathFront}/components/ItemCh.jsx`,
-      `${pathFront}/components/ItemLb.jsx`,
-      `${pathFront}/components/ShopList.jsx`,
-      `${pathFront}/components/MainShopList.jsx`,
-      `${pathFront}/components/MainCatalog.jsx`,
+      `${pathFront}/pages/content/AllShopsCont.jsx`,
+      `${pathFront}/pages/content/CurShopCont.jsx`,
+      `${pathFront}/pages/content/MainCont.jsx`,
     ],
     output: {
       dir: `${pathServer}/ssr-components/`,
