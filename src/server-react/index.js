@@ -3,10 +3,13 @@ const express = require('express');
 const React = require('react');
 const ReactDOMServer = require('react-dom/server');
 
+const { WebSocketServer } = require(`ws`);
+
 const fs = require('fs');
 const path = require( 'path' );
 
 const { readJSONFileToAnalitics } = require('../services/fs');
+const { runAnalitics } = require('../analitics/shop');
 
 const { bSeo, bPage } = require('./helpers/helpers.js');
 
@@ -15,11 +18,40 @@ const { topNav, navParams } = require('./server/model/nav.js');
 const { mainData } = require('./server/model/main.js');
 const { newData } = require('./server/model/pages.js');
 
+// Компоненты React
 const Wrapper = require('./server/ssr-components/Wrapper.js');
 const AllShopsCont = require('./server/ssr-components/AllShopsCont.js');
 const MainCont = require('./server/ssr-components/MainCont.js');
 const CurShopCont = require('./server/ssr-components/CurShopCont.js');
 const PageNotFound = require('./server/ssr-components/PageNotFound.js');
+
+const ws = new WebSocketServer({
+  port: 3000,
+  path: '/analitics'
+});
+
+ws.on("connection", async (ws) => {
+  const msg = {
+    type: 'start',
+    message: "Подключение к серверу успешно установлено!"
+  };
+
+  ws.send(JSON.stringify(msg));
+
+  await runAnalitics((msg) => ws.send(JSON.stringify({
+    type: 'msg',
+    message: msg
+  })));
+
+  ws.send(JSON.stringify({
+    type: 'end',
+    message: 'Аналитика закончилась, должны появиться новые товары!'
+  }));
+
+  ws.on('close', function close() {
+    console.log('Соединение с сервером закрыто!');
+  });
+});
 
 const app = express();
 const port = 8000;

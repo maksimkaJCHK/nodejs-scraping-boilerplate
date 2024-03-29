@@ -4,6 +4,26 @@ import Link from '../components/ui/Link';
 import './_params.scss';
 
 const Params = ({ cg, lb, newItem }) => {
+  const analitics = () => {
+    const socket = new WebSocket("ws://localhost:3000/analitics");
+
+    socket.addEventListener("open", (event) => {
+      socket.send("Соединение с сервером установлено!");
+    });
+
+    socket.addEventListener("message", (event) => {
+      console.log("Сообщение от сервера: ", event.data);
+
+      const mes = JSON.parse(event.data);
+
+      if (mes.type === 'end') socket.close();
+    });
+
+    socket.addEventListener("close", (event) => {
+      console.log("Соединение с сервером закрыто!");
+    });
+  }
+
   return (
     <section className="params">
       <div className="h2">Запросы по конкретным магазинам:</div>
@@ -12,7 +32,10 @@ const Params = ({ cg, lb, newItem }) => {
         <b>Запрос для читай-города: </b>
         {
           cg.map((link, idx) => {
-            return <Link { ...link } key = { idx } />
+            return <Link
+              { ...link }
+              key = { idx }
+            />
           })
         }
       </div>
@@ -20,7 +43,10 @@ const Params = ({ cg, lb, newItem }) => {
         <b>Запрос для лабирита: </b>
         {
           lb.map((link, idx) => {
-            return <Link { ...link } key = { idx } />
+            return <Link
+              { ...link }
+              key = { idx }
+            />
           })
         }
       </div>
@@ -34,10 +60,17 @@ const Params = ({ cg, lb, newItem }) => {
         </b>
         {
           newItem.map((link, idx) => {
-            return <Link { ...link } key = { idx } />
+            return <Link
+              { ...link }
+              key = { idx }
+            />
           })
         }
       </div>
+
+      <button onClick = { analitics }>
+        Анализировать
+      </button>
     </section>
   )
 }

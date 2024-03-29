@@ -8,9 +8,9 @@
     "scrapy:browser": "node ./src/spiders/browserExampleSpider.js",
     "scrapy:shop": "node ./src/spiders/shopScriping.js",
     "scrapy:documents": "node ./src/spiders/documents.js",
-    "analitics": "node ./src/analitics/shop.js",
+    "analitics": "node ./src/analitics/run.js",
     "server:static": "nodemon ./src/server/index.js",
-    "server:react": "nodemon ./src/server-react/express-config-compiled.js",
+    "server:react": "node ./src/server-react/express-config-compiled.js",
     "compile:react:ssr": "rollup -c ./src/server-react/rollup-ssr.js -w",
     "compile:react:front:dev": "rollup -c ./src/server-react/rollup-front-dev.js -w",
     "compile:react:front:build": "rollup -c ./src/server-react/rollup-front-build.js"
@@ -78,6 +78,7 @@
     "rollup-plugin-livereload": "^2.0.5",
     "rollup-plugin-serve": "^1.1.1",
     "rollup-plugin-size-snapshot": "^0.12.0",
-    "rollup-plugin-sizes": "^1.0.6"
+    "rollup-plugin-sizes": "^1.0.6",
+    "ws": "^8.16.0"
   }
 }

@@ -4,7 +4,11 @@ const { bDate } = require('../services/date');
 const analiticsPath = './results/analitics';
 const buildFrazeItem = (length) => length == 1 ? 'новый товар' : 'новых товара';
 
-const analizeShop = async (fraze, type = 'cg') => {
+const analizeShop = async ({
+  fraze,
+  type = 'cg',
+  callback = (f) => f
+}) => {
   const preNameFile = type == 'cg' ? 'cg-shop' : 'lb-shop';
   const nameSite = type == 'cg' ? 'читай-город' : 'лабиринт';
   const searchParam = type == 'cg' ? 'id' : 'url';
@@ -16,12 +20,14 @@ const analizeShop = async (fraze, type = 'cg') => {
 
   if (!newFile) {
     console.log('Нет нового файла для анализа');
+    callback('Нет нового файла для анализа');
 
     return;
   }
 
   if (!oldFile) {
     console.log('Нет старого файла для анализа');
+    callback('Нет старого файла для анализа');
 
     return;
   }
@@ -39,11 +45,14 @@ const analizeShop = async (fraze, type = 'cg') => {
   if (!newItems.length) {
     await renameFile(nameFile, newNameFile);
     console.log(`На сайте ${nameSite} по запросу ${fraze} нет ничего нового.`);
+    callback(`На сайте ${nameSite} по запросу ${fraze} нет ничего нового.`);
   }
 
   if (newItems.length) {
     console.log(`На сайте ${nameSite} по запросу ${fraze} появилось ${newItems.length} ${buildFrazeItem(newItems.length)}!!!`);
     console.log(newItems);
+
+    callback(`На сайте ${nameSite} по запросу ${fraze} появилось ${newItems.length} ${buildFrazeItem(newItems.length)}!!!`);
 
     await renameFile(nameFile, newNameFile);
 
@@ -51,22 +60,61 @@ const analizeShop = async (fraze, type = 'cg') => {
   }
 }
 
-const newItemsAnalitics = async () => {
+const newItemsAnalitics = async (callback = (f) => f) => {
   makeFolder(analiticsPath);
 
   console.log('Читай-город:');
-  await analizeShop('javascript');
-  await analizeShop('python');
-  await analizeShop('typescript');
-  await analizeShop('react');
-  await analizeShop('angular');
+  callback('Читай-город:');
+
+  await analizeShop({
+    fraze: 'javascript',
+    callback
+  });
+  await analizeShop({
+    fraze: 'python',
+    callback
+  });
+  await analizeShop({
+    fraze: 'typescript',
+    callback
+  });
+  await analizeShop({
+    fraze: 'react',
+    callback
+  });
+  await analizeShop({
+    fraze: 'angular',
+    callback
+  });
 
   console.log('Лабиринт:');
-  await analizeShop('javascript', 'lb');
-  await analizeShop('python', 'lb');
-  await analizeShop('typescript', 'lb');
-  await analizeShop('react', 'lb');
-  await analizeShop('angular', 'lb');
+  callback('Лабиринт:');
+
+  await analizeShop({
+    fraze: 'javascript',
+    type: 'lb',
+    callback
+  });
+  await analizeShop({
+    fraze: 'python',
+    type: 'lb',
+    callback
+  });
+  await analizeShop({
+    fraze: 'typescript',
+    type: 'lb',
+    callback
+  });
+  await analizeShop({
+    fraze: 'react',
+    type: 'lb',
+    callback
+  });
+  await analizeShop({
+   fraze: 'angular',
+   type: 'lb',
+   callback
+  });
 }
 
-newItemsAnalitics();
+exports.runAnalitics = newItemsAnalitics;
