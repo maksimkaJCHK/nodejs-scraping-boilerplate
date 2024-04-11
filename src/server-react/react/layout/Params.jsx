@@ -24,6 +24,26 @@ const Params = ({ cg, lb, newItem }) => {
     });
   }
 
+  const scraping = () => {
+    const socket = new WebSocket("ws://localhost:3000/scraping");
+
+    socket.addEventListener("open", (event) => {
+      socket.send("Соединение с сервером установлено!");
+    });
+
+    socket.addEventListener("message", (event) => {
+      console.log("Сообщение от сервера: ", event.data);
+
+      const mes = JSON.parse(event.data);
+
+      if (mes.type === 'end') socket.close();
+    });
+
+    socket.addEventListener("close", (event) => {
+      console.log("Соединение с сервером закрыто!");
+    });
+  }
+
   return (
     <section className="params">
       <div className="h2">Запросы по конкретным магазинам:</div>
@@ -67,7 +87,10 @@ const Params = ({ cg, lb, newItem }) => {
           })
         }
       </div>
-
+      
+      <button onClick = { scraping }>
+        Скрапинг интернет-магазинов
+      </button>
       <button onClick = { analitics }>
         Анализировать
       </button>

@@ -7,7 +7,7 @@ const { renameFileForAnalitics, makeFolder, makeFile } = require('../services/fs
 
 const { delayF } = require('../services/delay');
 
-const lbShopSpider = async (findFrase) => {
+const lbShopSpider = async (findFrase, callbackOutput = (f) => f ) => {
   let isFinish = false;
   const domen = 'https://www.labirint.ru';
 
@@ -23,7 +23,10 @@ const lbShopSpider = async (findFrase) => {
 
     needle.get(url, options, (err, res) => {
       if (res.statusCode === 404) {
-        log.error('Такой страницы нет - ' + url);
+        const msg = 'Такой страницы нет - ' + url;
+
+        log.error(msg);
+        callbackOutput(msg);
       } else {
         options.cookies = res.cookies;
 
@@ -71,8 +74,10 @@ const lbShopSpider = async (findFrase) => {
         // Перехожу на следующую страницу
         if ($('.pagination-next__text').attr('href')) {
           page += 1;
-          log.info('Страница - ', page);
+          const msg = 'Страница - ' + page;
 
+          log.info(msg);
+          callbackOutput(msg);
           q.push(forBuildUrl + $('.pagination-next__text').attr('href'));
         }
       }
@@ -85,7 +90,7 @@ const lbShopSpider = async (findFrase) => {
     log.info(this);
     log.info('Все прошло нормально - ', data);
   }
-  
+
   q.retry = function(){
     q.pause();
     log.i('Paused on:', this);
@@ -98,11 +103,14 @@ const lbShopSpider = async (findFrase) => {
   
   q.drain = () => {
     isFinish = true;
+    const msg = `Всего найдено ${results.length} товара, по запросу ${findFrase}`;
 
     log.info('__________________________________');
     log.info('Парсинг закончился');
-    log.info(`Всего найдено ${results.length} товара, по запросу ${findFrase}`);
+    log.info(msg);
 
+    callbackOutput('Парсинг закончился');
+    callbackOutput(msg);
     // Вполне возможно, я лабиринт буду отдельно парсить, к примеру если на читай городе сменят API
     makeFolder('./results/shop-result');
 

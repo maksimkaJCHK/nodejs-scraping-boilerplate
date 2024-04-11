@@ -9,7 +9,9 @@ const fs = require('fs');
 const path = require( 'path' );
 
 const { readJSONFileToAnalitics } = require('../services/fs');
+
 const { runAnalitics } = require('../analitics/shop');
+const { shopScraping } = require('../spiders/shopScraping');
 
 const { bSeo, bPage } = require('./helpers/helpers.js');
 
@@ -25,32 +27,49 @@ const MainCont = require('./server/ssr-components/MainCont.js');
 const CurShopCont = require('./server/ssr-components/CurShopCont.js');
 const PageNotFound = require('./server/ssr-components/PageNotFound.js');
 
-const ws = new WebSocketServer({
-  port: 3000,
-  path: '/analitics'
-});
+const wss = new WebSocketServer({ port: 3000 });
 
-ws.on("connection", async (ws) => {
+wss.on('connection', async (ws, req) => {
   const msg = {
     type: 'start',
     message: "Подключение к серверу успешно установлено!"
   };
 
-  ws.send(JSON.stringify(msg));
+  if (req.url === '/analitics') {
+    ws.send(JSON.stringify(msg));
+  
+    await runAnalitics((msg) => ws.send(JSON.stringify({
+      type: 'msg',
+      message: msg
+    })));
+  
+    ws.send(JSON.stringify({
+      type: 'end',
+      message: 'Аналитика закончилась, должны появиться новые товары!'
+    }));
+  
+    ws.on('close', function close() {
+      console.log('Соединение с сервером закрыто!');
+    });
+  }
 
-  await runAnalitics((msg) => ws.send(JSON.stringify({
-    type: 'msg',
-    message: msg
-  })));
-
-  ws.send(JSON.stringify({
-    type: 'end',
-    message: 'Аналитика закончилась, должны появиться новые товары!'
-  }));
-
-  ws.on('close', function close() {
-    console.log('Соединение с сервером закрыто!');
-  });
+  if (req.url === '/scraping') {
+    ws.send(JSON.stringify(msg));
+  
+    await shopScraping((msg) => ws.send(JSON.stringify({
+      type: 'msg',
+      message: msg
+    })));
+  
+    ws.send(JSON.stringify({
+      type: 'end',
+      message: 'Скрапинг закончился закончилась, должны появиться новые товары!'
+    }));
+  
+    ws.on('close', function close() {
+      console.log('Соединение с сервером закрыто!');
+    });
+  }
 });
 
 const app = express();

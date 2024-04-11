@@ -36,7 +36,7 @@ const writeToken = async (domen) => {
   await browser.close();
 }
 
-const cgShopSpider = async (findFrase) => {
+const cgShopSpider = async (findFrase, callbackOutput = (f) => f) => {
   const domen = 'https://www.chitai-gorod.ru/';
   const imgCgShopDomen = 'https://cdn.img-gorod.ru/310x500/';
 
@@ -54,13 +54,27 @@ const cgShopSpider = async (findFrase) => {
     await needle('get', javascriptUrl, { headers: headersCg })
       .then((res) => {
         if (res.statusCode === 404) {
-          log.e('Такой страницы нет - ' + url);
+          const msg = 'Такой страницы нет - ' + url;
+
+          log.e(msg);
+          callbackOutput(msg);
         } else {
           totalPages = res.body.data.relationships.products.meta.pagination.total_pages;
 
           res.body.included.forEach((el) => {
             if (el.attributes) {
-              const { authors, description, title, id, url, picture, yearPublishing, pages, price, publisher } = el.attributes
+              const {
+                authors,
+                description,
+                title,
+                id,
+                url,
+                picture,
+                yearPublishing,
+                pages,
+                price,
+                publisher
+              } = el.attributes
               const bookAuthors = [];
 
               // Мне приходят пустые объекты вместе с реальными книгами, если подумать, то если нет id-ка и url-а, то и книги скорее всего тоже нет
@@ -114,8 +128,10 @@ const cgShopSpider = async (findFrase) => {
   const path = './results/shop-result/';
   const name = `cg-shop-${findFrase}`;
   const extension = '.json';
+  const msg = `Всего найдено - ${books.length} книги по запросу ${findFrase}`;
 
-  log.info(`Всего найдено - ${books.length} книги по запросу ${findFrase}`);
+  log.info(msg);
+  callbackOutput(msg);
 
   renameFileForAnalitics({
     path,
