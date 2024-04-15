@@ -5,10 +5,21 @@ import { useSelector, useDispatch } from 'react-redux';
 import MainCont from './content/MainCont';
 import Preload from '@components/ui/Preload';
 
-import { loadCatalog, addCatalogs, addMainLinks } from '@slices/new-catalogs.js';
+import {
+  loadCatalog,
+  addCatalogs,
+  addMainLinks,
+
+} from '@slices/new-catalogs.js';
 
 const Main = () => {
-  const { mainLinks, catalogs, load } = useSelector(state => state.newCatalogs);
+  const {
+    mainLinks,
+    catalogs,
+    load,
+    isReloadNewCatalog
+  } = useSelector(state => state.newCatalogs);
+  
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -21,6 +32,12 @@ const Main = () => {
       dispatch(loadCatalog());
     }
   }, []);
+
+  useEffect(() => {
+    if (isReloadNewCatalog) {
+      dispatch(loadCatalog());
+    }
+  }, [isReloadNewCatalog]);
 
   return (
     <>

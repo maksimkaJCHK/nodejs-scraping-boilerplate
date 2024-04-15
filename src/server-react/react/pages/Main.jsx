@@ -8,7 +8,12 @@ import Preload from '@components/ui/Preload';
 import { loadCatalog, addCatalogs, addMainLinks } from '@slices/catalogs.js';
 
 const Main = () => {
-  const { mainLinks, catalogs, load } = useSelector(state => state.catalogs);
+  const {
+    mainLinks,
+    catalogs,
+    load,
+    isReloadCatalog
+  } = useSelector(state => state.catalogs);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -21,6 +26,12 @@ const Main = () => {
       dispatch(loadCatalog());
     }
   }, []);
+
+  useEffect(() => {
+    if (isReloadCatalog) {
+      dispatch(loadCatalog());
+    }
+  }, [isReloadCatalog]);
 
   return (
     <>

@@ -1,1 +1,1 @@
-"use strict";var r=require("./common.js");module.exports=r.Wrapper;
+"use strict";var e=require("./common.js");require("@slices/catalogs"),require("@slices/new-catalogs"),module.exports=e.Wrapper;

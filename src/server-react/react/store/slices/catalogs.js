@@ -18,6 +18,8 @@ const bParamsForCurShop = ({ id, type, shop }) => {
 const initialState = {
   error: false,
   load: true,
+  isReloadCatalogBtn: false,
+  isReloadCatalog: false,
   timeLoad: null,
   mainLinks: [],
   catalogs: [],
@@ -52,6 +54,14 @@ const catalogs = createSlice({
       let bParam = bParamsForCurShop({ id, type, shop });
 
       state.catalogs.push(bParam);
+    },
+    // Нужно ли показывать кнопку обновить каталог товаров
+    setIsReloadCatalogBtn(state) {
+      state.isReloadCatalogBtn = true;
+    },
+    setIsReloadCatalog(state) {
+      state.isReloadCatalog = true;
+      state.catalogs = [];
     }
   },
   extraReducers: (builder) => {
@@ -69,6 +79,9 @@ const catalogs = createSlice({
 
         state.mainLinks = mainLinks;
         state.catalogs = catalogs;
+
+        state.isReloadCatalog = false;
+        state.isReloadCatalogBtn = false;
       })
       .addCase(loadCatalog.rejected, (state) => {
         state.load = false;
@@ -97,6 +110,9 @@ const catalogs = createSlice({
           if (idx !== -1) {
             state.catalogs[idx] = action.payload;
           }
+
+          state.isReloadCatalog = false;
+          state.isReloadCatalogBtn = false;
         }
       })
       .addCase(loadCurCategory.rejected, (state) => {
@@ -131,6 +147,9 @@ const catalogs = createSlice({
             state.catalogs[idx][tShop] = dShop;
             state.catalogs[idx].shops[type] = shop;
           }
+
+          state.isReloadCatalog = false;
+          state.isReloadCatalogBtn = false;
         }
       })
       .addCase(loadCurShop.rejected, (state) => {
@@ -144,7 +163,9 @@ const {
   addCatalogs,
   addMainLinks,
   addCategoryInCatalogs,
-  addShopInCatalogs
+  addShopInCatalogs,
+  setIsReloadCatalogBtn,
+  setIsReloadCatalog,
 } = catalogs.actions;
 
 export {
@@ -155,6 +176,8 @@ export {
   loadCatalog,
   loadCurShop,
   loadCurCategory,
+  setIsReloadCatalogBtn,
+  setIsReloadCatalog,
 }
 
 export default catalogs.reducer;

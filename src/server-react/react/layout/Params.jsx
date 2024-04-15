@@ -1,11 +1,19 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
+
 import Link from '../components/ui/Link';
+import Button from '../components/ui/Button';
+
+import { setIsReloadCatalogBtn } from '@slices/catalogs';
+import { setIsReloadNewCatalogBtn } from '@slices/new-catalogs';
 
 import './_params.scss';
 
-const Params = ({ cg, lb, newItem }) => {
-  const analitics = () => {
-    const socket = new WebSocket("ws://localhost:3000/analitics");
+const Params = ({ cg, lb, newItem, children }) => {
+  const dispatch = useDispatch();
+
+  const typeSocket = ({ type }) => {
+    const socket = new WebSocket(`ws://localhost:8080/${type}`);
 
     socket.addEventListener("open", (event) => {
       socket.send("Соединение с сервером установлено!");
@@ -16,33 +24,32 @@ const Params = ({ cg, lb, newItem }) => {
 
       const mes = JSON.parse(event.data);
 
-      if (mes.type === 'end') socket.close();
+      if (mes.type === 'end') {
+        socket.close();
+
+        if (type === 'scraping') {
+          dispatch(setIsReloadCatalogBtn());
+        }
+
+        if (type === 'analitics') {
+          dispatch(setIsReloadNewCatalogBtn());
+        }
+
+        if (type === 'scraping-and-analitics') {
+          dispatch(setIsReloadCatalogBtn());
+          dispatch(setIsReloadNewCatalogBtn());
+        }
+      }
     });
 
     socket.addEventListener("close", (event) => {
       console.log("Соединение с сервером закрыто!");
     });
-  }
+  };
 
-  const scraping = () => {
-    const socket = new WebSocket("ws://localhost:3000/scraping");
-
-    socket.addEventListener("open", (event) => {
-      socket.send("Соединение с сервером установлено!");
-    });
-
-    socket.addEventListener("message", (event) => {
-      console.log("Сообщение от сервера: ", event.data);
-
-      const mes = JSON.parse(event.data);
-
-      if (mes.type === 'end') socket.close();
-    });
-
-    socket.addEventListener("close", (event) => {
-      console.log("Соединение с сервером закрыто!");
-    });
-  }
+  const analitics = () => typeSocket({ type: 'analitics' });
+  const scraping = () => typeSocket({ type: 'scraping' });
+  const scrapingAndAnalitics = () => typeSocket({ type: 'scraping-and-analitics' });
 
   return (
     <section className="params">
@@ -87,13 +94,18 @@ const Params = ({ cg, lb, newItem }) => {
           })
         }
       </div>
-      
-      <button onClick = { scraping }>
+
+      <Button onClick = { scraping }>
         Скрапинг интернет-магазинов
-      </button>
-      <button onClick = { analitics }>
+      </Button>
+      <Button onClick = { analitics }>
         Анализировать
-      </button>
+      </Button>
+      <Button onClick = { scrapingAndAnalitics }>
+        Скрапинг интернет-магазинов и анализ
+      </Button>
+
+      { children }
     </section>
   )
 }

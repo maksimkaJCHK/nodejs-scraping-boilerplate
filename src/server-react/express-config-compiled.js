@@ -39,41 +39,43 @@ const MainCont = require('./server/ssr-components/MainCont.js');
 const CurShopCont = require('./server/ssr-components/CurShopCont.js');
 const PageNotFound = require('./server/ssr-components/PageNotFound.js');
 const wss = new WebSocketServer({
-  port: 3000
+  port: 8080
 });
 wss.on('connection', async (ws, req) => {
   const msg = {
     type: 'start',
     message: "Подключение к серверу успешно установлено!"
   };
+  ws.send(JSON.stringify(msg));
   if (req.url === '/analitics') {
-    ws.send(JSON.stringify(msg));
     await runAnalitics(msg => ws.send(JSON.stringify({
       type: 'msg',
       message: msg
     })));
-    ws.send(JSON.stringify({
-      type: 'end',
-      message: 'Аналитика закончилась, должны появиться новые товары!'
-    }));
-    ws.on('close', function close() {
-      console.log('Соединение с сервером закрыто!');
-    });
   }
   if (req.url === '/scraping') {
-    ws.send(JSON.stringify(msg));
     await shopScraping(msg => ws.send(JSON.stringify({
       type: 'msg',
       message: msg
     })));
-    ws.send(JSON.stringify({
-      type: 'end',
-      message: 'Скрапинг закончился закончилась, должны появиться новые товары!'
-    }));
-    ws.on('close', function close() {
-      console.log('Соединение с сервером закрыто!');
-    });
   }
+  if (req.url === '/scraping-and-analitics') {
+    await shopScraping(msg => ws.send(JSON.stringify({
+      type: 'msg',
+      message: msg
+    })));
+    await runAnalitics(msg => ws.send(JSON.stringify({
+      type: 'msg',
+      message: msg
+    })));
+  }
+  ws.send(JSON.stringify({
+    type: 'end',
+    message: 'Скрапинг закончился закончилась, должны появиться новые товары!'
+  }));
+  ws.on('close', function close() {
+    console.log('Соединение с сервером закрыто!');
+  });
 });
 const app = express();
 const port = 8000;

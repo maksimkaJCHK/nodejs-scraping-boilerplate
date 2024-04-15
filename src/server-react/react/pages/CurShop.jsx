@@ -9,7 +9,13 @@ import CurShopCont from './content/CurShopCont';
 import Preload from '@components/ui/Preload';
 
 const CurShop = ({ nameShop }) => {
-  const { timeLoad, catalogs, load } = useSelector(state => state.catalogs);
+  const {
+    timeLoad,
+    catalogs,
+    load,
+    isReloadCatalog
+  } = useSelector(state => state.catalogs);
+
   const dispatch = useDispatch();
 
   const { fraze } = useParams();
@@ -62,6 +68,15 @@ const CurShop = ({ nameShop }) => {
       }
     }
   }, [ nameShop, fraze, timeLoad ]);
+
+  useEffect(() => {
+    if (isReloadCatalog) {
+      dispatch(loadCurShop({
+        type: nameShop,
+        fraze,
+      }));
+    }
+  }, [isReloadCatalog]);
 
   return (
     <>

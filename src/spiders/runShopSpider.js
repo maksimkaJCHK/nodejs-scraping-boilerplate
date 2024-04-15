@@ -1,3 +1,9 @@
 const { shopScraping } = require('./shopScraping');
 
-shopScraping();
+const runShopSpider = async () => {
+  await shopScraping();
+
+  process.exit(1);
+}
+
+runShopSpider();

@@ -5,6 +5,8 @@ import { loadCatalog, loadCurCategory } from '@thunk/new-catalogs';
 const initialState = {
   error: false,
   load: true,
+  isReloadNewCatalogBtn: false,
+  isReloadNewCatalog: false,
   timeLoad: null,
   mainLinks: [],
   catalogs: [],
@@ -29,6 +31,14 @@ const newCatalogs = createSlice({
         state.catalogs.push(payload);
       }
     },
+    // Для отображение кнопки обновить новый каталог
+    setIsReloadNewCatalogBtn(state) {
+      state.isReloadNewCatalogBtn = true;
+    },
+    setIsReloadNewCatalog(state) {
+      state.isReloadNewCatalog = true;
+      state.catalogs = [];
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -45,6 +55,9 @@ const newCatalogs = createSlice({
 
         state.mainLinks = mainLinks;
         state.catalogs = catalogs;
+
+        state.isReloadNewCatalogBtn = false;
+        state.isReloadNewCatalog = false;
       })
       .addCase(loadCatalog.rejected, (state) => {
         state.load = false;
@@ -73,6 +86,9 @@ const newCatalogs = createSlice({
           if (idx !== -1) {
             state.catalogs[idx] = action.payload;
           }
+
+          state.isReloadNewCatalogBtn = false;
+          state.isReloadNewCatalog = false;
         }
       })
       .addCase(loadCurCategory.rejected, (state) => {
@@ -86,7 +102,9 @@ const {
   addCatalogs,
   addMainLinks,
   addCategoryInCatalogs,
-  addShopInCatalogs
+  addShopInCatalogs,
+  setIsReloadNewCatalogBtn,
+  setIsReloadNewCatalog,
 } = newCatalogs.actions;
 
 export {
@@ -96,6 +114,8 @@ export {
   addShopInCatalogs,
   loadCatalog,
   loadCurCategory,
+  setIsReloadNewCatalogBtn,
+  setIsReloadNewCatalog,
 }
 
 export default newCatalogs.reducer;

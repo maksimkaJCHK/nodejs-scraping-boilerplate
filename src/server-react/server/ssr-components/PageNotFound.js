@@ -1,1 +1,1 @@
-"use strict";var e=require("./common.js");module.exports=e.PageNotFound;
+"use strict";var e=require("./common.js");require("@slices/catalogs"),require("@slices/new-catalogs"),module.exports=e.PageNotFound;

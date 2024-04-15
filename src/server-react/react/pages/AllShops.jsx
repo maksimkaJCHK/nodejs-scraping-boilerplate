@@ -11,7 +11,13 @@ import { loadCurCategory, addCategoryInCatalogs } from '@slices/catalogs.js';
 const Main = () => {
   const [ category, setCategory ] = useState({});
 
-  const { timeLoad, catalogs, load } = useSelector(state => state.catalogs);
+  const {
+    timeLoad,
+    catalogs,
+    load,
+    isReloadCatalog
+  } = useSelector(state => state.catalogs);
+
   const dispatch = useDispatch();
 
   const { fraze } = useParams();
@@ -51,6 +57,12 @@ const Main = () => {
       };
     }
   }, [timeLoad]);
+
+  useEffect(() => {
+    if (isReloadCatalog) {
+      dispatch(loadCurCategory(fraze));
+    }
+  }, [isReloadCatalog]);
 
   return (
     <>
