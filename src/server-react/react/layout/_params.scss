@@ -3,9 +3,13 @@
   line-height: 120%;
   &-nav {
     margin: 10px 0;
+    a,
+    b {
+      display: inline-block;
+      margin-right: 10px;
+    }
     a {
       color: var(--link-color);
-      margin-left: 10px;
       text-decoration: none;
       &:hover {
         text-decoration: none;
@@ -13,12 +17,17 @@
     }
     b {
       a {
-        margin-left: 0;
+        margin-right: 0;
       }
       
     }
     .active {
       color: var(--type-color);
     }
+  }
+  &-btn-block {
+    display: flex;
+    gap: 15px 10px;
+    flex-wrap: wrap;
   }
 }

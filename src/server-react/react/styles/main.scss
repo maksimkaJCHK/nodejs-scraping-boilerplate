@@ -16,21 +16,18 @@ h3,
 .h3 {
   margin: 15px 0;
   font: 18px/120% tahoma;
-}
-
-h3 a {
-  color: var(--type-color);
-  text-decoration: none;
-}
-
-h3 a:hover {
-  text-decoration: underline;
+  a {
+    color: var(--type-color);
+    text-decoration: none;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
 }
 
 .item-wrap {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
+  display: grid;
+  gap: 10px 40px;
 }
 
 .item {
@@ -39,54 +36,58 @@ h3 a:hover {
   flex-direction: column;
   width: 100%;
   border-bottom: 1px dotted #000;
-}
-
-.item p {
-  margin: 5px 0;
-}
-
-.item-img {
-  width: 100%;
-  display: block;
-  margin-right: 20px;
-  text-decoration: none;
-}
-
-.item-img img {
-  display: block;
-  max-width: 100%;
-  margin: 0 auto;
-}
-
-.item-description {
-  width: 100%;
-}
-
-.item-link {
-  margin: 20px 0 0;
-}
-
-.item-link a {
-  color: #fff;
-  padding: 10px 15px;
-  text-decoration: none;
-  display: inline-block;
-  border-radius: 5px;
-  background: #1616f1;
-  transition: background-color .4s ease-in-out 0s;
-}
-
-.item-link a:hover {
-  background: var(--link-color);
-}
-
-@media screen and (min-width: 600px) {
-  .item {
-    width: calc(50% - 10px);
+  p {
+    margin: 5px 0;
   }
-
-  .item-img img {
-    max-height: 300px;
+  &-img {
+    width: 100%;
+    display: block;
+    margin-right: 20px;
+    text-decoration: none;
+    img {
+      display: block;
+      max-width: 100%;
+      margin: 0 auto;
+    }
+  }
+  &-description {
+    width: 100%;
+  }
+  &-link {
+    margin: 20px 0 0;
+    a {
+      color: #fff;
+      padding: 10px 15px;
+      text-decoration: none;
+      display: inline-block;
+      border-radius: 5px;
+      background: #1616f1;
+      transition: background-color .4s ease-in-out 0s;
+      &:hover {
+        background: var(--link-color);
+      }
+    }
+  }
+  @media screen and (min-width: 500px) {
+    &-wrap {
+      grid-template-columns: 1fr 1fr;
+    }
+    &-img {
+      img {
+        max-height: 300px;
+      }
+    }
+  }
+  @media screen and (min-width: 750px) {
+    &-wrap {
+      grid-template-columns: 1fr 1fr 1fr;
+    }
+  
+    &-img {
+      img {
+        max-height: 400px;
+      }
+    }
   }
 }
 
@@ -94,19 +95,5 @@ h3 a:hover {
   #wrapper {
     padding-left: 25px;
     padding-right: 25px;
-  }
-
-  .item-wrap::after {
-    content: ' ';
-    display: block;
-    width: calc(33% - 20px);
-  }
-
-  .item {
-    width: calc(33% - 20px);
-  }
-
-  .item-img img {
-    max-height: 400px;
   }
 }

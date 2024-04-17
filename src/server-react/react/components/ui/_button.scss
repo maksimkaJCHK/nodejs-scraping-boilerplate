@@ -13,7 +13,4 @@
   &:hover {
     background: var(--btn-bg-hover);
   }
-  & + & {
-    margin-left: 10px;
-  }
 }
