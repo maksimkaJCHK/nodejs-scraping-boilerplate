@@ -11,7 +11,9 @@
     "analitics": "node ./src/analitics/run.js",
     "server:static": "nodemon ./src/server/index.js",
     "server:react": "node ./src/server-react/express-config-compiled.js",
-    "compile:react:ssr": "rollup -c ./src/server-react/rollup-ssr.js -w",
+    "compile:react": "npm run compile:react:ssr:build && npm run compile:react:front:build",
+    "compile:react:ssr:dev": "rollup -c ./src/server-react/rollup-ssr.js -w",
+    "compile:react:ssr:build": "rollup -c ./src/server-react/rollup-ssr.js",
     "compile:react:front:dev": "rollup -c ./src/server-react/rollup-front-dev.js -w",
     "compile:react:front:build": "rollup -c ./src/server-react/rollup-front-build.js"
   },

@@ -1,0 +1,29 @@
+include ./shops-item.pug
+include ./text.pug
+
+mixin outputCgShop(fraze, nameShop, shop)
+  +header(fraze, nameShop)
+
+  if !shop
+    +nullFraze(fraze, 'cg')
+  else 
+    div Всего #{shop.length} товаров
+    .item-wrap
+      each val in shop
+        +cg(val)
+
+mixin outputLbShop(fraze, nameShop, shop, severalShop)
+  +header(fraze, nameShop)
+
+  if severalShop
+    ul
+      li
+        a(href=`#shop-results-cg-${fraze}`) Товары на читай-городе
+
+  if !shop
+    +nullFraze(fraze, 'lb')
+  else 
+    div Всего #{shop.length} товаров 
+    .item-wrap
+      each val in shop
+        +lb(val)

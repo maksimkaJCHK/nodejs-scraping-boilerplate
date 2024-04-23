@@ -3,6 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import { loadCatalog, loadCurCategory } from '@thunk/new-catalogs';
 
 const initialState = {
+  isAnalitics: false,
   error: false,
   load: true,
   isReloadNewCatalogBtn: false,
@@ -16,6 +17,12 @@ const newCatalogs = createSlice({
   name: 'new-catalogs',
   initialState,
   reducers: {
+    runAnalitics(state) {
+      state.isAnalitics = true;
+    },
+    stopAnalitics(state) {
+      state.isAnalitics = false;
+    },
     addCatalogs(state, { payload }) {
       state.load = false;
       state.catalogs = payload;
@@ -105,6 +112,8 @@ const {
   addShopInCatalogs,
   setIsReloadNewCatalogBtn,
   setIsReloadNewCatalog,
+  runAnalitics,
+  stopAnalitics,
 } = newCatalogs.actions;
 
 export {
@@ -116,6 +125,8 @@ export {
   loadCurCategory,
   setIsReloadNewCatalogBtn,
   setIsReloadNewCatalog,
+  runAnalitics,
+  stopAnalitics,
 }
 
 export default newCatalogs.reducer;

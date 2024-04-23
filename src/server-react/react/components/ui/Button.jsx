@@ -2,12 +2,13 @@ import React from 'react';
 import './_button.scss';
 
 const Button = (props) => {
-  const { children, onClick } = props;
+  const { children, onClick, disabled } = props;
 
   return (
     <button
-      onClick = { onClick }
+      disabled = { disabled }
       className = 'btn'
+      onClick = { onClick }
     >
       { children }
     </button>

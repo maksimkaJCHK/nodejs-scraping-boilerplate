@@ -1,0 +1,11 @@
+.journal-item {
+  margin: 15px 0;
+  font-size: 14px;
+  &-time {
+    margin: 0 0 7px;
+    font-size: 12px;
+    span {
+      margin-left: 10px;
+    }
+  }
+}

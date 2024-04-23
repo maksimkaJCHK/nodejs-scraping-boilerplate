@@ -10,6 +10,8 @@ const Params = ({
   lb,
   newItem,
   children,
+  isScraping,
+  isAnalitics,
   analitics = (f) => f,
   scraping = (f) => f,
   scrapingAndAnalitics = (f) => f,
@@ -59,13 +61,22 @@ const Params = ({
       </div>
 
       <div className="params-btn-block">
-        <Button onClick = { scraping }>
+        <Button 
+          onClick = { scraping }
+          disabled = { isScraping }
+        >
           Скрапинг интернет-магазинов
         </Button>
-        <Button onClick = { analitics }>
+        <Button 
+          onClick = { analitics }
+          disabled = { isAnalitics }
+        >
           Анализировать
         </Button>
-        <Button onClick = { scrapingAndAnalitics }>
+        <Button 
+          onClick = { scrapingAndAnalitics }
+          disabled = { isScraping || isAnalitics }
+        >
           Скрапинг интернет-магазинов и анализ
         </Button>
 

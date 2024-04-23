@@ -13,4 +13,7 @@
   &:hover {
     background: var(--btn-bg-hover);
   }
+  &[disabled] {
+    opacity: .4;
+  }
 }

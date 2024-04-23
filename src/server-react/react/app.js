@@ -10,6 +10,7 @@ import router from  './router/router';
 
 import catalogs from '@slices/catalogs';
 import newCatalogs from '@slices/new-catalogs';
+import journal from '@slices/journal';
 
 import '@styles/main.scss';
 
@@ -20,6 +21,7 @@ const store = configureStore({
   reducer: {
     catalogs,
     newCatalogs,
+    journal,
   },
 });
 

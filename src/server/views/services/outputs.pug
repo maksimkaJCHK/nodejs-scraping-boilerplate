@@ -1,0 +1,30 @@
+include ./shops-output.pug
+
+mixin newOutput(fraze, cgItem, lbItem)
+  h2 Новые товары по запросу "#{fraze}"
+
+  .shop-results
+    if shops[cgItem] && shops[cgItem].length
+      div(id=`shop-results-cg-${fraze}`)
+        +outputCgShop(fraze, 'читай-города', shops[cgItem])
+
+    if shops[lbItem] && shops[lbItem].length
+      div(id=`shop-results-lb-${fraze}`)
+        +outputLbShop(fraze, 'лабиринта', shops[lbItem])
+
+mixin output(fraze, cgItem, lbItem, severalShop = true)
+  h2 Запрос "#{fraze}"
+
+  if severalShop
+    ul
+      li
+        a(href=`#shop-results-cg-${fraze}`) Товары на читай-городе
+      li
+        a(href=`#shop-results-lb-${fraze}`) Товары на лабиринте
+
+  .shop-results
+    div(id=`shop-results-cg-${fraze}`)
+      +outputCgShop(fraze, 'читай-города', shops[cgItem])
+
+    div(id=`shop-results-lb-${fraze}`)
+      +outputLbShop(fraze, 'лабиринта', shops[lbItem], severalShop)

@@ -63,9 +63,15 @@ wss.on('connection', async (ws, req) => {
     })));
   }
 
+  let endMessage;
+
+  if (req.url === '/analitics') endMessage = 'Аналитика закончилась, должны появиться новые товары!';
+  if (req.url === '/scraping') endMessage = 'Скрапинг закончился, должны появиться товары!'
+  if (req.url === '/scraping-and-analitics') endMessage = 'Скрапинг и аналитика закончились, стоит обновить товары и новые товары!'
+
   ws.send(JSON.stringify({
     type: 'end',
-    message: 'Скрапинг закончился закончилась, должны появиться новые товары!'
+    message: endMessage
   }));
 
   ws.on('close', function close() {

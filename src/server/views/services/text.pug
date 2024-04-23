@@ -1,0 +1,5 @@
+mixin header(fraze, shop)
+  h3 Товары по запросу "#{fraze}" для #{shop}
+
+mixin nullFraze(fraze, typeShop)
+  p Для поисковой фразы #{fraze} на #{typeShop == 'cg' ? 'читай-городе' : 'лабиринте'} нет товаров!!!

@@ -1,0 +1,53 @@
+mixin cg(val)
+  .item
+    a(href=`${val.url}` class="item-img" target="_blank") 
+      if (val.picture)
+        img(src=`${val.picture}`)
+      else 
+        | У товара нет картинки
+    .item-description
+      h3
+        a(href=`${val.url}` target="_blank") #{val.title}
+      p 
+        b Автор: 
+        each author in val.bookAuthors
+          | #{author} 
+      p= val.description
+      p 
+        b Страниц: 
+        | #{val.pages}
+      p 
+        b Опубликовано: 
+        | #{val.yearPublishing}
+      p 
+        b Издательство: 
+        | #{val.publisher}
+      p 
+        b Цена: 
+        | #{val.price} руб
+
+      .item-link
+        a(href=`${val.url}` target="_blank") Посмотреть товар
+
+mixin lb(val)
+  .item
+    a(href=`${val.url}` class="item-img" target="_blank") 
+      if val.picture
+        img(src=`${val.picture}`)
+      else 
+        | У товара нет картинки
+    .item-description
+      h3
+        a(href=`${val.url}` target="_blank") #{val.title}
+      p
+        b Издательство: 
+        | #{val.publisher}
+      p 
+        b Цена: 
+        | #{val.price} руб
+      p 
+        b Старая цена: 
+        | #{val.priceOld} руб
+
+      .item-link
+        a(href=`${val.url}` target="_blank") Посмотреть товар

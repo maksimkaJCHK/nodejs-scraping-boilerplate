@@ -16,6 +16,7 @@ const bParamsForCurShop = ({ id, type, shop }) => {
 }
 
 const initialState = {
+  isScraping: false,
   error: false,
   load: true,
   isReloadCatalogBtn: false,
@@ -29,6 +30,12 @@ const catalogs = createSlice({
   name: 'catalogs',
   initialState,
   reducers: {
+    runScraping(state) {
+      state.isScraping = true;
+    },
+    stopScraping(state) {
+      state.isScraping = false;
+    },
     addCatalogs(state, { payload }) {
       state.load = false;
       state.catalogs = payload;
@@ -166,6 +173,8 @@ const {
   addShopInCatalogs,
   setIsReloadCatalogBtn,
   setIsReloadCatalog,
+  runScraping,
+  stopScraping,
 } = catalogs.actions;
 
 export {
@@ -178,6 +187,8 @@ export {
   loadCurCategory,
   setIsReloadCatalogBtn,
   setIsReloadCatalog,
+  runScraping,
+  stopScraping,
 }
 
 export default catalogs.reducer;
