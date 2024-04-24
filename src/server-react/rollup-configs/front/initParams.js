@@ -18,6 +18,10 @@ export const bTypePlugins = ({ minimizeCss = true }) => {
           replacement: path.resolve(appRoot.path, 'src/server-react/react/styles'), 
         },
         {
+          find: '@helpers',
+          replacement: path.resolve(appRoot.path, 'src/server-react/react/helpers'), 
+        },
+        {
           find: '@api',
           replacement: path.resolve(appRoot.path, 'src/server-react/react/api'), 
         },

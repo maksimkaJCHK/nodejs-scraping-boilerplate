@@ -5,7 +5,7 @@ const { makeResultsFolder } = require('../services/fs.js');
 const shopScraping = async (callback = (f) => f) => {
   makeResultsFolder();
 
-  callback('Скрапинг читай-города по запросам');
+  callback('Скрапинг интернет-магазина читай-город начался');
 
   await cgShopSpider('javascript', callback);
   await cgShopSpider('python', callback);
@@ -13,7 +13,7 @@ const shopScraping = async (callback = (f) => f) => {
   await cgShopSpider('react', callback);
   await cgShopSpider('angular', callback);
 
-  callback('Скрапинг Лабиринта по запросам');
+  callback('Скрапинг интернет-магазина лабиринт начался');
 
   await lbShopSpider('javascript', callback);
   await lbShopSpider('python', callback);

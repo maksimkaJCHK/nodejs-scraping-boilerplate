@@ -1,38 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { bTime } from '@helpers/typeHelpers';
+
+const jsonData = JSON.parse(localStorage.getItem('journal'));
 
 const initialState = {
   isJournal: false,
-  journal: []
-};
-
-const monthArr = [
-  'января',
-  'февраля',
-  'марта',
-  'апреля',
-  'мая',
-  'июня',
-  'июля',
-  'августа',
-  'сентября',
-  'октября',
-  'ноября',
-  'декабря',
-];
-
-const bTime = (time) => {
-  const bTime = new Date(time);
-
-  const date = bTime.getDate();
-  const month = monthArr[bTime.getMonth()];
-  const year = bTime.getFullYear();
-  const hour = bTime.getHours();
-  const minute = bTime.getMinutes();
-
-  return {
-    time: `${hour}:${minute}`,
-    date: `${date} ${month} ${year}`
-  };
+  journal: jsonData || [],
 };
 
 const journal = createSlice({
@@ -46,15 +19,17 @@ const journal = createSlice({
       state.isJournal = !state.isJournal;
     },
     addInJournal(state, { payload }) {
-      const cTime = Date.now();
+      const cTime = new Date();
       const bcTime = bTime(cTime)
 
       state.journal.unshift({
         ...payload,
-        id: cTime,
+        id: cTime.getTime(),
         time: bcTime.time,
         date: bcTime.date
       });
+
+      localStorage.setItem('journal', JSON.stringify(state.journal.slice(0, 10)));
     }
   },
 })

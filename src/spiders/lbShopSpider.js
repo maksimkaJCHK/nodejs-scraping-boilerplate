@@ -74,7 +74,7 @@ const lbShopSpider = async (findFrase, callbackOutput = (f) => f ) => {
         // Перехожу на следующую страницу
         if ($('.pagination-next__text').attr('href')) {
           page += 1;
-          const msg = 'Страница - ' + page;
+          const msg = `Страница - ${page} для запроса ${findFrase} для интеренет-магазина лабиринт.`;
 
           log.info(msg);
           callbackOutput(msg);
@@ -103,7 +103,7 @@ const lbShopSpider = async (findFrase, callbackOutput = (f) => f ) => {
   
   q.drain = () => {
     isFinish = true;
-    const msg = `Всего найдено ${results.length} товара, по запросу ${findFrase}`;
+    const msg = `Всего найдено ${results.length} товара, по запросу ${findFrase} для интернет-магазина лабиринт`;
 
     log.info('__________________________________');
     log.info('Парсинг закончился');

@@ -11,6 +11,7 @@ import router from  './router/router';
 import catalogs from '@slices/catalogs';
 import newCatalogs from '@slices/new-catalogs';
 import journal from '@slices/journal';
+import searchResults from '@slices/search-results';
 
 import '@styles/main.scss';
 
@@ -22,6 +23,7 @@ const store = configureStore({
     catalogs,
     newCatalogs,
     journal,
+    searchResults
   },
 });
 

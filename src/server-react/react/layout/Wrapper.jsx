@@ -17,6 +17,7 @@ const Wrapper = ({
 
       <main>
         <Preload load = { isLoad } />
+
         { children }
       </main>
     </>

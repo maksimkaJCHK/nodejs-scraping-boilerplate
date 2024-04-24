@@ -23,6 +23,10 @@ const topNav = [
     url: '/all-shops/typescript',
     title: 'Typescript',
   },
+  {
+    url: '/search',
+    title: 'Поиск по запросам',
+  },
 ];
 
 const cg = [

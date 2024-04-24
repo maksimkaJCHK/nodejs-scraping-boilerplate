@@ -128,7 +128,7 @@ const cgShopSpider = async (findFrase, callbackOutput = (f) => f) => {
   const path = './results/shop-result/';
   const name = `cg-shop-${findFrase}`;
   const extension = '.json';
-  const msg = `Всего найдено - ${books.length} книги по запросу ${findFrase}`;
+  const msg = `Всего найдено - ${books.length} книги по запросу ${findFrase} для интеренет-магазина читай-город`;
 
   log.info(msg);
   callbackOutput(msg);

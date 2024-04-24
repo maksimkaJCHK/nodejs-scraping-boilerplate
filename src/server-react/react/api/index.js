@@ -18,10 +18,14 @@ const getCurShop = (fraze, type) => api.post(`/${type}/${fraze}`);
 const getNewPage = () => api.post('/new');
 const getNewCurCategory = (fraze) => api.post(`/new/${fraze}`);
 
+// Для поиска
+const getSearch = (fraze) => api.post(`/search/${fraze}`);
+
 export {
   getMainPage,
   getCurCategory,
   getCurShop,
   getNewPage,
   getNewCurCategory,
+  getSearch,
 };

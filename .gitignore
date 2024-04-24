@@ -2,8 +2,8 @@
 
 package-lock.json
 results/
-src/server-react/server/ssr-components
-src/server-react/server/public
+src/server-react/server/ssr-components/
+src/server-react/server/public/
 
 # Logs
 logs

@@ -18,6 +18,9 @@ const {
   shopScraping
 } = require('../spiders/shopScraping');
 const {
+  shopScrapingForFraze
+} = require('../spiders/shopScrapingForFraze');
+const {
   bSeo,
   bPage
 } = require('./helpers/helpers.js');
@@ -398,6 +401,41 @@ app.post('/new/:fraze', async (req, res, next) => {
   next();
 }, (req, res, next) => {
   console.log(`Post запрос с новыми товарами по фразе ${req.params.fraze} для интернет-магазинов`);
+});
+app.get('/search', async (req, res, next) => {
+  let page = typeLayout;
+  let seo = bSeo({
+    title: 'Поиск',
+    description: 'Описание для страницы поиска'
+  });
+  let appContent = ReactDOMServer.renderToString( /*#__PURE__*/React.createElement(Wrapper, {
+    topNav: topNav,
+    navParams: navParams,
+    isLoad: true
+  }));
+  page = bPage({
+    page,
+    seo,
+    appContent,
+    js: ''
+  });
+  res.contentType('text/html');
+  res.status(200);
+  res.send(page);
+  next();
+}, (req, res, next) => {
+  console.log('Загрузилась страница поиска');
+});
+app.post('/search/:fraze', async (req, res, next) => {
+  const fraze = req.params.fraze;
+  await shopScrapingForFraze(fraze);
+  const category = await bAllShopsParam(fraze);
+  res.contentType('application/json');
+  res.status(200);
+  res.send(category);
+  next();
+}, (req, res, next) => {
+  console.log(`Post запрос для страницы поиска по фразе ${req.params.fraze} для интернет-магазинов`);
 });
 app.use(function (req, res, next) {
   let page = typeLayout;

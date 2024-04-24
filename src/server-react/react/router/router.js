@@ -10,6 +10,7 @@ import AllShops from '@pages/AllShops';
 import CurShop from '@pages/CurShop';
 import NewCatalogs from '@pages/NewCatalogs';
 import NewAllShops from "@pages/NewAllShops.jsx";
+import Search from "@pages/Search.jsx";
 
 const router = createBrowserRouter([
   {
@@ -39,6 +40,10 @@ const router = createBrowserRouter([
       {
         path: "/new/:fraze",
         element: <NewAllShops />,
+      },
+      {
+        path: '/search',
+        element: <Search />
       },
       {
         path: "*",

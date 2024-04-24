@@ -28,7 +28,6 @@ export default {
         drop_console: true,
       },
     }),
-    //sizeSnapshot(),
     sizes(),
   ],
 };
