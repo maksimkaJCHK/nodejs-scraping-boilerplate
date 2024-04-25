@@ -22,6 +22,14 @@ export const bTypePlugins = ({ minimizeCss = true }) => {
           replacement: path.resolve(appRoot.path, 'src/server-react/react/helpers'), 
         },
         {
+          find: '@hooks',
+          replacement: path.resolve(appRoot.path, 'src/server-react/react/hooks'), 
+        },
+        {
+          find: '@pageHooks',
+          replacement: path.resolve(appRoot.path, 'src/server-react/react/pages/hooks'), 
+        },
+        {
           find: '@api',
           replacement: path.resolve(appRoot.path, 'src/server-react/react/api'), 
         },

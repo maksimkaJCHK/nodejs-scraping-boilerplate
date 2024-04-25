@@ -25,10 +25,11 @@ const searchResults = createSlice({
   name: 'searchResults',
   initialState,
   reducers: {
-    addCatalogs(state, { payload }) {
+    resetCatalogs(state) {
+      state.catalogs = {};
       state.load = false;
-      state.catalogs = payload;
-    },
+      state.error = false;
+    }
   },
   extraReducers: (builder) => {
     builder
@@ -51,11 +52,11 @@ const searchResults = createSlice({
 })
 
 const {
-
+  resetCatalogs
 } = searchResults.actions;
 
 export {
-
+  resetCatalogs
 }
 
 export default searchResults.reducer;

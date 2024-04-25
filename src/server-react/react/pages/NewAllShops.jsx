@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
 
-import { useSelector, useDispatch } from 'react-redux';
+import useTypeParams from '@hooks/useTypeParams.js';
 
 import AllShopsCont from './content/AllShopsCont';
 import Preload from '@components/ui/Preload';
@@ -9,6 +8,8 @@ import Preload from '@components/ui/Preload';
 import { loadCurCategory, addCategoryInCatalogs } from '@slices/new-catalogs.js';
 
 const Main = () => {
+  const { dispatch, useSelector, fraze } = useTypeParams();
+
   const [ category, setCategory ] = useState({});
 
   const {
@@ -17,10 +18,6 @@ const Main = () => {
     load,
     isReloadNewCatalog
   } = useSelector(state => state.newCatalogs);
-
-  const dispatch = useDispatch();
-
-  const { fraze } = useParams();
 
   useEffect(() => {
     const isCategory = window.newCategory !== undefined;

@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 
-import { useSelector, useDispatch } from 'react-redux';
+import useTypeParams from '@hooks/useTypeParams.js';
 
 import MainCont from './content/MainCont';
 import Preload from '@components/ui/Preload';
@@ -13,14 +13,14 @@ import {
 } from '@slices/new-catalogs.js';
 
 const Main = () => {
+  const { dispatch, useSelector } = useTypeParams();
+
   const {
     mainLinks,
     catalogs,
     load,
     isReloadNewCatalog
   } = useSelector(state => state.newCatalogs);
-  
-  const dispatch = useDispatch();
 
   useEffect(() => {
     if (window.newCatalogs !== undefined && window.newMainLinks !== undefined) {

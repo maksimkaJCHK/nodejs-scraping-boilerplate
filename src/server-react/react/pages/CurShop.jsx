@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-import { useParams } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
+import useTypeParams from '@hooks/useTypeParams.js';
 
 import { addShopInCatalogs, loadCurShop } from '@slices/catalogs';
 
@@ -9,16 +8,14 @@ import CurShopCont from './content/CurShopCont';
 import Preload from '@components/ui/Preload';
 
 const CurShop = ({ nameShop }) => {
+  const { dispatch, useSelector, fraze } = useTypeParams();
+
   const {
     timeLoad,
     catalogs,
     load,
     isReloadCatalog
   } = useSelector(state => state.catalogs);
-
-  const dispatch = useDispatch();
-
-  const { fraze } = useParams();
 
   const [shopListParams, changeShopListParams] = useState({});
  

@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 
-import { useSelector, useDispatch } from 'react-redux';
+import useTypeParams from '@hooks/useTypeParams.js';
 
 import MainCont from './content/MainCont';
 import Preload from '@components/ui/Preload';
@@ -8,13 +8,14 @@ import Preload from '@components/ui/Preload';
 import { loadCatalog, addCatalogs, addMainLinks } from '@slices/catalogs.js';
 
 const Main = () => {
+  const { dispatch, useSelector } = useTypeParams();
+
   const {
     mainLinks,
     catalogs,
     load,
     isReloadCatalog
   } = useSelector(state => state.catalogs);
-  const dispatch = useDispatch();
 
   useEffect(() => {
     if (window.catalogs !== undefined && window.mainLinks !== undefined) {
@@ -28,9 +29,7 @@ const Main = () => {
   }, []);
 
   useEffect(() => {
-    if (isReloadCatalog) {
-      dispatch(loadCatalog());
-    }
+    if (isReloadCatalog) dispatch(loadCatalog());
   }, [isReloadCatalog]);
 
   return (

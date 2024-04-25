@@ -1,7 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useState, useEffect, useRef } from 'react';
 
-import { loadSearchResults } from '@thunk/search-results';
+import useTypeParams from '@hooks/useTypeParams.js';
+import useForm from '@pageHooks/search/useForm.js';
+import useGetParams from '@pageHooks/search/useGetParams.js';
+
+import { resetCatalogs } from '@slices/search-results';
 
 import AllShopsCont from './content/AllShopsCont';
 
@@ -12,35 +15,32 @@ import Button from '@components/ui/Button';
 import './styles/_search.scss';
 
 const Search = () => {
+  const inp = useRef(null);
+  const { dispatch, useSelector } = useTypeParams();
+
   const [search, setSearch] = useState('');
-  const [searchAfterReq, setSearchAfterReq] = useState('');
-  const [disabled, setDiasbled] = useState(true);
 
-  const dispatch = useDispatch();
   const { catalogs, load } = useSelector(state => state.searchResults)
+  const { changeGetFraze } = useGetParams(setSearch);
 
-  const isReq = search.trim().length === 0;
+  const {
+    searchAfterReq,
+    disabled,
+    handleChangeSearch,
+    handleSubmit,
+  } = useForm({
+    changeGetFraze,
+    catalogs,
+    search,
+    setSearch
+  });
+
+  useEffect(() => () => dispatch(resetCatalogs()), []);
 
   useEffect(() => {
-    setDiasbled(isReq);
-  }, [search]);
-
-  useEffect(() => {
-    if (!load) {
-      setSearchAfterReq(search);
-      setSearch('');
-    }
+    if (load) inp.current.blur();
+    if (!load) inp.current.focus();
   }, [load]);
-
-  const changeSearch = (e) => {
-    setSearch(e.target.value);
-  };
-
-  const searchResults = (e) => {
-    e.preventDefault();
-
-    dispatch(loadSearchResults(search));
-  };
 
   return (
     <div className = 'search'>
@@ -48,11 +48,12 @@ const Search = () => {
 
       <form
         className = "search-form"
-        onSubmit = { searchResults }
+        onSubmit = { handleSubmit }
       >
         <Input
+          ref = { inp }
           value = { search }
-          onChange = { changeSearch }
+          onChange = { handleChangeSearch }
         />
         <Button disabled = { disabled }>
           Найти
