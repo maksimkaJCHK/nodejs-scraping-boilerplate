@@ -1,6 +1,7 @@
-const express = require('express');
+import express from 'express';
 
-const { readJSONFileToAnalitics } = require('../services/fs');
+import { readJSONFileToAnalitics } from '../services/fs.js';
+
 const app = express();
 const port = 8000;
 

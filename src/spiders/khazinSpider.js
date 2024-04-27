@@ -1,9 +1,9 @@
-const log = require('cllc')();
-const needle = require('needle');
-const tress = require('tress');
-const cheerio = require('cheerio');
+import log from 'cllc';
+import needle from 'needle';
+import tress from 'tress';
+import cheerio from 'cheerio';
 
-const { makeResultsFolder, makeFolder, makeFile } = require('../services/fs.js');
+import { makeFile, makeResultsFolder, makeFolder } from '../services/fs.js';
 
 const URL = 'https://khazin.ru/articles/';
 const options = {};
@@ -37,12 +37,12 @@ makeFolder('./results/hazin_results');
 const q = tress((url, callback) => {
   needle.get(url, options, (err, res) => {
     if (res.statusCode === 404) {
-      log.error('Такой страницы нет - ' + url);
+      log().error('Такой страницы нет - ' + url);
     } else {
       options.cookies = res.cookies;
 
       if (err || res.statusCode !== 200) {
-        log.e((err || res.statusCode) + ' - ' + url);
+        log().e((err || res.statusCode) + ' - ' + url);
   
         return callback(true);
       }
@@ -52,7 +52,7 @@ const q = tress((url, callback) => {
       // Формирую статью
       if ($('.post-content').html()) {
         count += 1;
-        log.info(count);
+        log().info(count);
 
         results.push({
           page,
@@ -75,7 +75,7 @@ const q = tress((url, callback) => {
       // Перехожу на следующую страницу
       if ($('.next.page-numbers').attr('href')) {
         page += 1;
-        log.info('Страница - ', page);
+        log().info('Страница - ', page);
 
         q.push($('.next.page-numbers').attr('href'));
       }
@@ -86,23 +86,23 @@ const q = tress((url, callback) => {
 }, delay);
 
 q.success = function(data) {
-  log.info(this);
-  log.info('Все прошло нормально - ', data);
+  log().info(this);
+  log().info('Все прошло нормально - ', data);
 }
 
 q.retry = function(){
   q.pause();
-  log.i('Paused on:', this);
+  log().i('Paused on:', this);
 
   setTimeout(function(){
     q.resume();
-    log.i('Resumed');
+    log().i('Resumed');
   }, 300000);
 }
 
 q.drain = () => {
   console.log('__________________');
-  log.info('Парсинг закончился');
+  log().info('Парсинг закончился');
 
   makeFile('./results/data.json', JSON.stringify(results, null, 2));
 };

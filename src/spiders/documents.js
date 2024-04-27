@@ -1,11 +1,11 @@
-const log = require('cllc')();
-const needle = require('needle');
-const tress = require('tress');
-const cheerio = require('cheerio');
+import log from 'cllc';
+import needle from 'needle';
+import tress from 'tress';
+import cheerio from 'cheerio';
 
-const { makeResultsFolder, makeFolder, makeFile } = require('../services/fs.js');
-const { delayF } = require('../services/delay');
-const { bType } = require('../services/types');
+import { makeResultsFolder, makeFolder, makeFile } from '../services/fs.js';
+import { delayF } from '../services/delay.js';
+import { bType } from '../services/types.js';
 
 const URL = 'http://localhost:8080/';
 const options = {};
@@ -27,7 +27,7 @@ const downloadDocs = async (url, path, nameDoc) => {
     const typeDoc = bType(res.headers['content-type']);
 
     if (res.statusCode === 404) {
-      log.error('Такой страницы нет - ' + url);
+      log().error('Такой страницы нет - ' + url);
     } else {
       makeFile(`${path}/${nameDoc}.${typeDoc}`, res.body);
     }
@@ -40,12 +40,12 @@ const scrapDoc = async (docUrl) => {
   const docPage = tress((url, callback) => {
      needle('get', url, options, async (err, res) => {
       if (res.statusCode === 404) {
-        log.error('Такой страницы нет - ' + url);
+        log().error('Такой страницы нет - ' + url);
       } else {
         options.cookies = res.cookies;
   
         if (err || res.statusCode !== 200) {
-          log.e((err || res.statusCode) + ' - ' + url);
+          log().e((err || res.statusCode) + ' - ' + url);
     
           return callback(true);
         }
@@ -75,8 +75,8 @@ const scrapDoc = async (docUrl) => {
   }, delay);
 
   docPage.success = function(data) {
-    log.info(this);
-    log.info('Все прошло нормально - ', data);
+    log().info(this);
+    log().info('Все прошло нормально - ', data);
 
     isWork = false;
   }
@@ -87,13 +87,13 @@ const scrapDoc = async (docUrl) => {
   
     setTimeout(function(){
       q.resume();
-      log.i('Resumed');
+      log().i('Resumed');
     }, 300000);
   }
 
   docPage.drain = () => {
     console.log('__________________');
-    log.info('Парсинг документов на странице закончился');
+    log().info('Парсинг документов на странице закончился');
   };
 
   docPage.push(docUrl);
@@ -106,12 +106,12 @@ const scrapDoc = async (docUrl) => {
 const raisePage = tress((url, callback) => {
   needle.get(url, options, async (err, res) => {
     if (res.statusCode === 404) {
-      log.error('Такой страницы нет - ' + url);
+      log().error('Такой страницы нет - ' + url);
     } else {
       options.cookies = res.cookies;
 
       if (err || res.statusCode !== 200) {
-        log.e((err || res.statusCode) + ' - ' + url);
+        log().e((err || res.statusCode) + ' - ' + url);
   
         return callback(true);
       }
@@ -134,8 +134,8 @@ const raisePage = tress((url, callback) => {
 }, delay);
 
 raisePage.success = function(data) {
-  log.info(this);
-  log.info('Все прошло нормально - ', data);
+  log().info(this);
+  log().info('Все прошло нормально - ', data);
 }
 
 raisePage.retry = function(){
@@ -144,13 +144,13 @@ raisePage.retry = function(){
 
   setTimeout(function(){
     q.resume();
-    log.i('Resumed');
+    log().i('Resumed');
   }, 300000);
 }
 
 raisePage.drain = () => {
   console.log('__________________');
-  log.info('Парсинг закончился');
+  log().info('Парсинг закончился');
 };
 
 raisePage.push(URL);

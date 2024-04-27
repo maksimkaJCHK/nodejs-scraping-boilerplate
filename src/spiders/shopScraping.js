@@ -1,8 +1,8 @@
-const { lbShopSpider } = require('./lbShopSpider');
-const { cgShopSpider } = require('./cgShopSpider');
-const { makeResultsFolder } = require('../services/fs.js');
+import { lbShopSpider } from './lbShopSpider.js';
+import { cgShopSpider } from './cgShopSpider.js';
+import { makeResultsFolder } from '../services/fs.js';
 
-const shopScraping = async (callback = (f) => f) => {
+export const shopScraping = async (callback = (f) => f) => {
   makeResultsFolder();
 
   callback('Скрапинг интернет-магазина читай-город начался');
@@ -21,5 +21,3 @@ const shopScraping = async (callback = (f) => f) => {
   await lbShopSpider('react', callback);
   await lbShopSpider('angular', callback);
 }
-
-exports.shopScraping = shopScraping;

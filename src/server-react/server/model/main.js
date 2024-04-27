@@ -1,6 +1,6 @@
-const { readJSONFileToAnalitics } = require('../../../services/fs');
+import { readJSONFileToAnalitics } from '../../../services/fs.js';
 
-const mainData = async () => {
+export const mainData = async () => {
   const cgJavascript = await readJSONFileToAnalitics('cg-shop-javascript');
   const cgAngular = await readJSONFileToAnalitics('cg-shop-angular');
   const cgPythonr = await readJSONFileToAnalitics('cg-shop-python');
@@ -94,6 +94,3 @@ const mainData = async () => {
     mainLinks,
   }
 }
-
-
-exports.mainData = mainData;

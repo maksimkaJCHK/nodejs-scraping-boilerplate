@@ -1,16 +1,14 @@
-const bSeo = ({ title, description }) => {
+export const bSeo = ({ title, description }) => {
   return `
   <title>${title}</title>
   <meta name="description" content="${description}">
 `
 };
 
-const bPage = ({ page, seo, appContent, js = "<!-- -->" }) => {
+export const bPage = ({ page, seo, appContent, js = "<!-- -->" }) => {
   page = page.replace(/<!--seo-->/, seo);
   page = page.replace(/<!-- js -->/, `<script>${js}</script>`);
   page = page.replace('<div id="forRenderContent"></div>', `<div id="forRenderContent">${appContent}</div>`);
 
   return page;
 };
-
-module.exports = { bSeo, bPage };

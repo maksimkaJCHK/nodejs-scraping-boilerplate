@@ -1,9 +1,9 @@
-const puppeteer = require('puppeteer');
-const log = require('cllc')();
-const needle = require('needle');
-const { renameFileForAnalitics, makeFile, makeFolder } = require('../services/fs');
+import puppeteer from 'puppeteer';
+import log from 'cllc';
+import needle from 'needle';
+import { renameFileForAnalitics, makeFile, makeFolder } from '../services/fs.js';
 
-const { delayF } = require('../services/delay');
+import { delayF } from '../services/delay.js';
 
 const headersCg = {};
 
@@ -36,7 +36,7 @@ const writeToken = async (domen) => {
   await browser.close();
 }
 
-const cgShopSpider = async (findFrase, callbackOutput = (f) => f) => {
+export const cgShopSpider = async (findFrase, callbackOutput = (f) => f) => {
   const domen = 'https://www.chitai-gorod.ru/';
   const imgCgShopDomen = 'https://cdn.img-gorod.ru/310x500/';
 
@@ -56,7 +56,7 @@ const cgShopSpider = async (findFrase, callbackOutput = (f) => f) => {
         if (res.statusCode === 404) {
           const msg = 'Такой страницы нет - ' + url;
 
-          log.e(msg);
+          log().e(msg);
           callbackOutput(msg);
         } else {
           totalPages = res.body.data.relationships.products.meta.pagination.total_pages;
@@ -111,7 +111,7 @@ const cgShopSpider = async (findFrase, callbackOutput = (f) => f) => {
       })
       .catch((err) => {
         if (err || res.statusCode !== 200) {
-          log.e((err || res.statusCode) + ' - ' + javascriptUrl);
+          log().e((err || res.statusCode) + ' - ' + javascriptUrl);
         }
       });
     
@@ -130,7 +130,7 @@ const cgShopSpider = async (findFrase, callbackOutput = (f) => f) => {
   const extension = '.json';
   const msg = `Всего найдено - ${books.length} книги по запросу ${findFrase} для интеренет-магазина читай-город`;
 
-  log.info(msg);
+  log().info(msg);
   callbackOutput(msg);
 
   renameFileForAnalitics({
@@ -144,5 +144,3 @@ const cgShopSpider = async (findFrase, callbackOutput = (f) => f) => {
 
   nullLine();
 };
-
-exports.cgShopSpider = cgShopSpider;

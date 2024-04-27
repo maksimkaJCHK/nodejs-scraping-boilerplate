@@ -1,3 +1,3 @@
-const { runAnalitics } = require('./shop');
+import { runAnalitics } from './shop.js';
 
 runAnalitics();

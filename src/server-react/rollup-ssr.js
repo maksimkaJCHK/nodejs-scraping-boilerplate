@@ -14,10 +14,7 @@ export default [
     ],
     output: {
       dir: `${pathServer}/ssr-components/`,
-      format: 'cjs',
-      // chunkFileNames() {
-      //   return 'common.js'
-      // }
+      format: 'es',
       chunkFileNames() {
         return "[name].js";
       },
@@ -35,11 +32,32 @@ export default [
     input: './src/server-react/index.js',
     output: {
       file: './src/server-react/express-config-compiled.js',
-      format: 'cjs',
+      format: 'es',
       chunkFileNames() {
         return 'common.js'
       }
     },
+    external: [
+      'express',
+      'react',
+      'react-dom/server',
+      'ws',
+      'fs',
+      'path',
+      '../services/fs.js',
+      '../analitics/shop.js',
+      '../spiders/shopScraping.js',
+      '../spiders/shopScrapingForFraze.js',
+      './helpers/helpers.js',
+      './server/model/nav.js',
+      './server/model/main.js',
+      './server/model/pages.js',
+      './server/ssr-components/Wrapper.js',
+      './server/ssr-components/AllShopsCont.js',
+      './server/ssr-components/MainCont.js',
+      './server/ssr-components/CurShopCont.js',
+      './server/ssr-components/PageNotFound.js'
+    ],
     ...initParamsExpress,
   },
 ];

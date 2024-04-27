@@ -77,7 +77,7 @@ const typesDoc = [
   },
 ];
 
-const bType = (mType) => {
+export const bType = (mType) => {
   const fIdx = typesDoc.findIndex((el) => el.mimeType == mType);
 
   if (fIdx !== -1) {
@@ -86,5 +86,3 @@ const bType = (mType) => {
 
   return null;
 };
-
-exports.bType = bType;

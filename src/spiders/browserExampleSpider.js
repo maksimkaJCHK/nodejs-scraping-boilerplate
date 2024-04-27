@@ -1,5 +1,5 @@
-const puppeteer = require('puppeteer');
-const { makeResultsFolder, makeFile } = require('../services/fs.js');
+import puppeteer from 'puppeteer';
+import { makeResultsFolder, makeFile } from '../services/fs.js';
 
 const domen = 'http://localhost:8080/';
 

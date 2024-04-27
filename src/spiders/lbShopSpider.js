@@ -1,13 +1,13 @@
-const log = require('cllc')();
-const needle = require('needle');
-const tress = require('tress');
-const cheerio = require('cheerio');
+import log from 'cllc';
+import needle from 'needle';
+import tress from 'tress';
+import cheerio from 'cheerio';
 
-const { renameFileForAnalitics, makeFolder, makeFile } = require('../services/fs');
+import { renameFileForAnalitics, makeFolder, makeFile } from '../services/fs.js';
 
-const { delayF } = require('../services/delay');
+import { delayF } from '../services/delay.js';
 
-const lbShopSpider = async (findFrase, callbackOutput = (f) => f ) => {
+export const lbShopSpider = async (findFrase, callbackOutput = (f) => f ) => {
   let isFinish = false;
   const domen = 'https://www.labirint.ru';
 
@@ -25,13 +25,13 @@ const lbShopSpider = async (findFrase, callbackOutput = (f) => f ) => {
       if (res.statusCode === 404) {
         const msg = 'Такой страницы нет - ' + url;
 
-        log.error(msg);
+        log().error(msg);
         callbackOutput(msg);
       } else {
         options.cookies = res.cookies;
 
         if (err || res.statusCode !== 200) {
-          log.e((err || res.statusCode) + ' - ' + url);
+          log().e((err || res.statusCode) + ' - ' + url);
     
           return callback(true);
         }
@@ -76,7 +76,7 @@ const lbShopSpider = async (findFrase, callbackOutput = (f) => f ) => {
           page += 1;
           const msg = `Страница - ${page} для запроса ${findFrase} для интеренет-магазина лабиринт.`;
 
-          log.info(msg);
+          log().info(msg);
           callbackOutput(msg);
           q.push(forBuildUrl + $('.pagination-next__text').attr('href'));
         }
@@ -87,17 +87,17 @@ const lbShopSpider = async (findFrase, callbackOutput = (f) => f ) => {
   }, delay);
 
   q.success = function(data) {
-    log.info(this);
-    log.info('Все прошло нормально - ', data);
+    log().info(this);
+    log().info('Все прошло нормально - ', data);
   }
 
   q.retry = function(){
     q.pause();
-    log.i('Paused on:', this);
+    log().i('Paused on:', this);
   
     setTimeout(function(){
       q.resume();
-      log.i('Resumed');
+      log().i('Resumed');
     }, 300000);
   }
   
@@ -105,9 +105,9 @@ const lbShopSpider = async (findFrase, callbackOutput = (f) => f ) => {
     isFinish = true;
     const msg = `Всего найдено ${results.length} товара, по запросу ${findFrase} для интернет-магазина лабиринт`;
 
-    log.info('__________________________________');
-    log.info('Парсинг закончился');
-    log.info(msg);
+    log().info('__________________________________');
+    log().info('Парсинг закончился');
+    log().info(msg);
 
     callbackOutput('Парсинг закончился');
     callbackOutput(msg);
@@ -134,5 +134,3 @@ const lbShopSpider = async (findFrase, callbackOutput = (f) => f ) => {
     await delayF();
   }
 }
-
-exports.lbShopSpider = lbShopSpider;

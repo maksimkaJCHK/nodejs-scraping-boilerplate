@@ -1,4 +1,4 @@
-const topNav = [
+export const topNav = [
   {
     url: '/',
     title: 'Главная',
@@ -98,8 +98,7 @@ const newItem = [
   },
 ];
 
-exports.topNav = topNav;
-exports.navParams = {
+export const navParams = {
   cg,
   lb,
   newItem

@@ -1,4 +1,4 @@
-const { shopScraping } = require('./shopScraping');
+import { shopScraping } from './shopScraping.js';
 
 const runShopSpider = async () => {
   await shopScraping();

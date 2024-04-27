@@ -1,5 +1,11 @@
-const { readJSONFileToAnalitics, makeFile, makeFolder, renameFile, deleteFile } = require('../services/fs');
-const { bDate } = require('../services/date');
+import {
+  readJSONFileToAnalitics,
+  makeFile,
+  makeFolder,
+  renameFile,
+} from '../services/fs.js';
+
+import { bDate } from '../services/date.js';
 
 const analiticsPath = './results/analitics';
 const buildFrazeItem = (length) => length == 1 ? 'новый товар' : 'новых товара';
@@ -60,7 +66,7 @@ const analizeShop = async ({
   }
 }
 
-const newItemsAnalitics = async (callback = (f) => f) => {
+export const runAnalitics = async (callback = (f) => f) => {
   makeFolder(analiticsPath);
 
   console.log('Читай-город:');
@@ -116,5 +122,3 @@ const newItemsAnalitics = async (callback = (f) => f) => {
    callback
   });
 }
-
-exports.runAnalitics = newItemsAnalitics;

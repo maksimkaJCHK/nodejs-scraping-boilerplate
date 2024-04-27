@@ -68,6 +68,7 @@ const catalogs = createSlice({
     },
     setIsReloadCatalog(state) {
       state.isReloadCatalog = true;
+      state.isReloadCatalogBtn = false;
       state.catalogs = [];
     }
   },

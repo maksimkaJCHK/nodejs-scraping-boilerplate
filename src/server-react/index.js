@@ -1,32 +1,32 @@
-const express = require('express');
+import express from 'express';
 
-const React = require('react');
-const ReactDOMServer = require('react-dom/server');
+import React from 'react';
+import ReactDOMServer from 'react-dom/server';
 
-const { WebSocketServer } = require(`ws`);
+import { WebSocketServer } from 'ws';
 
-const fs = require('fs');
-const path = require( 'path' );
+import fs from 'fs';
+import path from 'path';
 
-const { readJSONFileToAnalitics } = require('../services/fs');
+import { readJSONFileToAnalitics } from '../services/fs.js';
 
-const { runAnalitics } = require('../analitics/shop');
-const { shopScraping } = require('../spiders/shopScraping');
-const { shopScrapingForFraze } = require('../spiders/shopScrapingForFraze');
+import { runAnalitics } from '../analitics/shop.js';
+import { shopScraping } from '../spiders/shopScraping.js';
+import { shopScrapingForFraze } from '../spiders/shopScrapingForFraze.js';
 
-const { bSeo, bPage } = require('./helpers/helpers.js');
+import { bSeo, bPage } from './helpers/helpers.js';
 
-const { topNav, navParams } = require('./server/model/nav.js');
+import { topNav, navParams } from './server/model/nav.js';
 
-const { mainData } = require('./server/model/main.js');
-const { newData } = require('./server/model/pages.js');
+import { mainData } from './server/model/main.js';
+import { newData } from './server/model/pages.js';
 
 // Компоненты React
-const Wrapper = require('./server/ssr-components/Wrapper.js');
-const AllShopsCont = require('./server/ssr-components/AllShopsCont.js');
-const MainCont = require('./server/ssr-components/MainCont.js');
-const CurShopCont = require('./server/ssr-components/CurShopCont.js');
-const PageNotFound = require('./server/ssr-components/PageNotFound.js');
+import Wrapper from './server/ssr-components/Wrapper.js';
+import AllShopsCont from './server/ssr-components/AllShopsCont.js';
+import MainCont from './server/ssr-components/MainCont.js';
+import CurShopCont from './server/ssr-components/CurShopCont.js';
+import PageNotFound from './server/ssr-components/PageNotFound.js';
 
 const wss = new WebSocketServer({ port: 8080 });
 
@@ -94,7 +94,7 @@ app.use(function (req, res, next) {
   next();
 });
 
-const typeLayout = fs.readFileSync(path.resolve(__dirname, './server/views/main.html'), {
+const typeLayout = fs.readFileSync('./src/server-react/server/views/main.html', {
   encoding: 'utf8',
 });
 
@@ -485,6 +485,8 @@ app.post('/new/:fraze', async (req, res, next) => {
   next();
 }, (req, res, next) => {
   console.log(`Post запрос с новыми товарами по фразе ${req.params.fraze} для интернет-магазинов`);
+}, (req, res, next) => {
+  console.log(`Post запрос для новых товаров по фразе "${req.params.fraze}"`);
 });
 
 app.get('/search', async (req, res, next) => {
