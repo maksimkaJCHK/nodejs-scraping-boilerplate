@@ -15,16 +15,31 @@ const bParamsForCurShop = ({ id, type, shop }) => {
   }
 }
 
-const initialState = {
+const bCategorory = (state) => {
+  if (window.category) {
+    return {
+      ...state,
+      catalogs: [
+        window.category
+      ]
+    }
+  }
+
+  return state;
+};
+
+let initialState = {
   isScraping: false,
   error: false,
   load: true,
   isReloadCatalogBtn: false,
   isReloadCatalog: false,
   timeLoad: null,
-  mainLinks: [],
-  catalogs: [],
+  mainLinks: window.mainLinks || [],
+  catalogs: window.catalogs || [],
 };
+
+initialState = bCategorory(initialState);
 
 const catalogs = createSlice({
   name: 'catalogs',
@@ -42,6 +57,9 @@ const catalogs = createSlice({
     },
     addMainLinks(state, { payload }) {
       state.mainLinks = payload;
+    },
+    stopLoad(state) {
+      state.load = false;
     },
     // Запросы по конкретным ключевым словам для читай-города и лабиринта
     addCategoryInCatalogs(state, { payload }) {
@@ -168,6 +186,7 @@ const catalogs = createSlice({
 })
 
 const {
+  stopLoad,
   addCatalogs,
   addMainLinks,
   addCategoryInCatalogs,
@@ -179,6 +198,7 @@ const {
 } = catalogs.actions;
 
 export {
+  stopLoad,
   addCatalogs,
   addMainLinks,
   addCategoryInCatalogs,

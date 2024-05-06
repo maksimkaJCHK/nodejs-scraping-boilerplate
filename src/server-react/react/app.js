@@ -29,12 +29,6 @@ const store = configureStore({
 
 const App = () => {
   useEffect(() => {
-    const renderCont = document.getElementById('forRenderContent');
-
-    if (renderCont) {
-      renderCont.parentNode.removeChild(renderCont);
-    }
-
     const app = document.querySelector('body');
     app.classList.add('isVisible');
   }, []);

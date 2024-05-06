@@ -2,16 +2,31 @@ import { createSlice } from '@reduxjs/toolkit';
 
 import { loadCatalog, loadCurCategory } from '@thunk/new-catalogs';
 
-const initialState = {
+const bCategorory = (state) => {
+  if (window.newCategory) {
+    return {
+      ...state,
+      catalogs: [
+        window.newCategory
+      ]
+    }
+  }
+
+  return state;
+};
+
+let initialState = {
   isAnalitics: false,
   error: false,
   load: true,
   isReloadNewCatalogBtn: false,
   isReloadNewCatalog: false,
   timeLoad: null,
-  mainLinks: [],
-  catalogs: [],
+  mainLinks: window.newMainLinks || [],
+  catalogs: window.newCatalogs || [],
 };
+
+initialState = bCategorory(initialState);
 
 const newCatalogs = createSlice({
   name: 'new-catalogs',
@@ -29,6 +44,9 @@ const newCatalogs = createSlice({
     },
     addMainLinks(state, { payload }) {
       state.mainLinks = payload;
+    },
+    stopLoad(state) {
+      state.load = false;
     },
     // Запросы по конкретным ключевым словам для читай-города и лабиринта
     addCategoryInCatalogs(state, { payload }) {
@@ -107,6 +125,7 @@ const newCatalogs = createSlice({
 })
 
 const {
+  stopLoad,
   addCatalogs,
   addMainLinks,
   addCategoryInCatalogs,
@@ -118,6 +137,7 @@ const {
 } = newCatalogs.actions;
 
 export {
+  stopLoad,
   addCatalogs,
   addMainLinks,
   addCategoryInCatalogs,

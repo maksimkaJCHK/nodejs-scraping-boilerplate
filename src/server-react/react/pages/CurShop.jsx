@@ -17,8 +17,27 @@ const CurShop = ({ nameShop }) => {
     isReloadCatalog
   } = useSelector(state => state.catalogs);
 
-  const [shopListParams, changeShopListParams] = useState({});
- 
+  const bShopListParams = () => {
+    const fIdx = catalogs.findIndex(({ id }) => id === fraze);
+
+    if (fIdx !== -1) {
+      const noGetReq = (nameShop === 'lb' && catalogs[fIdx].idLb) || (nameShop === 'cg' && catalogs[fIdx].idCg);
+
+      if (noGetReq) {
+        return {
+          shop: catalogs[fIdx]['shops'][nameShop],
+          id: fraze,
+          type: nameShop,
+          title: `Товары для ${ (nameShop === 'cg') ? 'читай-города' : 'лабиринта'} по запросу ${fraze}`
+        }
+      }
+    }
+
+    return {};
+  }
+
+  const [shopListParams, changeShopListParams] = useState(bShopListParams());
+
   useEffect(() => {
     let isCurShop = false;
 
@@ -45,7 +64,7 @@ const CurShop = ({ nameShop }) => {
             type: nameShop,
             title: `Товары для ${ (nameShop === 'cg') ? 'читай-города' : 'лабиринта'} по запросу ${fraze}`
           }
-  
+
           changeShopListParams(params);
         }
 

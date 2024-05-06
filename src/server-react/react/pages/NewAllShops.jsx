@@ -10,7 +10,7 @@ import { loadCurCategory, addCategoryInCatalogs } from '@slices/new-catalogs.js'
 const Main = () => {
   const { dispatch, useSelector, fraze } = useTypeParams();
 
-  const [ category, setCategory ] = useState({});
+  const [ category, setCategory ] = useState(window.newCategory || {});
 
   const {
     timeLoad,

@@ -10,7 +10,7 @@ import { loadCurCategory, addCategoryInCatalogs } from '@slices/catalogs.js';
 const Main = () => {
   const { dispatch, useSelector, fraze } = useTypeParams();
 
-  const [ category, setCategory ] = useState({});
+  const [ category, setCategory ] = useState(window.category || {});
 
   const {
     timeLoad,
@@ -35,11 +35,7 @@ const Main = () => {
         setCategory(category);
       }
 
-      if (category && !(category.idLb && category.idCg)) {
-        dispatch(loadCurCategory(fraze));
-      }
-
-      if (!category) {
+      if (!category || (category && !(category.idLb && category.idCg))) {
         dispatch(loadCurCategory(fraze));
       }
     }

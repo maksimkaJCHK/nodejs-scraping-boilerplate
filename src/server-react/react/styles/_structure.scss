@@ -45,19 +45,7 @@ main {
 
 body {
   overflow: hidden;
-  #app {
-    top: -1000px;
-    left: -1000px;
-    height: 1px;
-    overflow: hidden;
-    position: absolute;
-  }
   &.isVisible {
     overflow: visible;
-    #app {
-      height: auto;
-      overflow: visible;
-      position: static;
-    }
   }
 }

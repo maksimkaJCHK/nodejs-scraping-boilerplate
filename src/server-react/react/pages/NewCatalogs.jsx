@@ -7,9 +7,7 @@ import Preload from '@components/ui/Preload';
 
 import {
   loadCatalog,
-  addCatalogs,
-  addMainLinks,
-
+  stopLoad
 } from '@slices/new-catalogs.js';
 
 const Main = () => {
@@ -24,8 +22,7 @@ const Main = () => {
 
   useEffect(() => {
     if (window.newCatalogs !== undefined && window.newMainLinks !== undefined) {
-      dispatch(addCatalogs(window.newCatalogs));
-      dispatch(addMainLinks(window.newMainLinks));
+      dispatch(stopLoad());
     }
 
     if (window.newCatalogs === undefined && !mainLinks.length) {

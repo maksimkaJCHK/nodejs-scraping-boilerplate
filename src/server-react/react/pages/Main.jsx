@@ -5,7 +5,7 @@ import useTypeParams from '@hooks/useTypeParams.js';
 import MainCont from './content/MainCont';
 import Preload from '@components/ui/Preload';
 
-import { loadCatalog, addCatalogs, addMainLinks } from '@slices/catalogs.js';
+import { loadCatalog, stopLoad } from '@slices/catalogs.js';
 
 const Main = () => {
   const { dispatch, useSelector } = useTypeParams();
@@ -19,8 +19,7 @@ const Main = () => {
 
   useEffect(() => {
     if (window.catalogs !== undefined && window.mainLinks !== undefined) {
-      dispatch(addCatalogs(window.catalogs));
-      dispatch(addMainLinks(window.mainLinks));
+      dispatch(stopLoad());
     }
 
     if (window.catalogs === undefined && !mainLinks.length) {
