@@ -23,8 +23,6 @@ const Main = () => {
     const isCategory = window.newCategory !== undefined;
 
     if (isCategory) {
-      dispatch(addCategoryInCatalogs(window.newCategory));
-
       window.newCategory = undefined;
     }
 
@@ -35,11 +33,7 @@ const Main = () => {
         setCategory(category);
       }
 
-      if (category && !(category.idLb && category.idCg)) {
-        dispatch(loadCurCategory(fraze));
-      }
-
-      if (!category) {
+      if (!category || (category && !(category.idLb && category.idCg))) {
         dispatch(loadCurCategory(fraze));
       }
     }

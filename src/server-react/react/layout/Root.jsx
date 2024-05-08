@@ -22,7 +22,7 @@ import { addInJournal, openJournal } from '@slices/journal';
 
 import { topNav, navParams } from '../model/nav';
 
-import Journal from '../components/Journal';
+import Journal from './journal/Journal';
 import Nav from '../layout/Nav';
 import Params from '../layout/Params';
 import Button from '../components/ui/Button';

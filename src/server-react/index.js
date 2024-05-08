@@ -313,7 +313,7 @@ app.get('/lb/:fraze', async (req, res, next) => {
     description: `Описание для страницы по запросу "${fraze}" для лабиринта`
   });
 
-  const params = bShopParam(fraze, 'lb')
+  const params = await bShopParam(fraze, 'lb')
 
   let appContent = ReactDOMServer.renderToString(
     <Wrapper

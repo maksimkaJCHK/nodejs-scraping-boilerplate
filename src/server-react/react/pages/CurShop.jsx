@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 
 import useTypeParams from '@hooks/useTypeParams.js';
 
-import { addShopInCatalogs, loadCurShop } from '@slices/catalogs';
+import { stopLoad, loadCurShop } from '@slices/catalogs';
 
 import CurShopCont from './content/CurShopCont';
 import Preload from '@components/ui/Preload';
@@ -46,12 +46,13 @@ const CurShop = ({ nameShop }) => {
     }
 
     if (isCurShop) {
-      dispatch(addShopInCatalogs(window.curshop[nameShop][fraze]));
+      dispatch(stopLoad());
 
-      window.curshop[nameShop][fraze] = undefined;
+      window.curshop = undefined;
     }
 
     if (!isCurShop) {
+      let isLoadCurShop = false;
       const fIdx = catalogs.findIndex(({ id }) => id === fraze);
 
       if (fIdx !== -1) {
@@ -68,15 +69,10 @@ const CurShop = ({ nameShop }) => {
           changeShopListParams(params);
         }
 
-        if (!noGetReq) {
-          dispatch(loadCurShop({
-            type: nameShop,
-            fraze,
-          }));
-        }
+        isLoadCurShop = !noGetReq;
       }
 
-      if (fIdx === -1) {
+      if (fIdx === -1 || isLoadCurShop) {
         dispatch(loadCurShop({
           type: nameShop,
           fraze,

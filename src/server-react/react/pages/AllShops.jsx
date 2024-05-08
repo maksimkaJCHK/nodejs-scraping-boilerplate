@@ -5,7 +5,7 @@ import useTypeParams from '@hooks/useTypeParams.js';
 import AllShopsCont from './content/AllShopsCont';
 import Preload from '@components/ui/Preload';
 
-import { loadCurCategory, addCategoryInCatalogs } from '@slices/catalogs.js';
+import { loadCurCategory, stopLoad } from '@slices/catalogs.js';
 
 const Main = () => {
   const { dispatch, useSelector, fraze } = useTypeParams();
@@ -23,7 +23,7 @@ const Main = () => {
     const isCategory = window.category !== undefined;
 
     if (isCategory) {
-      dispatch(addCategoryInCatalogs(window.category));
+      dispatch(stopLoad());
 
       window.category = undefined;
     }
@@ -52,9 +52,7 @@ const Main = () => {
   }, [timeLoad]);
 
   useEffect(() => {
-    if (isReloadCatalog) {
-      dispatch(loadCurCategory(fraze));
-    }
+    if (isReloadCatalog) dispatch(loadCurCategory(fraze));
   }, [isReloadCatalog]);
 
   return (

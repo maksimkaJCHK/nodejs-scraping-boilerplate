@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import { changeIsJournal } from '@slices/journal'
 
-import JournalItem from './JournalItem';
+import JournalItems from './JournalItems';
 
 import './_journal.scss';
 
@@ -27,7 +27,7 @@ const Journal = () => {
       </div>
 
       <div className="wrapper">
-        <JournalItem items = {journal} />
+        <JournalItems items = {journal} />
       </div>
     </div>
   )

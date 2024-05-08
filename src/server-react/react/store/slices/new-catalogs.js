@@ -6,6 +6,7 @@ const bCategorory = (state) => {
   if (window.newCategory) {
     return {
       ...state,
+      load: false,
       catalogs: [
         window.newCategory
       ]

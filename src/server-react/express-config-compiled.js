@@ -248,7 +248,7 @@ app.get('/lb/:fraze', async (req, res, next) => {
     title: `Страница по запросу "${fraze}" для лабиринта`,
     description: `Описание для страницы по запросу "${fraze}" для лабиринта`
   });
-  const params = bShopParam(fraze, 'lb');
+  const params = await bShopParam(fraze, 'lb');
   let appContent = ReactDOMServer.renderToString( /*#__PURE__*/React.createElement(Wrapper, {
     topNav: topNav,
     navParams: navParams

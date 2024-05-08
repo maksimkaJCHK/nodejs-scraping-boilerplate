@@ -19,9 +19,34 @@ const bCategorory = (state) => {
   if (window.category) {
     return {
       ...state,
+      load: false,
       catalogs: [
         window.category
       ]
+    }
+  }
+
+  return state;
+};
+
+const bCurShop = (state) => {
+  const curShop = window.curshop;
+
+  if (curShop) {
+    const nameShop = Object.keys(curShop)[0];
+
+    if (nameShop) {
+      const fraze = Object.keys(curShop[nameShop])[0];
+
+      const { id, shop, type } = curShop[nameShop][fraze];
+
+      const bParam = bParamsForCurShop({ id, type, shop });
+
+      return {
+        ...state,
+        load: false,
+        catalogs: [bParam]
+      }
     }
   }
 
@@ -40,6 +65,7 @@ let initialState = {
 };
 
 initialState = bCategorory(initialState);
+initialState = bCurShop(initialState);
 
 const catalogs = createSlice({
   name: 'catalogs',

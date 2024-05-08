@@ -28,6 +28,7 @@ main {
   color: var(--type-color);
   position: relative;
   min-height: 300px;
+  transition: opacity .4s ease-in-out 0s;
   a {
     color: var(--link-color);
     &:hover {
@@ -45,7 +46,13 @@ main {
 
 body {
   overflow: hidden;
+  main {
+    opacity: .6;
+  }
   &.isVisible {
     overflow: visible;
+    main {
+      opacity: 1;
+    }
   }
 }

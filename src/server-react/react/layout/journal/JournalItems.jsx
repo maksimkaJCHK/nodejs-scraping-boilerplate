@@ -1,16 +1,14 @@
 import React from 'react';
 
-import FrazeNull from './ui/FrazeNull';
+import FrazeNull from '../../components/ui/FrazeNull';
 
-import './_journal-item.scss';
-
-const JournalItem = ({ items }) => {
+const JournalItems = ({ items }) => {
   if (!items.length) {
     return <FrazeNull text = "Журнал пуст." />;
   }
 
   return (
-    <>
+    <div className="journal-wrap-items">
       {
         items.map(({ message, id, time, date }) => {
           return (
@@ -19,15 +17,17 @@ const JournalItem = ({ items }) => {
               key = {id}
             >
               <div className = "journal-item-time">
-                { time } <span>{ date}</span>
+                { date } <span>{ time}</span>
               </div>
-              { message }
+              <div className="journal-item-message">
+                { message }
+              </div>
             </div>
           )
         })
       }
-    </>
+    </div>
   )
 }
 
-export default JournalItem;
+export default JournalItems;
