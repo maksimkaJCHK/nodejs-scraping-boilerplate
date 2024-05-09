@@ -34,7 +34,7 @@ const router = createBrowserRouter([
         element: <CurShop nameShop = "lb" />,
       },
       {
-        path: "/new",
+        path: "/new-items",
         element: <NewCatalogs />,
       },
       {

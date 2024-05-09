@@ -11,6 +11,7 @@ export default [
       `${pathFront}/pages/content/AllShopsCont.jsx`,
       `${pathFront}/pages/content/CurShopCont.jsx`,
       `${pathFront}/pages/content/MainCont.jsx`,
+      `${pathFront}/pages/ssr/Search.jsx`,
     ],
     output: {
       dir: `${pathServer}/ssr-components/`,
@@ -56,7 +57,7 @@ export default [
       './server/ssr-components/AllShopsCont.js',
       './server/ssr-components/MainCont.js',
       './server/ssr-components/CurShopCont.js',
-      './server/ssr-components/PageNotFound.js'
+      './server/ssr-components/PageNotFound.js',
     ],
     ...initParamsExpress,
   },

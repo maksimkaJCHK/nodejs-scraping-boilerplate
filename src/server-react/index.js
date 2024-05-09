@@ -1,12 +1,10 @@
 import express from 'express';
+import fs from 'fs';
 
 import React from 'react';
 import ReactDOMServer from 'react-dom/server';
 
 import { WebSocketServer } from 'ws';
-
-import fs from 'fs';
-import path from 'path';
 
 import { readJSONFileToAnalitics } from '../services/fs.js';
 
@@ -27,6 +25,8 @@ import AllShopsCont from './server/ssr-components/AllShopsCont.js';
 import MainCont from './server/ssr-components/MainCont.js';
 import CurShopCont from './server/ssr-components/CurShopCont.js';
 import PageNotFound from './server/ssr-components/PageNotFound.js';
+
+import Search from './server/ssr-components/Search.js';
 
 const wss = new WebSocketServer({ port: 8080 });
 
@@ -114,6 +114,7 @@ const bCategory = ({ fraze, cgItems, lbItems }) => {
 // Главная страница
 app.get('/', async (req, res, next) => {
   let page = typeLayout;
+  const nameUrl = 'main';
 
   let seo = bSeo({
     title: "Все запросы",
@@ -126,6 +127,7 @@ app.get('/', async (req, res, next) => {
     <Wrapper
       topNav = { topNav }
       navParams = { navParams }
+      nameUrl = { nameUrl }
     >
       <MainCont
         title = "Все товары по всем запросам"
@@ -179,6 +181,7 @@ const bAllShopsParam = async (fraze) => {
 
 app.get('/all-shops/:fraze', async (req, res, next) => {
   const fraze = req.params.fraze;
+  const nameUrl = fraze;
 
   let page = typeLayout;
 
@@ -193,6 +196,8 @@ app.get('/all-shops/:fraze', async (req, res, next) => {
     <Wrapper
       topNav = { topNav }
       navParams = { navParams }
+      isLoad = { false }
+      nameUrl = { nameUrl }
     >
       <AllShopsCont
         title = {`Товары по запросу "${ fraze }" для интернет-магазинов`}
@@ -249,6 +254,7 @@ const bShopParam = async (fraze, type) => {
 
 app.get('/cg/:fraze', async (req, res, next) => {
   const fraze = req.params.fraze;
+  const nameUrl = `${fraze}-cg`;
 
   let page = typeLayout;
 
@@ -263,6 +269,8 @@ app.get('/cg/:fraze', async (req, res, next) => {
     <Wrapper
       topNav = { topNav }
       navParams = { navParams }
+      isLoad = { false }
+      nameUrl = { nameUrl }
     >
       <CurShopCont
         title = { `Страница по запросу "${ fraze }" для читай-города` }
@@ -305,6 +313,7 @@ app.post('/cg/:fraze', async (req, res, next) => {
 // Лабиринт
 app.get('/lb/:fraze', async (req, res, next) => {
   const fraze = req.params.fraze;
+  const nameUrl = `${fraze}-lb`;
 
   let page = typeLayout;
 
@@ -319,6 +328,8 @@ app.get('/lb/:fraze', async (req, res, next) => {
     <Wrapper
       topNav = { topNav }
       navParams = { navParams }
+      isLoad = { false }
+      nameUrl = { nameUrl }
     >
       <CurShopCont
         title = { `Страница по запросу "${ fraze }" для лабиринта` }
@@ -359,8 +370,9 @@ app.post('/lb/:fraze', async (req, res, next) => {
 });
 
 // Новые товары
-app.get('/new', async (req, res, next) => {
+app.get('/new-items', async (req, res, next) => {
   let page = typeLayout;
+  const nameUrl = 'new';
 
   let seo = bSeo({
     title: "Все новые товары для магазинов",
@@ -373,9 +385,10 @@ app.get('/new', async (req, res, next) => {
     <Wrapper
       topNav = { topNav }
       navParams = { navParams }
+      nameUrl = { nameUrl }
     >
       <MainCont
-        title = "Все товары по всем запросам"
+        title = "Новые товары по всем запросам"
         mainLinks = { mainLinks }
         catalogs = { catalogs }
       />
@@ -399,7 +412,7 @@ app.get('/new', async (req, res, next) => {
   console.log('Загрузкилась страница с новыми товарами для магазинов');
 });
 
-app.post('/new', async (req, res, next) => {
+app.post('/new-items', async (req, res, next) => {
   const { mainLinks, catalogs } = await newData();
 
   res.contentType('application/json');
@@ -433,6 +446,7 @@ const bNewItems = async (fraze) => {
 
 app.get('/new/:fraze', async (req, res, next) => {
   const fraze = req.params.fraze;
+  const nameUrl = `${fraze}-new`;
 
   let page = typeLayout;
 
@@ -447,6 +461,8 @@ app.get('/new/:fraze', async (req, res, next) => {
     <Wrapper
       topNav = { topNav }
       navParams = { navParams }
+      isLoad = { false }
+      nameUrl = { nameUrl }
     >
       <AllShopsCont
         title = {`Новые товары по запросу "${ fraze }" для интернет-магазинов`}
@@ -491,6 +507,7 @@ app.post('/new/:fraze', async (req, res, next) => {
 
 app.get('/search', async (req, res, next) => {
   let page = typeLayout;
+  const nameUrl = 'search';
 
   let seo = bSeo({
     title: 'Поиск',
@@ -501,8 +518,14 @@ app.get('/search', async (req, res, next) => {
     <Wrapper
       topNav = { topNav }
       navParams = { navParams }
-      isLoad = { true }
-    ></Wrapper>
+      isLoad = { false }
+      nameUrl = { nameUrl }
+    >
+      <Search
+        load = { false }
+        search = ""
+        disabled = { true} />
+    </Wrapper>
   );
 
   page = bPage({

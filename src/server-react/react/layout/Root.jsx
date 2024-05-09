@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
 import { Outlet } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux';
@@ -28,10 +28,16 @@ import Params from '../layout/Params';
 import Button from '../components/ui/Button';
 
 const Root = () => {
+  const [isJournal, setIsJournal] = useState(false);
+
   const { isReloadCatalogBtn, isScraping } = useSelector(state => state.catalogs);
   const { isReloadNewCatalogBtn, isAnalitics } = useSelector(state => state.newCatalogs);
 
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    setTimeout(() => setIsJournal(true), 1000)
+  }, []);
 
   const typeSocket = ({ type }) => {
     const socket = new WebSocket(`ws://localhost:8080/${type}`);
@@ -128,7 +134,7 @@ const Root = () => {
         <Outlet />
       </main>
 
-      <Journal />
+      { isJournal ? <Journal /> : null }
     </>
   )
 }

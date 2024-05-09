@@ -20,6 +20,9 @@ export const initParamsComponents = {
       browser: true,
     }),
     postcss({
+      extract: true,
+      extract: 'tmp/css/main.css',
+      minimize: true,
       plugins: [
         autoprefixer(),
         url({
@@ -67,6 +70,19 @@ export const initParamsExpress = {
       ],
       plugins: [],
       exclude: 'node_modules/**',
+    }),
+    postcss({
+      extract: true,
+      extract: 'tmp/css/main.css',
+      minimize: false,
+      plugins: [
+        autoprefixer(),
+        url({
+          url: "inline",
+          maxSize: 10,
+          fallback: "copy",
+        }),
+      ],
     }),
   ],
 };

@@ -3,7 +3,7 @@ import Link from '../components/ui/Link';
 
 import './_nav.scss';
 
-const Nav = ({ link }) => {
+const Nav = ({ link, nameUrl }) => {
   return (
     <nav>
       {
@@ -11,6 +11,7 @@ const Nav = ({ link }) => {
           return <Link
             { ...item }
             key = { idx }
+            nameUrl = { nameUrl }
           />
         })
       }

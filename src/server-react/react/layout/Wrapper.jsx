@@ -8,12 +8,19 @@ const Wrapper = ({
     topNav,
     navParams,
     children,
+    nameUrl,
     isLoad = true
   }) => {
   return (
     <>
-      <Nav link = { topNav } />
-      <Params { ...navParams } />
+      <Nav
+        link = { topNav }
+        nameUrl = { nameUrl }
+      />
+      <Params
+        { ...navParams }
+        nameUrl = { nameUrl }
+      />
 
       <main>
         <Preload load = { isLoad } />

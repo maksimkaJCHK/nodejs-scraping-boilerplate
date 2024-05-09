@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import ReactDOM from 'react-dom/client';
+import ReactDOM, { hydrateRoot } from 'react-dom/client';
 
 import { RouterProvider } from "react-router-dom";
 
@@ -16,7 +16,6 @@ import searchResults from '@slices/search-results';
 import '@styles/main.scss';
 
 const node = document.getElementById('app');
-const root = ReactDOM.createRoot(node);
 
 const store = configureStore({
   reducer: {
@@ -40,4 +39,4 @@ const App = () => {
   )
 }
 
-root.render(<App />);
+hydrateRoot(node, <App />);

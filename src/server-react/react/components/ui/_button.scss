@@ -9,7 +9,7 @@
   border-radius: 5px;
   background: var(--btn-bg);
   border: 1px solid var(--btn-bg);
-  transition: background-color .4s ease-in 0s;
+  transition: background-color .4s var(--ease-out-sine) 0s;
   &:hover {
     background: var(--btn-bg-hover);
   }

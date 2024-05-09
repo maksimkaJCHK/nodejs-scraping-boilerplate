@@ -15,7 +15,7 @@ const getCurCategory = (fraze) => api.post(`/all-shops/${fraze}`);
 const getCurShop = (fraze, type) => api.post(`/${type}/${fraze}`);
 
 // Новые товары
-const getNewPage = () => api.post('/new');
+const getNewPage = () => api.post('/new-items');
 const getNewCurCategory = (fraze) => api.post(`/new/${fraze}`);
 
 // Для поиска

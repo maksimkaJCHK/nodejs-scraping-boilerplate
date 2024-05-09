@@ -12,6 +12,7 @@ const Params = ({
   children,
   isScraping,
   isAnalitics,
+  nameUrl,
   analitics = (f) => f,
   scraping = (f) => f,
   scrapingAndAnalitics = (f) => f,
@@ -27,6 +28,7 @@ const Params = ({
             return <Link
               { ...link }
               key = { idx }
+              nameUrl = { nameUrl }
             />
           })
         }
@@ -38,6 +40,7 @@ const Params = ({
             return <Link
               { ...link }
               key = { idx }
+              nameUrl = { nameUrl }
             />
           })
         }
@@ -46,8 +49,10 @@ const Params = ({
         <h2>Новые товары:</h2>
         <b>
           <Link
-            url="/new"
+            url="/new-items"
             title="Новые товары по всем запросам"
+            name = "new"
+            nameUrl = { nameUrl }
           />
         </b>
         {
@@ -55,6 +60,7 @@ const Params = ({
             return <Link
               { ...link }
               key = { idx }
+              nameUrl = { nameUrl }
             />
           })
         }
