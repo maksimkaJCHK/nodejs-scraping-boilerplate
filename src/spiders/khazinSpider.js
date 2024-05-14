@@ -3,16 +3,6 @@ import needle from 'needle';
 import tress from 'tress';
 import cheerio from 'cheerio';
 
-import { makeFile, makeResultsFolder, makeFolder } from '../services/fs.js';
-
-const URL = 'https://khazin.ru/articles/';
-const options = {};
-const delay = -1000;
-
-let results = [];
-let count = 0;
-let page = 0;
-
 const buildPost = (html) => {
   return html
     .replace(/&/gi, "&amp;")
@@ -22,89 +12,92 @@ const buildPost = (html) => {
     .replace(/'/gi, "&#039;");
 };
 
-const bNamePage = (url) => {
-  const bUrl = url.replace('https://khazin.ru/', '');
+const khazinSpider = ({
+  URL,
+  saveArticle,
+  resultsCallback,
+  delay = -1000
+}) => {
+  const options = {};
 
-  return `${bUrl
-    .replace(/\\/gi, '')
-    .replace(/\//gi, '')}`;
-}
+  let results = [];
+  let count = 0;
+  let page = 0;
 
-makeResultsFolder();
+  const q = tress((url, callback) => {
+    needle.get(url, options, (err, res) => {
+      if (res.statusCode === 404) {
+        log().error('Такой страницы нет - ' + url);
+      } else {
+        options.cookies = res.cookies;
 
-makeFolder('./results/hazin_results');
+        if (err || res.statusCode !== 200) {
+          log().e((err || res.statusCode) + ' - ' + url);
 
-const q = tress((url, callback) => {
-  needle.get(url, options, (err, res) => {
-    if (res.statusCode === 404) {
-      log().error('Такой страницы нет - ' + url);
-    } else {
-      options.cookies = res.cookies;
+          return callback(true);
+        }
+    
+        const $ = cheerio.load(res.body);
+    
+        // Формирую статью
+        if ($('.post-content').html()) {
+          count += 1;
+          log().info(count);
 
-      if (err || res.statusCode !== 200) {
-        log().e((err || res.statusCode) + ' - ' + url);
-  
-        return callback(true);
-      }
-  
-      const $ = cheerio.load(res.body);
-  
-      // Формирую статью
-      if ($('.post-content').html()) {
-        count += 1;
-        log().info(count);
+          results.push({
+            page,
+            number: count,
+            url: url,
+            header: $('h1').text(),
+            post: buildPost($('.post-content').html())
+          });
 
-        results.push({
-          page,
-          number: count,
-          url: url,
-          header: $('h1').text(),
-          post: buildPost($('.post-content').html())
+          saveArticle({
+            page,
+            count,
+            url,
+            content: $('.post-content').html()
+          });
+        };
+
+        // Собираю ссылки на странице
+        $('.posts .post .post__thumbnail>a').each(function() {
+          const urlNews = $(this).attr('href');
+
+          q.push(urlNews);
         });
 
-        makeFile(`./results/hazin_results/${page}_${count}_${bNamePage(url)}`, $('.post-content').html());
-      };
-  
-      // Собираю ссылки на странице
-      $('.posts .post .post__thumbnail>a').each(function() {
-        const urlNews = $(this).attr('href');
-  
-        q.push(urlNews);
-      });
-  
-      // Перехожу на следующую страницу
-      if ($('.next.page-numbers').attr('href')) {
-        page += 1;
-        log().info('Страница - ', page);
+        // Перехожу на следующую страницу
+        if ($('.next.page-numbers').attr('href')) {
+          page += 1;
+          log().info('Страница - ', page);
 
-        q.push($('.next.page-numbers').attr('href'));
+          q.push($('.next.page-numbers').attr('href'));
+        }
       }
-    }
 
-    callback();
-  });
-}, delay);
+      callback();
+    });
+  }, delay);
 
-q.success = function(data) {
-  log().info(this);
-  log().info('Все прошло нормально - ', data);
+  q.success = function(data) {
+    log().info(this);
+    log().info('Все прошло нормально - ', data);
+  }
+
+  q.retry = function(){
+    q.pause();
+    log().i('Paused on:', this);
+
+    setTimeout(function(){
+      q.resume();
+      log().i('Resumed');
+    }, 300000);
+  }
+
+  q.drain = () => resultsCallback(results);
+
+  q.push(URL);
 }
 
-q.retry = function(){
-  q.pause();
-  log().i('Paused on:', this);
-
-  setTimeout(function(){
-    q.resume();
-    log().i('Resumed');
-  }, 300000);
-}
-
-q.drain = () => {
-  console.log('__________________');
-  log().info('Парсинг закончился');
-
-  makeFile('./results/data.json', JSON.stringify(results, null, 2));
-};
-
-q.push(URL);
+export default khazinSpider;

@@ -5,7 +5,7 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "scrapy:static": "node ./src/spiders/khazinSpider.js",
+    "scrapy:static": "node ./src/crawlers/khazinCrawler.js",
     "scrapy:browser": "node ./src/spiders/browserExampleSpider.js",
     "scrapy:shop": "node ./src/spiders/runShopSpider.js",
     "scrapy:documents": "node ./src/spiders/documents.js",
