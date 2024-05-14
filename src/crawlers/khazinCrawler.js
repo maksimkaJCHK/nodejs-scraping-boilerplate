@@ -3,7 +3,7 @@ import log from 'cllc';
 
 import { makeFile, makeResultsFolder, makeFolder } from '../services/fs.js';
 
-const URL = 'https://khazin.ru/articles/page/360/';
+const URL = 'https://khazin.ru/articles/';
 
 const bNamePage = (url) => {
   const bUrl = url.replace('https://khazin.ru/', '');
