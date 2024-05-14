@@ -47,11 +47,11 @@ export const cgShopSpider = async (findFrase, callbackOutput = (f) => f) => {
   let isStop = false;
 
   while (!isStop) {
-    const javascriptUrl = `https://web-gate.chitai-gorod.ru/api/v2/search/product?phrase=${findFrase}&products%5Bpage%5D=${pageCount}&products%5Bper-page%5D=1000&sort=relevance`;
+    const jsUrl = `https://web-gate.chitai-gorod.ru/api/v2/search/product?phrase=${findFrase}&products%5Bpage%5D=${pageCount}&products%5Bper-page%5D=1000&sort=relevance`;
 
     let totalPages = null;
 
-    await needle('get', javascriptUrl, { headers: headersCg })
+    await needle('get', jsUrl, { headers: headersCg })
       .then((res) => {
         if (res.statusCode === 404) {
           const msg = 'Такой страницы нет - ' + url;
@@ -74,7 +74,8 @@ export const cgShopSpider = async (findFrase, callbackOutput = (f) => f) => {
                 pages,
                 price,
                 publisher
-              } = el.attributes
+              } = el.attributes;
+
               const bookAuthors = [];
 
               // Мне приходят пустые объекты вместе с реальными книгами, если подумать, то если нет id-ка и url-а, то и книги скорее всего тоже нет
@@ -86,7 +87,7 @@ export const cgShopSpider = async (findFrase, callbackOutput = (f) => f) => {
                     const firstName = author.firstName;
                     const middleName = author.middleName;
                     const lastName = author.lastName;
-        
+
                     bookAuthors.push(`${firstName} ${middleName} ${lastName}`)
                   });
                 }
@@ -111,10 +112,10 @@ export const cgShopSpider = async (findFrase, callbackOutput = (f) => f) => {
       })
       .catch((err) => {
         if (err || res.statusCode !== 200) {
-          log().e((err || res.statusCode) + ' - ' + javascriptUrl);
+          log().e((err || res.statusCode) + ' - ' + jsUrl);
         }
       });
-    
+
     if (totalPages == pageCount) isStop = true;
     pageCount += 1;
 

@@ -100,7 +100,7 @@ export const lbShopSpider = async (findFrase, callbackOutput = (f) => f ) => {
       log().i('Resumed');
     }, 300000);
   }
-  
+
   q.drain = () => {
     isFinish = true;
     const msg = `Всего найдено ${results.length} товара, по запросу ${findFrase} для интернет-магазина лабиринт`;
@@ -111,7 +111,7 @@ export const lbShopSpider = async (findFrase, callbackOutput = (f) => f ) => {
 
     callbackOutput('Парсинг закончился');
     callbackOutput(msg);
-    // Вполне возможно, я лабиринт буду отдельно парсить, к примеру если на читай городе сменят API
+    // Вполне возможно, я лабиринт буду отдельно парсить, к примеру если на читай-городе сменят API
     makeFolder('./results/shop-result');
 
     const path = './results/shop-result/';
