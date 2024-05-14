@@ -1,19 +1,17 @@
 import puppeteer from 'puppeteer';
-import { makeResultsFolder, makeFile } from '../services/fs.js';
-
-const domen = 'http://localhost:8080/';
-
-const delayF = (delay = 5000) => {
-  return new Promise((resolve, reject) => {
-    setInterval(() => resolve(), delay);
-  });
-};
 
 const bNamePage = (url) => `${url
   .replace(/\\/gi, '_')
   .replace(/\//gi, '_')}`;
 
-(async () => {
+const browserExampleSpider = async ({
+  domen,
+  makeResultsFolder,
+  delayF,
+  savePage,
+  login,
+  password
+}) => {
   const browser = await puppeteer.launch({ headless: false });
   const page = await browser.newPage();
 
@@ -30,8 +28,8 @@ const bNamePage = (url) => `${url
   // Жду, когда загрузится форма авторизации
   await page.waitForSelector('#username');
 
-  await page.type('#username', 'mylogin');
-  await page.type("#password", 'myPassword')
+  await page.type('#username', login);
+  await page.type("#password", password)
 
   await page.click('#kc-login')
 
@@ -73,7 +71,10 @@ const bNamePage = (url) => `${url
 
         console.log(body);
 
-        makeFile(`./results/${bNamePage(url)}.txt`, body);
+        savePage({
+          name: bNamePage(url),
+          body
+        })
       } catch (error) {
         console.log(error);
       }
@@ -83,4 +84,6 @@ const bNamePage = (url) => `${url
   }
 
   bPage();
-})();
+};
+
+export default browserExampleSpider;

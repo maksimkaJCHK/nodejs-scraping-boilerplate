@@ -1,13 +1,13 @@
 import express from 'express';
 import { WebSocketServer } from 'ws';
 import { runAnalitics } from '../analitics/shop.js';
-import { shopScraping } from '../spiders/shopScraping.js';
+import { shopScraping } from '../crawlers/shopScraping.js';
 import e from 'fs';
 import n, { forwardRef } from 'react';
 import r from 'react-dom/server';
 import { readJSONFileToAnalitics } from '../services/fs.js';
 import { bAllShopsParam } from './server/services/services.js';
-import { shopScrapingForFraze } from '../spiders/shopScrapingForFraze.js';
+import { shopScrapingForFraze } from '../crawlers/shopScrapingForFraze.js';
 
 const topNav = [{
   url: '/',

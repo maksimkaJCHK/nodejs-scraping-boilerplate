@@ -1,5 +1,5 @@
-import { lbShopSpider } from './lbShopSpider.js';
-import { cgShopSpider } from './cgShopSpider.js';
+import { lbShopSpider } from '../spiders/lbShopSpider.js';
+import { cgShopSpider } from '../spiders/cgShopSpider.js';
 import { makeResultsFolder } from '../services/fs.js';
 
 export const shopScraping = async (callback = (f) => f) => {

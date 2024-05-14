@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOMServer from 'react-dom/server';
 
 import { bAllShopsParam } from '../services/services.js';
-import { shopScrapingForFraze } from '../../../spiders/shopScrapingForFraze.js';
+import { shopScrapingForFraze } from '../../../crawlers/shopScrapingForFraze.js';
 
 import Wrapper from '../../react/layout/Wrapper.jsx';
 import Search from '../../react/pages/ssr/Search.jsx';

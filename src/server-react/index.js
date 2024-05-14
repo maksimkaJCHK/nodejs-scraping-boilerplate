@@ -3,7 +3,7 @@ import express from 'express';
 import { WebSocketServer } from 'ws';
 
 import { runAnalitics } from '../analitics/shop.js';
-import { shopScraping } from '../spiders/shopScraping.js';
+import { shopScraping } from '../crawlers/shopScraping.js';
 
 // Новые компоненты
 import pages from './server/requests-ssr/'
