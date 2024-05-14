@@ -21,6 +21,24 @@
     overflow: auto;
     border-radius: 10px 10px 0 0;
     padding-top: 20px;
+    @-moz-document url-prefix() {
+      & {
+        scrollbar-width: auto;
+        scrollbar-color: var(--j-color-time) var(--j-background);
+      }
+    }
+    &::-webkit-scrollbar {
+      width: 10px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: var(--j-background);
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: var(--j-color-time);
+      border-radius: 20px;
+    }
   }
   &-open {
     transform: translateY(0%);

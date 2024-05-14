@@ -15,6 +15,9 @@ const journal = createSlice({
     openJournal(state) {
       state.isJournal = true;
     },
+    closeJournal(state) {
+      state.isJournal = false;
+    },
     changeIsJournal(state) {
       state.isJournal = !state.isJournal;
     },
@@ -38,12 +41,14 @@ const {
   changeIsJournal,
   addInJournal,
   openJournal,
+  closeJournal,
 } = journal.actions;
 
 export {
   changeIsJournal,
   addInJournal,
   openJournal,
+  closeJournal,
 }
 
 export default journal.reducer;
