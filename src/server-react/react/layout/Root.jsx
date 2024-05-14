@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
 import { Outlet } from "react-router-dom";
-import { useDispatch, useSelector } from 'react-redux';
+import useTypeParams from '@hooks/useTypeParams.js';
 
 import {
   setIsReloadCatalog,
@@ -28,12 +28,12 @@ import Params from '../layout/Params';
 import Button from '../components/ui/Button';
 
 const Root = () => {
+  const { dispatch, useSelector } = useTypeParams();
+
   const [isJournal, setIsJournal] = useState(false);
 
   const { isReloadCatalogBtn, isScraping } = useSelector(state => state.catalogs);
   const { isReloadNewCatalogBtn, isAnalitics } = useSelector(state => state.newCatalogs);
-
-  const dispatch = useDispatch();
 
   useEffect(() => {
     setTimeout(() => setIsJournal(true), 1000)

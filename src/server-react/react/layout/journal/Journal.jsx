@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { useSelector, useDispatch } from 'react-redux';
+import useTypeParams from '@hooks/useTypeParams.js';
 
 import { changeIsJournal } from '@slices/journal'
 
@@ -9,8 +9,8 @@ import JournalItems from './JournalItems';
 import './_journal.scss';
 
 const Journal = () => {
+  const { dispatch, useSelector } = useTypeParams();
   const { isJournal, journal } = useSelector(state => state.journal);
-  const dispatch = useDispatch();
 
   const journalClass = [
     'journal',
