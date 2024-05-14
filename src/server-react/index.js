@@ -36,26 +36,14 @@ wss.on('connection', async (ws, req) => {
 
   ws.send(JSON.stringify(msg));
 
-  if (req.url === '/analitics') {
-    await runAnalitics((msg) => ws.send(JSON.stringify({
-      type: 'msg',
-      message: msg
-    })));
-  }
-
-  if (req.url === '/scraping') {
+  if (req.url === '/scraping' || req.url === '/scraping-and-analitics') {
     await shopScraping((msg) => ws.send(JSON.stringify({
       type: 'msg',
       message: msg
     })));
   }
 
-  if (req.url === '/scraping-and-analitics') {
-    await shopScraping((msg) => ws.send(JSON.stringify({
-      type: 'msg',
-      message: msg
-    })));
-
+  if (req.url === '/analitics' || req.url === '/scraping-and-analitics') {
     await runAnalitics((msg) => ws.send(JSON.stringify({
       type: 'msg',
       message: msg

@@ -895,23 +895,13 @@ wss.on('connection', async (ws, req) => {
     message: "Подключение к серверу успешно установлено!"
   };
   ws.send(JSON.stringify(msg));
-  if (req.url === '/analitics') {
-    await runAnalitics(msg => ws.send(JSON.stringify({
-      type: 'msg',
-      message: msg
-    })));
-  }
-  if (req.url === '/scraping') {
+  if (req.url === '/scraping' || req.url === '/scraping-and-analitics') {
     await shopScraping(msg => ws.send(JSON.stringify({
       type: 'msg',
       message: msg
     })));
   }
-  if (req.url === '/scraping-and-analitics') {
-    await shopScraping(msg => ws.send(JSON.stringify({
-      type: 'msg',
-      message: msg
-    })));
+  if (req.url === '/analitics' || req.url === '/scraping-and-analitics') {
     await runAnalitics(msg => ws.send(JSON.stringify({
       type: 'msg',
       message: msg
@@ -942,7 +932,7 @@ app.use(function (req, res, next) {
 
 // Главная страница
 app.get('/', mainPage, (req, res, next) => {
-  console.log('Загрузкилась главная страница');
+  console.log('Загрузилась главная страница');
 });
 app.post('/', mainPagePost, (req, res, next) => {
   console.log('Post запрос для главной страницы');
@@ -950,7 +940,7 @@ app.post('/', mainPagePost, (req, res, next) => {
 
 // Все магазины
 app.get('/all-shops/:fraze', allShopsPage, (req, res, next) => {
-  console.log(`Загрузкилась страница с запросами ${req.params.fraze} для интрнет-магазинов`);
+  console.log(`Загрузилась страница с запросами ${req.params.fraze} для интрнет-магазинов`);
 });
 app.post('/all-shops/:fraze', allShopsPagePost, (req, res, next) => {
   console.log(`Post запрос для фразы ${req.params.fraze} для интрнет-магазинов`);
@@ -958,7 +948,7 @@ app.post('/all-shops/:fraze', allShopsPagePost, (req, res, next) => {
 
 // Категория по читай городу
 app.get('/cg/:fraze', cgShop, (req, res, next) => {
-  console.log(`Загрузкилась страница с запросами ${req.params.fraze} для читай-города`);
+  console.log(`Загрузилась страница с запросами ${req.params.fraze} для читай-города`);
 });
 app.post('/cg/:fraze', cgShopPost, (req, res, next) => {
   console.log(`Post запрос для фразы ${req.params.fraze} для читай-города`);
@@ -966,7 +956,7 @@ app.post('/cg/:fraze', cgShopPost, (req, res, next) => {
 
 // Лабиринт
 app.get('/lb/:fraze', lbShop, (req, res, next) => {
-  console.log(`Загрузкилась страница с запросами ${req.params.fraze} для лабиринта`);
+  console.log(`Загрузилась страница с запросами ${req.params.fraze} для лабиринта`);
 });
 app.post('/lb/:fraze', lbShopPost, (req, res, next) => {
   console.log(`Post запрос для фразы ${req.params.fraze} для лабиринта`);
@@ -974,7 +964,7 @@ app.post('/lb/:fraze', lbShopPost, (req, res, next) => {
 
 // Новые товары
 app.get('/new-items', newItemsPage, (req, res, next) => {
-  console.log('Загрузкилась страница с новыми товарами для магазинов');
+  console.log('Загрузилась страница с новыми товарами для магазинов');
 });
 app.post('/new-items', newItemsPagePost, (req, res, next) => {
   console.log('Post запрос с новыми товарами для магазинов');
@@ -982,7 +972,7 @@ app.post('/new-items', newItemsPagePost, (req, res, next) => {
 
 // Новые товары по конкретным фразам
 app.get('/new/:fraze', newFrazePage, (req, res, next) => {
-  console.log(`Загрузкилась страница с новыми запросами ${req.params.fraze} для магазинов`);
+  console.log(`Загрузилась страница с новыми запросами ${req.params.fraze} для магазинов`);
 });
 app.post('/new/:fraze', newFrazePagePost, (req, res, next) => {
   console.log(`Post запрос с новыми товарами по фразе ${req.params.fraze} для интернет-магазинов`);
