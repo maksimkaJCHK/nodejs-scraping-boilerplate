@@ -23,15 +23,34 @@ block content
   if shops.cgJavascript || shops.lbJavascript
     #shop-javascript
       +newOutput('javascript', 'cgJavascript', 'lbJavascript')
+  else
+    p
+      b По запросу "javascript" нет новых товаров!!!
+
   if shops.cgPythonr || shops.lbPythonr
     #shop-python
       +newOutput('python', 'cgPythonr', 'lbPythonr')
+  else
+    p
+      b По запросу "python" нет новых товаров!!!
+
   if shops.cgReact || shops.lbReact
     #shop-react
       +newOutput('react', 'cgReact', 'lbReact')
+  else
+    p
+      b По запросу "react" нет новых товаров!!!
+
   if shops.cgTypescript || shops.lbTypescript
     #shop-typescript
       +newOutput('typescript', 'cgTypescript', 'lbTypescript')
+  else
+    p
+      b По запросу "typescript" нет новых товаров!!!
+
   if shops.cgAngular || shops.lbAngular
     #shop-angular
       +newOutput('angular', 'cgAngular', 'lbAngular')
+  else
+    p
+      b По запросу "angular" нет новых товаров!!!
