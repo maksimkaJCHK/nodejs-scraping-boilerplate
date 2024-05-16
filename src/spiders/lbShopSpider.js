@@ -3,11 +3,13 @@ import needle from 'needle';
 import tress from 'tress';
 import cheerio from 'cheerio';
 
-import { renameFileForAnalitics, makeFolder, makeFile } from '../services/fs.js';
-
 import { delayF } from '../services/delay.js';
 
-export const lbShopSpider = async (findFrase, callbackOutput = (f) => f ) => {
+export const lbShopSpider = async ({
+  findFrase,
+  callbackOutput = (f) => f,
+  callbackResults = (f) => f
+}) => {
   let isFinish = false;
   const domen = 'https://www.labirint.ru';
 
@@ -103,29 +105,8 @@ export const lbShopSpider = async (findFrase, callbackOutput = (f) => f ) => {
 
   q.drain = () => {
     isFinish = true;
-    const msg = `Всего найдено ${results.length} товара, по запросу ${findFrase} для интернет-магазина лабиринт`;
 
-    log().info('__________________________________');
-    log().info('Парсинг закончился');
-    log().info(msg);
-
-    callbackOutput('Парсинг закончился');
-    callbackOutput(msg);
-    // Вполне возможно, я лабиринт буду отдельно парсить, к примеру если на читай-городе сменят API
-    makeFolder('./results/shop-result');
-
-    const path = './results/shop-result/';
-    const name = `lb-shop-${findFrase}`;
-    const extension = '.json';
-
-    renameFileForAnalitics({
-      path,
-      name,
-      extension,
-      callback() {
-        makeFile(path + name + extension, JSON.stringify(results, null, 2));
-      }
-    });
+    callbackResults(findFrase, results, callbackOutput);
   };
 
   q.push(forBuildUrl + `?stype=0&page=${page}`);

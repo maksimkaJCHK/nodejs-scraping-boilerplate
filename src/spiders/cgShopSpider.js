@@ -1,7 +1,6 @@
 import puppeteer from 'puppeteer';
 import log from 'cllc';
 import needle from 'needle';
-import { renameFileForAnalitics, makeFile, makeFolder } from '../services/fs.js';
 
 import { delayF } from '../services/delay.js';
 
@@ -36,7 +35,11 @@ const writeToken = async (domen) => {
   await browser.close();
 }
 
-export const cgShopSpider = async (findFrase, callbackOutput = (f) => f) => {
+export const cgShopSpider = async ({
+  findFrase,
+  callbackOutput = (f) => f,
+  callbackResults = (f) => f
+}) => {
   const domen = 'https://www.chitai-gorod.ru/';
   const imgCgShopDomen = 'https://cdn.img-gorod.ru/310x500/';
 
@@ -123,25 +126,5 @@ export const cgShopSpider = async (findFrase, callbackOutput = (f) => f) => {
   }
 
   nullLine();
-
-  makeFolder('./results/shop-result');
-
-  const path = './results/shop-result/';
-  const name = `cg-shop-${findFrase}`;
-  const extension = '.json';
-  const msg = `Всего найдено - ${books.length} книги по запросу ${findFrase} для интеренет-магазина читай-город`;
-
-  log().info(msg);
-  callbackOutput(msg);
-
-  renameFileForAnalitics({
-    path,
-    name,
-    extension,
-    callback() {
-      makeFile(path + name + extension, JSON.stringify(books, null, 4));
-    }
-  });
-
-  nullLine();
+  callbackResults(findFrase, books, callbackOutput);
 };
