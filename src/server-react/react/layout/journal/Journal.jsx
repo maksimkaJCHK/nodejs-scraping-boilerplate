@@ -16,6 +16,11 @@ const Journal = () => {
     window.addEventListener('click', () => dispatch(closeJournal()));
   }, []);
 
+  const handleJournal = (e) => {
+    e.stopPropagation();
+    dispatch(changeIsJournal());
+  }
+
   const journalClass = [
     'journal',
     isJournal ? 'journal-open' : null
@@ -24,16 +29,19 @@ const Journal = () => {
   return (
     <div
       className = { journalClass }
-      onClick = { (e) => e.stopPropagation() }
+      
     >
       <div
         className = "journal-label"
-        onClick = { () => dispatch(changeIsJournal()) }
+        onClick = { handleJournal}
       >
         Журнал
       </div>
 
-      <div className="wrapper">
+      <div 
+        className="wrapper"
+        onClick = { (e) => e.stopPropagation() }
+      >
         <JournalItems items = {journal} />
       </div>
     </div>
