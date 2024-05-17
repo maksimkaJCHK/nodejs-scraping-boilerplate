@@ -2,6 +2,9 @@
   --j-background: #282828;
   --j-color-time: #dc8d45;
   --j-color-mes: #618ff8;
+  --j-color-action: #45bd90;
+  --j-color-results: #c9e917;
+  --j-color-error: #c71c16;
 
   left: 0;
   width: 100%;
@@ -68,8 +71,8 @@
     div,
     span {
       &::selection {
-        color: #fff;
-        background: #45bd90;
+        color: #000;
+        background: var(--j-color-action);
       }
     }
   }
@@ -92,6 +95,17 @@
     }
     &-message {
       color: var(--j-color-mes);
+    }
+    &-start &-message,
+    &-end &-message {
+      font-weight: bold;
+      color: var(--j-color-action);
+    }
+    &-results &-message {
+      color: var(--j-color-results);
+    }
+    &-error &-message {
+      color: var(--j-color-error);
     }
   }
 }

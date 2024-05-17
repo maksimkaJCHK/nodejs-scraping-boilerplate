@@ -28,7 +28,7 @@ export const lbShopSpider = async ({
         const msg = 'Такой страницы нет - ' + url;
 
         log().error(msg);
-        callbackOutput(msg);
+        callbackOutput(msg, error);
       } else {
         options.cookies = res.cookies;
 

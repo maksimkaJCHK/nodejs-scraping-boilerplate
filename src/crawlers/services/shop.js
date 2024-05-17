@@ -10,10 +10,10 @@ export const callbackResults = (nameShop, prefix) => (findFrase, results, callba
   const path = './results/shop-result/';
   const name = `${prefix}-shop-${findFrase}`;
   const extension = '.json';
-  const msg = `Всего найдено - ${results.length} книги по запросу ${findFrase} для интеренет-магазина ${nameShop}`;
+  const msg = `Всего найдено - ${results.length} книги по запросу ${findFrase} для интеренет-магазина ${nameShop}!!!`;
 
   console.log(msg);
-  callback(msg);
+  callback(msg, 'results');
 
   renameFileForAnalitics({
     path,

@@ -60,7 +60,7 @@ export const cgShopSpider = async ({
           const msg = 'Такой страницы нет - ' + url;
 
           log().e(msg);
-          callbackOutput(msg);
+          callbackOutput(msg, 'error');
         } else {
           totalPages = res.body.data.relationships.products.meta.pagination.total_pages;
 

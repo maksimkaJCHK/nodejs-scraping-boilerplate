@@ -10,11 +10,21 @@ const JournalItems = ({ items }) => {
   return (
     <div className="journal-wrap-items">
       {
-        items.map(({ message, id, time, date }) => {
+        items.map(({
+          message,
+          id,
+          time,
+          date,
+          type
+        }) => {
+          const bClassName = ['journal-item'];
+
+          if (type !== 'msg') bClassName.push(`journal-item-${type}`);
+
           return (
             <div 
-              className = 'journal-item'
-              key = {id}
+              className = { bClassName.join(' ') }
+              key = { id }
             >
               <div className = "journal-item-time">
                 { date } <span>{ time}</span>

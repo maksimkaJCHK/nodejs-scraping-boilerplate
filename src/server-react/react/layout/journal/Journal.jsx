@@ -42,7 +42,7 @@ const Journal = () => {
         className="wrapper"
         onClick = { (e) => e.stopPropagation() }
       >
-        <JournalItems items = {journal} />
+        <JournalItems items = { journal } />
       </div>
     </div>
   )

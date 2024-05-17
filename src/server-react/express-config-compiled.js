@@ -890,22 +890,20 @@ const wss = new WebSocketServer({
   port: 8080
 });
 wss.on('connection', async (ws, req) => {
+  const retMes = (message, type) => ({
+    type: type || 'msg',
+    message
+  });
   const msg = {
     type: 'start',
-    message: "Подключение к серверу успешно установлено!"
+    message: 'Подключение к серверу успешно установлено!'
   };
   ws.send(JSON.stringify(msg));
   if (req.url === '/scraping' || req.url === '/scraping-and-analitics') {
-    await shopScraping(msg => ws.send(JSON.stringify({
-      type: 'msg',
-      message: msg
-    })));
+    await shopScraping((msg, type) => ws.send(JSON.stringify(retMes(msg, type))));
   }
   if (req.url === '/analitics' || req.url === '/scraping-and-analitics') {
-    await runAnalitics(msg => ws.send(JSON.stringify({
-      type: 'msg',
-      message: msg
-    })));
+    await runAnalitics((msg, type) => ws.send(JSON.stringify(retMes(msg, type))));
   }
   let endMessage;
   if (req.url === '/analitics') endMessage = 'Аналитика закончилась, должны появиться новые товары!';
