@@ -51,14 +51,14 @@ const analizeShop = async ({
   if (!newItems.length) {
     await renameFile(nameFile, newNameFile);
     console.log(`На сайте ${nameSite} по запросу ${fraze} нет ничего нового.`);
-    callback(`На сайте ${nameSite} по запросу ${fraze} нет ничего нового.`);
+    callback(`На сайте ${nameSite} по запросу ${fraze} нет ничего нового.`, 'results');
   }
 
   if (newItems.length) {
     console.log(`На сайте ${nameSite} по запросу ${fraze} появилось ${newItems.length} ${buildFrazeItem(newItems.length)}!!!`);
     console.log(newItems);
 
-    callback(`На сайте ${nameSite} по запросу ${fraze} появилось ${newItems.length} ${buildFrazeItem(newItems.length)}!!!`);
+    callback(`На сайте ${nameSite} по запросу ${fraze} появилось ${newItems.length} ${buildFrazeItem(newItems.length)}!!!`, 'results');
 
     await renameFile(nameFile, newNameFile);
 
@@ -69,8 +69,8 @@ const analizeShop = async ({
 export const runAnalitics = async (callback = (f) => f) => {
   makeFolder(analiticsPath);
 
-  console.log('Читай-город:');
-  callback('Читай-город:');
+  console.log('Начался анализ интернет-магазина читай-город.');
+  callback('Начался анализ интернет-магазина читай-город.');
 
   await analizeShop({
     fraze: 'javascript',
@@ -93,8 +93,8 @@ export const runAnalitics = async (callback = (f) => f) => {
     callback
   });
 
-  console.log('Лабиринт:');
-  callback('Лабиринт:');
+  console.log('Начался анализ интернет-магазина лабиринт.');
+  callback('Начался анализ интернет-магазина лабиринт.');
 
   await analizeShop({
     fraze: 'javascript',
