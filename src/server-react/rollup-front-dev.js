@@ -17,7 +17,7 @@ export default {
     file: `${pathFront}/server/public/js/main.js`,
     name: 'main',
     format: 'iife',
-    sourcemap: true,
+    sourcemap: 'inline',
   },
   plugins: [
     livereload({

@@ -49,20 +49,20 @@ const analizeShop = async ({
   const newNameFile = `${analiticsPath}/${type}-${fraze}_${bPrefix}.json`;
 
   if (!newItems.length) {
-    const fraze = `На сайте ${nameSite} по запросу ${fraze} нет ничего нового.`;
+    const frazeRes = `На сайте ${nameSite} по запросу "${fraze}" нет ничего нового.`;
 
     await renameFile(nameFile, newNameFile);
-    console.log(fraze);
-    callback(fraze, 'results');
+    console.log(frazeRes);
+    callback(frazeRes, 'results');
   }
 
   if (newItems.length) {
-    const fraze = `На сайте ${nameSite} по запросу ${fraze} появилось ${newItems.length} ${buildFrazeItem(newItems.length)}!!!`;
+    const frazeRes = `На сайте ${nameSite} по запросу "${fraze}" появилось ${newItems.length} ${buildFrazeItem(newItems.length)}!!!`;
 
-    console.log(fraze);
+    console.log(frazeRes);
     console.log(newItems);
 
-    callback(`fraze`, 'results');
+    callback(frazeRes, 'results');
 
     await renameFile(nameFile, newNameFile);
 

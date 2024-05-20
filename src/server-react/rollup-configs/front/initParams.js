@@ -99,8 +99,8 @@ export const bTypePlugins = ({ minimizeCss = true }) => {
             "modules": false,
             "corejs": 3,
             "targets": {
-              "chrome": "58",
-              "ie": "11"
+              "chrome": "80",
+              "edge": "88"
             }
           }
         ],
