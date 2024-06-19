@@ -21,7 +21,9 @@ export const lbShopSpider = async ({
   const results = [];
 
   const q = tress((url, callback) => {
-    const options = {};
+    const options = {
+      cookies: {}
+    };
 
     needle.get(url, options, (err, res) => {
       if (res.statusCode === 404) {
