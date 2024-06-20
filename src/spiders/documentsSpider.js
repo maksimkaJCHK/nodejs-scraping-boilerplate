@@ -7,7 +7,9 @@ import { makeFile } from '../services/fs.js';
 import { delayF } from '../services/delay.js';
 import { bType } from '../services/types.js';
 
-const options = {};
+const options = {
+  cookies: {}
+};
 
 const bUrl = (url) => {
   const lStr = url.lastIndexOf('/');

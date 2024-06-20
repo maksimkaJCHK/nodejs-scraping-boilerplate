@@ -18,7 +18,9 @@ const khazinSpider = ({
   resultsCallback,
   delay = -1000
 }) => {
-  const options = {};
+  const options = {
+    cookies: {}
+  };
 
   let results = [];
   let count = 0;
