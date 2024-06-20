@@ -38,9 +38,13 @@ const resultsCallback = (results) => {
   if (results.length) {
     const progr = results.filter(({ name }) => name.toLowerCase().indexOf('программист') !== -1);
     const front = results.filter(({ name }) => name.toLowerCase().indexOf('front') !== -1);
+    const verst = results.filter(({ name }) => name.toLowerCase().indexOf('верстальщик') !== -1);
+    const web = results.filter(({ name }) => name.toLowerCase().indexOf('web') !== -1);
 
     if (progr.length) log().info(`По вакансии программист найдено ${progr.length} вакансии.`);
-    if (front.length) log().info(`По вакансии frontend-разоаботчик найдено ${progr.length} вакансии.`);
+    if (front.length) log().info(`По вакансии frontend-разоаботчик найдена ${progr.length} вакансия.`);
+    if (verst.length) log().info(`По вакансии верстальщик найдена ${progr.length} вакансия.`);
+    if (web.length) log().info(`По вакансии web-мастер найдена ${progr.length} вакансия.`);
   }
 };
 
