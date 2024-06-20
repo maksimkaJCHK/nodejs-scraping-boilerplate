@@ -9,7 +9,7 @@
     "scrapy:browser": "node ./src/crawlers/browserExampleSpiderCrawler.js",
     "scrapy:shop": "node ./src/crawlers/runShopSpider.js",
     "scrapy:documents": "node ./src/crawlers/documents.js",
-    "scrapy:express": "node ./src/spiders/expressOficeSpider.js",
+    "scrapy:express": "node ./src/crawlers/hhCompanyCrawler.js",
     "analitics": "node ./src/analitics/run.js",
     "server:static": "nodemon ./src/server/index.js",
     "server:react": "node ./src/server-react/express-config-compiled.js",

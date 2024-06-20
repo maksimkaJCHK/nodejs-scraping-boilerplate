@@ -3,9 +3,11 @@ import needle from 'needle';
 import tress from 'tress';
 import cheerio from 'cheerio';
 
-const expressOfice = ({ URL, delay } = {
-  URL: 'https://tula.hh.ru/search/vacancy?from=employerPage&employer_id=909573&hhtmFrom=employer',
-  delay: -700
+const hhCompanySpider = ({
+  idCompany,
+  vacancyCallback = (x) => x,
+  resultsCallback = (x) => x,
+  delay = -700
 }) => {
   const options = {
     cookies: {}
@@ -15,6 +17,8 @@ const expressOfice = ({ URL, delay } = {
 
   const q = tress((url, callback) => {
     needle.get(url, options, (err, res) => {
+      let job = {};
+
       if (res.statusCode === 404) {
         log().error('Такой страницы нет - ' + url);
       } else {
@@ -35,45 +39,64 @@ const expressOfice = ({ URL, delay } = {
           const price = $('[data-qa="vacancy-salary"]').text();
           const description = $('.vacancy-branded-user-content').html();
 
-          results.push({
+          job = {
             name,
             price,
             description
-          })
+          };
+
+          results.push(job);
         }
 
         $('main .vacancy-search-item__card').each(function() {
           const urlVacancy = $(this).find('h2').find('.bloko-link').attr('href');
 
           if (urlVacancy.indexOf('vacancy/') !== -1) q.push(urlVacancy);
+
+          if (urlVacancy.indexOf('vacancy/') === -1) {
+            const name = $(this).find('h2').text();
+            const price = '';
+            const description = '';
+
+            job = {
+              name,
+              price,
+              description
+            };
+
+            results.push(job);
+          };
         })
       }
 
-      callback();
+      callback(null, job);
     });
   }, delay);
 
   q.success = function(data) {
+    const txt = data.name || '';
+
     log().info(this);
-    log().info('Все прошло нормально - ', data);
+    log().info('Все прошло нормально - ', txt);
+
+    vacancyCallback(data);
   }
 
   q.retry = function(){
     q.pause();
-    log().i('Paused on:', this);
+
+    log().i('Скрапинг остановился: ', this);
 
     setTimeout(function(){
       q.resume();
-      log().i('Resumed');
+
+      log().i('Скрапинг возобновлен');
     }, 300_000);
   }
 
-  q.drain = () => {
-    console.log(results);
-  };
+  q.drain = () => resultsCallback(results);
 
-  q.push(URL);
+  q.push(`https://tula.hh.ru/search/vacancy?from=employerPage&employer_id=${idCompany}&hhtmFrom=employer`);
 }
 
-expressOfice();
-//export default expressOfice;
+export default hhCompanySpider;
