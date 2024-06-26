@@ -27,7 +27,7 @@ const vacancyCallback = (vacancyFolder) => (data) => {
     `
     log().info(`Вакансия - "${name}"`);
 
-    makeFile(`${vacancyFolder}${name}.html`, content);
+    makeFile(`${vacancyFolder}${name.replace(/\//gi, ' ')}.html`, content);
   }
 };
 
