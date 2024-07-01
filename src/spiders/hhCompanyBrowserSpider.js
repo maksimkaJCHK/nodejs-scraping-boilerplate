@@ -43,8 +43,8 @@ const hhCompanyBrowserSpider = async ({
   const page1 = await context.newPage();
 
   await page1.setViewport({
-    width: 1880,
-    height: 1024,
+    width: 1480,
+    height: 1000,
   });
 
   await page1.goto(url, {
@@ -75,7 +75,7 @@ const hhCompanyBrowserSpider = async ({
     return linksArr;
   });
 
-  await bScreen({
+  if (screenPath) await bScreen({
     page: page1,
     path: screenPath,
     name: 'list-job'
@@ -119,7 +119,7 @@ const hhCompanyBrowserSpider = async ({
       const isVerst = job.name.toLowerCase().indexOf('верстальщик') !== -1;
       const isWeb = job.name.toLowerCase().indexOf('web') !== -1;
 
-      if (isProger || isFront || isVerst || isWeb) {
+      if (screenPath && (isProger || isFront || isVerst || isWeb)) {
         await bScreen({
           page: page1,
           path: screenPath,
