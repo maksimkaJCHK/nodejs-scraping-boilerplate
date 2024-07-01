@@ -11,6 +11,7 @@
     "scrapy:documents": "node ./src/crawlers/documents.js",
     "scrapy:work": "node ./src/crawlers/hhCompanyCrawler.js",
     "scrapy:work:browser": "node ./src/crawlers/hhCompanyBrowserCrawler.js",
+    "scrapy:company": "node ./src/crawlers/companyCrawler.js",
     "analitics": "node ./src/analitics/run.js",
     "server:static": "nodemon ./src/server/index.js",
     "server:react": "node ./src/server-react/express-config-compiled.js",
