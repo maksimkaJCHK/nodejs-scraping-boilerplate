@@ -15,7 +15,7 @@ const typeCrawler = async ({
   startPage,
   delay = 1000
 }) => {
-  typeSpider({
+  await typeSpider({
     startPage,
     itemCallback,
     resultsCallback,

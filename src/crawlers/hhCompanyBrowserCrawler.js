@@ -49,7 +49,7 @@ const resultsCallback = (results) => {
   }
 };
 
-const hhCompanyBrowserCrawler = ({
+const hhCompanyBrowserCrawler = async ({
   idCompany,
   nameCompany,
 }) => {
@@ -66,7 +66,7 @@ const hhCompanyBrowserCrawler = ({
 
   const vacancyCallbackFun = vacancyCallback(vacancyFolder);
 
-  hhCompanyBrowserSpider({
+  await hhCompanyBrowserSpider({
     idCompany,
     vacancyCallback: vacancyCallbackFun,
     resultsCallback,
@@ -74,12 +74,16 @@ const hhCompanyBrowserCrawler = ({
   })
 }
 
-hhCompanyBrowserCrawler({
-  idCompany: '909573',
-  nameCompany: 'express-office',
-});
+const runCompanyCrawlers = async () => {
+  await hhCompanyBrowserCrawler({
+    idCompany: '909573',
+    nameCompany: 'express-office',
+  });
 
-// hhCompanyBrowserCrawler({
-//   idCompany: '4127247',
-//   nameCompany: 'Qtim',
-// });
+  await hhCompanyBrowserCrawler({
+    idCompany: '4127247',
+    nameCompany: 'Qtim',
+  });
+}
+
+runCompanyCrawlers();

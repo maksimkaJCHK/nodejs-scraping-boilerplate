@@ -96,9 +96,15 @@ const hhCompanyBrowserSpider = async ({
     await delayF(delay);
 
     const job = await page1.evaluate(() => {
-      const name = document.querySelector('.vacancy-title h1').textContent;
-      const price = document.querySelector('[data-qa="vacancy-salary"]').textContent;
-      const description = document.querySelector('.vacancy-branded-user-content').innerHTML;
+      const name = document.querySelector('.vacancy-title h1')?.textContent;
+
+      const price1 = document.querySelector('[data-qa="vacancy-salary"]')?.textContent;
+      const price2 = document.querySelector('.vacancy-salary-compensation-type-gross')?.textContent;
+      const price = price1 || price2;
+      
+      const desc1 = document.querySelector('.vacancy-branded-user-content')?.innerHTML;
+      const desc2 = document.querySelector('.vacancy-description')?.innerHTML;
+      const description = desc1 || desc2;
 
       return {
         name,
