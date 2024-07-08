@@ -8,7 +8,7 @@ export const settings = {
   },
   launch: {
     headless: false,
-    args: [`--window-size=${width},${1024}`]
+    args: [`--window-size=${width},${height}`]
   },
   gotoParam: {
     timeout: 60_000,
