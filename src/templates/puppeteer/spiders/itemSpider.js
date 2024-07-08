@@ -1,9 +1,9 @@
 import log from 'cllc';
+import { settings } from './settings.js';
 
 const itemSpider = async ({
   url,
   page,
-  settings,
   itemCallback = (x) => x
 }) => {
   try {

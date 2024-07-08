@@ -3,21 +3,7 @@ import log from 'cllc';
 
 import itemSpider from './itemSpider.js';
 import { delayF } from '../../../services/delay.js';
-
-const settings = {
-  viewPort: {
-    width: 1880,
-    height: 1024,
-  },
-  launch: {
-    headless: false,
-    args: [`--window-size=1880,1024`]
-  },
-  gotoParam: {
-    timeout: 60_000,
-    waitUntil: 'domcontentloaded'
-  }
-};
+import { settings } from './settings.js';
 
 const typeSpider = async ({
   startPage,
@@ -67,12 +53,11 @@ const typeSpider = async ({
       await itemSpider({
         url: items[i],
         page: page2,
-        settings,
         itemCallback(item) {
           itemCallback(item);
           results.push(item);
         }
-      })
+      });
 
       await delayF(delay);
     }

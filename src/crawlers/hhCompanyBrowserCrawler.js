@@ -84,6 +84,11 @@ const runCompanyCrawlers = async () => {
     idCompany: '4127247',
     nameCompany: 'Qtim',
   });
+
+  await hhCompanyBrowserCrawler({
+    idCompany: '200522',
+    nameCompany: 'soft-expert',
+  });
 }
 
 runCompanyCrawlers();
