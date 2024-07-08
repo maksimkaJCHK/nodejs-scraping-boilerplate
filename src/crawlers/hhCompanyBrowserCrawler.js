@@ -9,7 +9,7 @@ const bDate = () => {
   const cDate = new Date();
 
   const date = bNumb(cDate.getDate());
-  const month = bNumb(cDate.getMonth());
+  const month = bNumb(cDate.getMonth() + 1);
   const year = cDate.getFullYear();
   const hours = bNumb(cDate.getHours());
   const minutes = bNumb(cDate.getMinutes());
