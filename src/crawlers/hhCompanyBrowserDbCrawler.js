@@ -29,11 +29,13 @@ const resultsCallback = (results) => {
     const front = results.filter(({ name }) => name.toLowerCase().indexOf('front') !== -1);
     const verst = results.filter(({ name }) => name.toLowerCase().indexOf('верстальщик') !== -1);
     const web = results.filter(({ name }) => name.toLowerCase().indexOf('web') !== -1);
+    const developer = results.filter(({ name }) => name.toLowerCase().indexOf('разработчик') !== -1);
 
     if (progr.length) log().info(`По вакансии программист найдено ${progr.length} вакансии.`);
-    if (front.length) log().info(`По вакансии frontend-разоаботчик найдена ${progr.length} вакансия.`);
-    if (verst.length) log().info(`По вакансии верстальщик найдена ${progr.length} вакансия.`);
-    if (web.length) log().info(`По вакансии web-мастер найдена ${progr.length} вакансия.`);
+    if (front.length) log().info(`По вакансии frontend-разоаботчик найдена ${front.length} вакансия.`);
+    if (verst.length) log().info(`По вакансии верстальщик найдена ${verst.length} вакансия.`);
+    if (web.length) log().info(`По вакансии web-мастер найдена ${web.length} вакансия.`);
+    if (developer.length) log().info(`По вакансии web-разработчик найдена ${developer.length} вакансия.`);
   }
 };
 
