@@ -27,7 +27,7 @@ const vacancyCallback = (vacancyFolder) => (data) => {
     `
     log().info(`Вакансия - "${name}"`);
 
-    makeFile(`${vacancyFolder}${name.replace(/\//gi, ' ')}.html`, content);
+    makeFile(`${vacancyFolder}${name.replace(/[\/\\]/gi, ' ')}.html`, content);
   }
 };
 
@@ -75,15 +75,15 @@ const hhCompanyBrowserCrawler = async ({
 }
 
 const runCompanyCrawlers = async () => {
-  await hhCompanyBrowserCrawler({
-    idCompany: '909573',
-    nameCompany: 'express-office',
-  });
+  // await hhCompanyBrowserCrawler({
+  //   idCompany: '909573',
+  //   nameCompany: 'express-office',
+  // });
 
-  await hhCompanyBrowserCrawler({
-    idCompany: '4127247',
-    nameCompany: 'Qtim',
-  });
+  // await hhCompanyBrowserCrawler({
+  //   idCompany: '4127247',
+  //   nameCompany: 'Qtim',
+  // });
 
   await hhCompanyBrowserCrawler({
     idCompany: '200522',
