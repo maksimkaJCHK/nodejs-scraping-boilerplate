@@ -1,5 +1,5 @@
 import puppeteer from 'puppeteer';
-import cheerio from 'cheerio';
+import * as cheerio from 'cheerio';
 import log from 'cllc';
 
 import companyItemSpider from './companyItemSpider.js';

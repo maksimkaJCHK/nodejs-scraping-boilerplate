@@ -190,10 +190,10 @@ function o() {
   return o = Object.assign ? Object.assign.bind() : function (e) {
     for (var t = 1; t < arguments.length; t++) {
       var a = arguments[t];
-      for (var n in a) Object.prototype.hasOwnProperty.call(a, n) && (e[n] = a[n]);
+      for (var n in a) ({}).hasOwnProperty.call(a, n) && (e[n] = a[n]);
     }
     return e;
-  }, o.apply(this, arguments);
+  }, o.apply(null, arguments);
 }
 const p = ({
     url: e,
@@ -460,11 +460,11 @@ const p = ({
     category: e,
     title: t
   }) => /*#__PURE__*/n.createElement(n.Fragment, null, /*#__PURE__*/n.createElement("h1", null, t), Object.keys(e).length ? /*#__PURE__*/n.createElement(P, e) : null),
-  j = ({
+  S = ({
     shopListParams: e,
     title: t
   }) => /*#__PURE__*/n.createElement(n.Fragment, null, /*#__PURE__*/n.createElement("h1", null, t), /*#__PURE__*/n.createElement(w, e)),
-  S = async (e, t) => {
+  j = async (e, t) => {
     const a = `${t}-shop-${e}`;
     return {
       id: e,
@@ -490,13 +490,13 @@ const p = ({
         title: `Страница по запросу "${p}" для ${d}`,
         description: `Описание для страницы по запросу "${p}" для ${d}`
       });
-    const b = await S(p, i);
+    const b = await j(p, i);
     let v = r.renderToString( /*#__PURE__*/n.createElement(y, {
       topNav: a,
       navParams: l,
       isLoad: !1,
       nameUrl: g
-    }, /*#__PURE__*/n.createElement(j, {
+    }, /*#__PURE__*/n.createElement(S, {
       title: `Страница по запросу "${p}" для ${d}`,
       shopListParams: b
     })));
@@ -509,7 +509,7 @@ const p = ({
   },
   T = e => async (t, a, n) => {
     const l = t.params.fraze,
-      r = await S(l, e);
+      r = await j(l, e);
     a.contentType("application/json"), a.status(200), a.send(r), n();
   },
   U = async () => {
@@ -599,7 +599,7 @@ const p = ({
   x = () => /*#__PURE__*/n.createElement("div", {
     className: "pageNotFound"
   }, /*#__PURE__*/n.createElement("h1", null, "Страница не найдера!!!"), /*#__PURE__*/n.createElement("p", null, "Страница не найдена, попробуйте перейти по ссылкам выше.")),
-  O = /*#__PURE__*/forwardRef(({
+  z = /*#__PURE__*/forwardRef(({
     value: e,
     onChange: t
   }, a) => /*#__PURE__*/n.createElement("input", {
@@ -609,7 +609,7 @@ const p = ({
     ref: a,
     onChange: t
   })),
-  z = ({
+  O = ({
     load: e,
     search: t,
     disabled: a
@@ -619,7 +619,7 @@ const p = ({
     load: e
   }), /*#__PURE__*/n.createElement("form", {
     className: "search-form"
-  }, /*#__PURE__*/n.createElement(O, {
+  }, /*#__PURE__*/n.createElement(z, {
     value: t,
     onChange: e => e
   }), /*#__PURE__*/n.createElement(d, {
@@ -698,7 +698,7 @@ const p = ({
           navParams: l,
           isLoad: !1,
           nameUrl: "search"
-        }, /*#__PURE__*/n.createElement(z, {
+        }, /*#__PURE__*/n.createElement(O, {
           load: !1,
           search: "",
           disabled: !0

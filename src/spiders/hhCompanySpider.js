@@ -1,7 +1,7 @@
 import log from 'cllc';
 import needle from 'needle';
 import tress from 'tress';
-import cheerio from 'cheerio';
+import * as cheerio from 'cheerio';
 
 const hhCompanySpider = ({
   idCompany,
