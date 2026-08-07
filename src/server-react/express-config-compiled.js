@@ -491,7 +491,7 @@ const p = ({
         description: `Описание для страницы по запросу "${p}" для ${d}`
       });
     const b = await j(p, i);
-    let v = r.renderToString( /*#__PURE__*/n.createElement(y, {
+    let v = r.renderToString(/*#__PURE__*/n.createElement(y, {
       topNav: a,
       navParams: l,
       isLoad: !1,
@@ -693,7 +693,7 @@ const p = ({
           title: "Поиск",
           description: "Описание для страницы поиска"
         }),
-        g = r.renderToString( /*#__PURE__*/n.createElement(y, {
+        g = r.renderToString(/*#__PURE__*/n.createElement(y, {
           topNav: a,
           navParams: l,
           isLoad: !1,
@@ -726,7 +726,7 @@ const p = ({
         mainLinks: d,
         catalogs: u
       } = await mainData();
-      let E = r.renderToString( /*#__PURE__*/n.createElement(y, {
+      let E = r.renderToString(/*#__PURE__*/n.createElement(y, {
         topNav: a,
         navParams: l,
         nameUrl: "main"
@@ -757,7 +757,7 @@ const p = ({
           description: `Описание для страницы по запросу "${p}"`
         });
       const E = await bAllShopsParam(p);
-      let b = r.renderToString( /*#__PURE__*/n.createElement(y, {
+      let b = r.renderToString(/*#__PURE__*/n.createElement(y, {
         topNav: a,
         navParams: l,
         isLoad: !1,
@@ -797,7 +797,7 @@ const p = ({
         mainLinks: g,
         catalogs: d
       } = await U();
-      let u = r.renderToString( /*#__PURE__*/n.createElement(y, {
+      let u = r.renderToString(/*#__PURE__*/n.createElement(y, {
         topNav: a,
         navParams: l,
         nameUrl: "new"
@@ -828,7 +828,7 @@ const p = ({
           description: `Описание для страницы с новыми товарами по запросу "${o}"`
         });
       const u = await F(o);
-      let E = r.renderToString( /*#__PURE__*/n.createElement(y, {
+      let E = r.renderToString(/*#__PURE__*/n.createElement(y, {
         topNav: a,
         navParams: l,
         isLoad: !1,
@@ -856,7 +856,7 @@ const p = ({
           title: "Страница не найдена",
           description: "Страница не найдена"
         }),
-        g = r.renderToString( /*#__PURE__*/n.createElement(y, {
+        g = r.renderToString(/*#__PURE__*/n.createElement(y, {
           topNav: a,
           navParams: l,
           isLoad: !1
